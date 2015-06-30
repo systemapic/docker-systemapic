@@ -1,0 +1,6 @@
+
+NginX server for systemapic.js + vile.js
+
+Command: #           given name         mirror ports       link to dev-vile             image
+docker run -d --name nginx-proxy-2 -p 80:80 -p 443:443 --link dev-vile:dev-vile knutole/dev-nginx-server:latest
+

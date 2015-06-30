@@ -1,0 +1,43 @@
+##
+# knutole/dev-wu-server
+#
+# This creates an image for the wu.js server
+#
+
+# from ubuntu + gdal + mapnik + node + pigz + hpnssh
+FROM systemapic/gis
+
+# Install Gdal globally
+RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
+
+# Copy package.json
+ADD ./wu/package.json /tmp/package.json
+WORKDIR /tmp
+RUN export MAKEFLAGS="-j 7"
+RUN npm install
+
+# Set path for global node_modules
+ENV NODE_PATH /usr/local/lib/node_modules
+
+# Copy latest wu
+ADD ./wu /var/www/wu
+
+# Inject config
+ADD ./server-config.js /var/www/wu/config/server-config.js
+ADD ./ssh_config /root/.ssh/config
+ADD ./px_vile_grind_key /root/.ssh/px_vile_grind_key
+
+# log folder
+RUN mkdir /var/www/wu/log
+
+# Install node_modules
+RUN cp /tmp/node_modules /var/www/wu/ -r
+
+# Set terminal env
+ENV TERM xterm
+
+# Define working directory.
+WORKDIR /var/www/wu
+
+# Expose port
+EXPOSE 3001

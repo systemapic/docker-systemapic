@@ -1,0 +1,10 @@
+Host px_vile_grind
+    HostName 5.9.117.212
+    User root
+    IdentityFile ~/.ssh/px_vile_grind_key
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    IdentitiesOnly yes
+    ForwardAgent no
+    ServerAliveInterval 60
+    Port 2222
