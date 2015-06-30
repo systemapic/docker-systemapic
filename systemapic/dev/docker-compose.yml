@@ -1,0 +1,74 @@
+vile: 
+    image: systemapic/vile
+    links: 
+        - rkue
+        - rtoken
+    ports:
+        - 3003
+    volumes_from:
+        - data_store_dev # data container
+    volumes:
+        - /var/www/vile:/var/www/vile # local copy of vile
+    command: ./vile-server.sh
+
+grind: 
+    image: systemapic/grind
+    links: 
+        - rkue
+        - rtoken
+    ports:
+        - 3004
+    volumes_from:
+        - data_store_dev # data container
+    volumes:
+        - /var/www/vile-grind:/var/www/vile-grind # local copy of vile
+    command: ./vile-grind-server.sh
+
+wu:
+    image: systemapic/wu
+    links:
+        - rkue
+        - rtoken
+        - mongo
+        - vile
+        - grind
+    ports: 
+        - 3001
+    volumes_from:
+        - data_store_dev
+    volumes: 
+        - /var/www/wu:/var/www/wu # local copy of wu
+    command: ./server.sh
+
+sshd:
+    image: systemapic/sshd
+    volumes_from:
+        - data_store_dev
+    ports:
+        - 2222:2222
+
+nginx:
+    image: systemapic/nginx
+    links: 
+        - vile
+        - wu
+    ports:
+        - 443:443
+        - 80:80
+
+rkue:
+    image: systemapic/rkue
+    ports:
+        - 6379
+
+rtoken:
+    image: systemapic/rtoken
+    ports: 
+        - 6379
+
+mongo: 
+    image: systemapic/mongo
+    ports:
+        - 27017
+    volumes_from:
+        - mongo_store_dev # data container
