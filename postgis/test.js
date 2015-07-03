@@ -12,11 +12,10 @@ var conString = 'postgres://' + pg_username + ':' + pg_password + '@' + pg_host 
 
 console.log('conString: ', conString);
 
-// var shapefile_path = '/docks/postgis/docker-postgis/testdata/africa/Africa.shp';
-var shapefile_folder = '/docks/postgis/docker-postgis/testdata/';
-var shapefile_file = 'cetin5/cetin3_SBAS_6x5_22d-sbas-direct_UTM38N_Coherence_0.2.shp';
+var shapefile_folder = '"/docks/postgis/data/';
+var shapefile_file = 'cetin3/cetin3_SBAS_6x5_22d-sbas-direct_UTM38N.shp"';
 var shapefile_path = shapefile_folder + shapefile_file;
-var fileUuid = 'cetin_Coherence';
+var fileUuid = 'turkey_data_1';
 
 
 // var cmd = 'shp2pgsql -I egypt/EGY-level_1.shp file-322323-232332 | PGPASSWORD=docker psql -h 172.17.8.151 --username=docker systemapic'
@@ -26,10 +25,10 @@ var cmd = [
 	shapefile_path,
 	fileUuid,
 	'|',
-	'PGPASSWORD=docker',
+	'PGPASSWORD=' + pg_password,
 	'psql',
 	'-h 172.17.8.151',
-	'--username=docker',
+	'--username=' + pg_username,
 	'systemapic'
 ]
 
@@ -40,6 +39,8 @@ console.time('import');
 exec(command, {maxBuffer: 1024 * 50000}, function (err, stdin, stdout) {
 	console.log('cmd done', stdout, stdin, err);
 	console.timeEnd('import');
+	console.log('command was: ', command);
+
 });
 
 // pg.connect(conString, function(err, client, done) {
