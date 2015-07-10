@@ -15,13 +15,13 @@ console.log('conString: ', conString);
 var shapefile_folder = '"/docks/postgis/data/';
 var shapefile_file = 'cetin3/cetin3_SBAS_6x5_22d-sbas-direct_UTM38N.shp"';
 var shapefile_path = shapefile_folder + shapefile_file;
-var fileUuid = 'turkey_data_1';
+var fileUuid = 'turkey_data_3';
 
 
 // var cmd = 'shp2pgsql -I egypt/EGY-level_1.shp file-322323-232332 | PGPASSWORD=docker psql -h 172.17.8.151 --username=docker systemapic'
 var cmd = [
 	'shp2pgsql',
-	'-I',
+	// '-I',
 	shapefile_path,
 	fileUuid,
 	'|',
@@ -37,7 +37,8 @@ console.log('command: ', command);
 
 console.time('import');
 exec(command, {maxBuffer: 1024 * 50000}, function (err, stdin, stdout) {
-	console.log('cmd done', stdout, stdin, err);
+	// console.log('cmd done', stdout, stdin, err);
+	console.log('err:', err);
 	console.timeEnd('import');
 	console.log('command was: ', command);
 
