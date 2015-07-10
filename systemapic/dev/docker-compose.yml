@@ -24,6 +24,14 @@ grind:
         - /var/www/vile-grind:/var/www/vile-grind # local copy of vile
     command: ./vile-grind-server.sh
 
+postgis:
+    image: systemapic/postgis
+    ports:
+        - 5432
+    volumes_from:
+        - postgis_store_dev
+    command: ./start.sh
+
 wu:
     image: systemapic/wu
     links:
@@ -32,6 +40,7 @@ wu:
         - mongo
         - vile
         - grind
+        - postgis
     ports: 
         - 3001
     volumes_from:
