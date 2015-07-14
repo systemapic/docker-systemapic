@@ -22,7 +22,7 @@ RUN echo "port = 5432" >> /etc/postgresql/9.3/main/postgresql.conf
 EXPOSE 5432
 
 ENV TERM xterm
-RUN apt-get install -y fish htop
+RUN apt-get install -y fish htop pgtune
 
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
