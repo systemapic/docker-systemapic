@@ -1,5 +1,32 @@
-vile: 
-    image: systemapic/vile
+# vile: 
+#     image: systemapic/vile
+#     links: 
+#         - rkue
+#         - rtoken
+#     ports:
+#         - 3003
+#     volumes_from:
+#         - data_store_dev # data container
+#     volumes:
+#         - /var/www/vile:/var/www/vile # local copy of vile
+#     command: ./vile-server.sh
+
+# grind: 
+#     image: systemapic/grind
+#     links: 
+#         - rkue
+#         - rtoken
+#     ports:
+#         - 3004
+#     volumes_from:
+#         - data_store_dev # data container
+#     volumes:
+#         - /var/www/vile-grind:/var/www/vile-grind # local copy of vile
+#     command: ./vile-grind-server.sh
+
+
+pile: 
+    image: systemapic/pile
     links: 
         - rkue
         - rtoken
@@ -8,21 +35,9 @@ vile:
     volumes_from:
         - data_store_dev # data container
     volumes:
-        - /var/www/vile:/var/www/vile # local copy of vile
-    command: ./vile-server.sh
+        - /var/www/pile:/var/www/pile # local copy of vile
+    command: ./pile-server.sh
 
-grind: 
-    image: systemapic/grind
-    links: 
-        - rkue
-        - rtoken
-    ports:
-        - 3004
-    volumes_from:
-        - data_store_dev # data container
-    volumes:
-        - /var/www/vile-grind:/var/www/vile-grind # local copy of vile
-    command: ./vile-grind-server.sh
 
 postgis:
     image: systemapic/postgis
@@ -38,8 +53,8 @@ wu:
         - rkue
         - rtoken
         - mongo
-        - vile
-        - grind
+        - pile
+        # - grind
         - postgis
     ports: 
         - 3001
@@ -49,17 +64,17 @@ wu:
         - /var/www/wu:/var/www/wu # local copy of wu
     command: ./server.sh
 
-sshd:
-    image: systemapic/sshd
-    volumes_from:
-        - data_store_dev
-    ports:
-        - 2222:2222
+# sshd:
+#     image: systemapic/sshd
+#     volumes_from:
+#         - data_store_dev
+#     ports:
+#         - 2222:2222
 
 nginx:
     image: systemapic/nginx
     links: 
-        - vile
+        - pile
         - wu
     ports:
         - 443:443
