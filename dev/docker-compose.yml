@@ -30,6 +30,9 @@ pile:
     links: 
         - rkue
         - rtoken
+        - wu
+        - mongo
+        - postgis
     ports:
         - 3003
     volumes_from:
@@ -53,8 +56,6 @@ wu:
         - rkue
         - rtoken
         - mongo
-        - pile
-        # - grind
         - postgis
     ports: 
         - 3001
