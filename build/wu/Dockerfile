@@ -24,8 +24,6 @@ ADD ./wu /var/www/wu
 
 # Inject config
 ADD ./server-config.js /var/www/wu/config/server-config.js
-ADD ./ssh_config /root/.ssh/config
-ADD ./px_vile_grind_key /root/.ssh/px_vile_grind_key
 
 # log folder
 RUN mkdir /var/www/wu/log

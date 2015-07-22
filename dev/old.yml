@@ -1,6 +1,5 @@
-# deocker
 wu:
-  image: systemapic/wu
+  image: systemapic/wu:latest
   links:
     - redis
     - mongo
