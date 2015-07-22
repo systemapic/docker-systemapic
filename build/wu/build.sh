@@ -3,7 +3,6 @@
 # clone
 git clone git@github.com:systemapic/wu.git wu
 
-
 # stamp package.json with original time
 cd wu
 REV=$(git rev-list -n 1 HEAD 'package.json');

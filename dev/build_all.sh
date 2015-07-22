@@ -10,15 +10,15 @@ cd mongo
 ./build.sh
 cd ..
 
-cd rkue
+cd redis
 ./build.sh
 cd ..
 
-cd rtoken
+cd postgis
 ./build.sh
 cd ..
 
-cd vile
+cd pile
 ./build.sh
 cd ..
 

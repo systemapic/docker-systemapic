@@ -1,24 +1,36 @@
 module.exports = {
 	"serverConfig": {
 
+		"version" : "1.0.7",
+
+		"token" : {
+
+			"accessTokenLength" : "256",
+			"refreshTokenLength" : "256",
+			"expiresIn" : "3600"
+		},
+
 		"port": 3001,
 		"mongo": {
 			"url": "mongodb://mongo/systemapic"
 		},
 		"kueRedis": {
 			"port": 6379,
-			"host": "rkue",
-			"auth": "crlAxeVBbmaxBY5GVTaxohjsgEUcrT5IdJyHi8J1fdGG8KqXdfw3RP0qyoGlLltoVjFjzZCcKHvBVQHpTUQ26W8ql6xurdm0hLIY"
+			"host": "redis",
+			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE",
+			"db" : 3
 		},
 		"tokenRedis": {
 			"port": 6379,
-			"host": "rtoken",
-			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE"
+			"host": "redis",
+			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE",
+			"db" : 1
 		},
 		"temptokenRedis": {
 			"port": 6379,
-			"host": "rtoken",
-			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE"
+			"host": "redis",
+			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE",
+			"db" : 2
 		},
 		"slack": {
 			"webhook": "https://hooks.slack.com/services/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",
@@ -56,7 +68,7 @@ module.exports = {
 		},
 		"phantomJS": {
 			"user": "info@systemapic.com",
-			"auth": "whKvBzL9dPQWKThXcF7yjAr2"
+			"auth": "***REMOVED***@dev"
 		},
 		"nodemailer": {
 			"service": "gmail",
@@ -65,7 +77,7 @@ module.exports = {
 				"pass": "***REMOVED***@noerdbiz"
 			},
 			"bcc": [
-				"info@systemapic.com"
+				"knutole@noerd.biz"
 			],
 			"from": "Systemapic.com <info@systemapic.com>"
 		},
