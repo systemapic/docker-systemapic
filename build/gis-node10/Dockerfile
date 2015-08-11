@@ -157,7 +157,7 @@ RUN sh /tmp/install-graphicsmagick.sh
 RUN npm install grunt-cli -g
 RUN npm install nodemon -g
 RUN npm install forever -g
-RUN apt-get update && apt-get install -y nmap pigz zip mlocate
+RUN apt-get update && apt-get install -y nmap pigz zip mlocate redis-tools
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

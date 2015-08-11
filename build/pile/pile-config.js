@@ -1,26 +1,32 @@
-// CONFIG FILE FOR [vile] TILESERVER
 module.exports = {
 
 	// tileserver port
 	port : 3003,
 
 	// kue 
- 	kueRedis : {
+ 	kueredis : {
  		port : 6379,
- 		host : 'rkue',
-   		auth : 'crlAxeVBbmaxBY5GVTaxohjsgEUcrT5IdJyHi8J1fdGG8KqXdfw3RP0qyoGlLltoVjFjzZCcKHvBVQHpTUQ26W8ql6xurdm0hLIY'
+ 		host : 'kueredis',
+   		auth : '9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE',
+   		// db   : 4
    	},
 
    	// tokens
-	tokenRedis : {
+	redis : {
 		port : 6379,
-		host : 'rtoken',
-		auth : '9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE'
+		host : 'redis',
+		auth : '9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE',
+		db   : 1
+	},
+
+	// mongo
+	mongo : {
+		url : 'mongodb://mongo/systemapic'
 	},
 
 	// no access
 	noAccessMessage : 'No access. Please contact Systemapic.com if you believe you are getting this message in error.',
-	noAccessTile : 'public/noAccessTile.png',
+	noAccessTile    : 'public/noAccessTile.png',
 	
 	// waiting tile
 	processingTile : 'public/noAccessTile.png',
