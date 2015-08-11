@@ -29,6 +29,9 @@ RUN cp /tmp/node_modules /var/www/pile/ -r
 # Define working directory.
 WORKDIR /var/www/pile
 
+# terminal
+ENV TERM xterm 
+
 # Expose port
 EXPOSE 3003
 
