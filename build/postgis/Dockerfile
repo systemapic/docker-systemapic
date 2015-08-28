@@ -20,8 +20,8 @@ RUN echo "host    all             all             0.0.0.0/0               md5" >
 RUN service postgresql start && /bin/su postgres -c "createuser -d -s -r -l docker" && /bin/su postgres -c "psql postgres -c \"ALTER USER docker WITH ENCRYPTED PASSWORD 'docker'\"" && service postgresql stop
 RUN echo "listen_addresses = '*'" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "port = 5432" >> /etc/postgresql/9.3/main/postgresql.conf
-RUN echo "log_statement = all" >> /etc/postgresql/9.3/main/postgresql.conf
-# RUN echo "logging_collector = on" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "log_statement = ddl" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "log_min_error_statement = ERROR" >> /etc/postgresql/9.3/main/postgresql.conf
 
 EXPOSE 5432
 
