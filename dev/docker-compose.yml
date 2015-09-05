@@ -5,10 +5,10 @@
 wu:
   image: systemapic/wu
   links:
+    - mongo
     - redislayers
     - redisstats
     - redistemp
-    - mongo
     - postgis
   ports: 
     - 3001
@@ -21,11 +21,11 @@ wu:
 pile: 
   image: systemapic/pile
   links: 
+    - mongo
     - redislayers
     - redisstats
     - redistemp
     - wu
-    - mongo
     - postgis
   ports:
     - 3003
@@ -77,3 +77,4 @@ mongo:
     - 27017
   volumes_from:
     - mongo_store_dev 
+    
