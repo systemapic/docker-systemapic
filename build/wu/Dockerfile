@@ -31,6 +31,10 @@ RUN mkdir /var/www/wu/log
 # Install node_modules
 RUN cp /tmp/node_modules /var/www/wu/ -r
 
+# Install extras
+RUN apt-get update
+RUN apt-get install -y sysstat
+
 # Set terminal env
 ENV TERM xterm
 

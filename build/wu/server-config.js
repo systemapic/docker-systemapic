@@ -1,15 +1,10 @@
 module.exports = {
 	"serverConfig": {
-
-		"version" : "1.0.7",
-
-		"token" : {
-
-			"accessTokenLength" : "256",
-			"refreshTokenLength" : "256",
-			"expiresIn" : "3600"
+		"token": {
+			"accessTokenLength": "256",
+			"refreshTokenLength": "256",
+			"expiresIn": "3600"
 		},
-
 		"port": 3001,
 		"mongo": {
 			"url": "mongodb://mongo/systemapic"
@@ -18,19 +13,19 @@ module.exports = {
 			"port": 6379,
 			"host": "redis",
 			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE",
-			"db" : 3
+			"db": 3
 		},
 		"tokenRedis": {
 			"port": 6379,
 			"host": "redis",
 			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE",
-			"db" : 1
+			"db": 1
 		},
 		"temptokenRedis": {
 			"port": 6379,
 			"host": "redis",
 			"auth": "9p7bRrd7Zo9oFbxVJIhI09pBq6KiOBvU4C76SmzCkqKlEPLHVR02TN2I40lmT9WjxFiFuBOpC2BGwTnzKyYTkMAQ21toWguG7SZE",
-			"db" : 2
+			"db": 2
 		},
 		"slack": {
 			"webhook": "https://hooks.slack.com/services/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",
@@ -41,24 +36,24 @@ module.exports = {
 			"icon": "http://systemapic.com/wp-content/uploads/systemapic-color-logo-circle.png",
 			"baseurl": "https://dev.systemapic.com/"
 		},
-		"vile": {
-			"uri": "http://vile:3003/",
-			"link": "vile",
-			"port": "3003"
-		},
-		"vile_grind": {
-			"remote_ssh": "px_vile_grind",
-			"remote_url": "http://5.9.117.212:3004/",
-			"sender_ssh": "tx_data_store",
-			"sender_url": "https://dev.systemapic.com/"
-		},
-		"vileosm": {
-			"uri": ""
-		},
-		"grind": {
-			"host": "http://5.9.117.212:3004/",
-			"ssh": "tx"
-		},
+		// "vile": {
+		// 	"uri": "http://vile:3003/",
+		// 	"link": "vile",
+		// 	"port": "3003"
+		// },
+		// "vile_grind": {
+		// 	"remote_ssh": "px_vile_grind",
+		// 	"remote_url": "http://5.9.117.212:3004/",
+		// 	"sender_ssh": "tx_data_store",
+		// 	"sender_url": "https://dev.systemapic.com/"
+		// },
+		// "vileosm": {
+		// 	"uri": ""
+		// },
+		// "grind": {
+		// 	"host": "http://5.9.117.212:3004/",
+		// 	"ssh": "tx"
+		// },
 		"portalServer": {
 			"uri": "https://dev.systemapic.com/"
 		},
@@ -68,16 +63,16 @@ module.exports = {
 		},
 		"phantomJS": {
 			"user": "info@systemapic.com",
-			"auth": "o1bbxb1q@dev"
+			"auth": "08d1f2a817d1daf86b54db76530615b7"
 		},
 		"nodemailer": {
 			"service": "gmail",
 			"auth": {
-				"user": "knutole@noerd.biz",
-				"pass": "o1bbxb1q@noerdbiz"
+				"user" : "knutole@systemapic.com",
+				"pass" : "o1bbxb1q@systemapic"
 			},
 			"bcc": [
-				"knutole@noerd.biz"
+				"knutole@systemapic.com"
 			],
 			"from": "Systemapic.com <info@systemapic.com>"
 		},
@@ -92,8 +87,8 @@ module.exports = {
 		},
 		"portal": {
 			"roles": {
-				"superAdmin": "role-673a9293-de2c-4873-8068-dd094fc10128",
-				"portalAdmin": "role-11f42172-0418-4870-92a3-7a672e2aa32a"
+				"superAdmin": "role-bbe9ea50-d99a-4291-9a16-5196c4561f94",
+				"portalAdmin": "role-48e3a8e2-79e9-44a2-9652-a6a97add557f"
 			}
 		}
 	},
@@ -101,9 +96,7 @@ module.exports = {
 		"autoStart": true,
 		"accessToken": "pk.eyJ1Ijoic3lzdGVtYXBpYyIsImEiOiJkV2JONUNVIn0.TJrzQrsehgz_NAfuF8Sr1Q",
 		"layer": "systemapic.kcjonn12",
-		// "layer": "systemapic.laoo9f6j",
 		"logo": "css/images/login-logo.png",
-		// "logo": "css/images/systemapic-login-logo.png",
 		"wrapper": false,
 		"speed": 1000,
 		"position": {
@@ -131,7 +124,7 @@ module.exports = {
 		"id": "app",
 		"portalName": "systemapic",
 		"portalLogo": false,
-		"portalTitle": "[dev] Systemapic Secure Portal",
+		"portalTitle": "[tx] Systemapic Secure Portal",
 		"panes": {
 			"clients": true,
 			"options": true,
@@ -155,9 +148,9 @@ module.exports = {
 		"defaults": {
 			"project": {
 				"position": {
-					"lat": -27.449790329784214,
-					"lng": 133.96728515625,
-					"zoom": 5
+					"lat": 54.213861000644926,
+					"lng": 6.767578125,
+					"zoom": 4
 				}
 			}
 		},
@@ -174,6 +167,10 @@ module.exports = {
 			"tiles": {
 				"uri": "https://{s}.systemapic.com/r/",
 				"subdomains": "efgh"
+			},
+			"proxy" : {
+				"uri" : "",
+				"subdomains" : ["proxy-tx-a", "proxy-tx-b", "proxy-tx-c", "proxy-tx-d"]
 			},
 			"utfgrid": {
 				"uri": "https://{s}.systemapic.com/u/",

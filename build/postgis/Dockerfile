@@ -23,6 +23,18 @@ RUN echo "port = 5432" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "log_statement = ddl" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "log_min_error_statement = ERROR" >> /etc/postgresql/9.3/main/postgresql.conf
 
+# pgtune
+RUN echo "max_connections = 100" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "shared_buffers = 4GB" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "effective_cache_size = 12GB" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "work_mem = 20971kB" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "maintenance_work_mem = 2GB" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "checkpoint_segments = 128" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "checkpoint_completion_target = 0.9" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "wal_buffers = 16MB" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "default_statistics_target = 500" >> /etc/postgresql/9.3/main/postgresql.conf
+
+
 EXPOSE 5432
 
 ENV TERM xterm

@@ -1,8 +1,12 @@
-# deocker
+# systemapic / dev
+#
+# - whole systemapic dev setup
+# - sharing /wu and /pile folders with localhost 
 wu:
   image: systemapic/wu
   links:
     - redis
+    - redisstats
     - mongo
     - postgis
   ports: 
@@ -18,6 +22,7 @@ pile:
   links: 
     - redis
     - kueredis
+    - redisstats
     - wu
     - mongo
     - postgis
@@ -47,14 +52,21 @@ nginx:
     - 80:80
 
 redis:
-  image: systemapic/redis
+  image: systemapic/redis:layers
   ports: 
     - 6379
   volumes_from:
     - redis_store_dev
 
+redisstats:
+  image: systemapic/redis:stats
+  ports: 
+    - 6379
+  volumes_from:
+    - redis_stats_store_dev
+
 kueredis:
-  image: systemapic/kue:redis
+  image: systemapic/redis:kue
   ports: 
     - 6379
 
