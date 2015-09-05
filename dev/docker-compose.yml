@@ -5,8 +5,9 @@
 wu:
   image: systemapic/wu
   links:
-    - redis
+    - redislayers
     - redisstats
+    - redistemp
     - mongo
     - postgis
   ports: 
@@ -20,9 +21,9 @@ wu:
 pile: 
   image: systemapic/pile
   links: 
-    - redis
-    - kueredis
+    - redislayers
     - redisstats
+    - redistemp
     - wu
     - mongo
     - postgis
@@ -51,7 +52,7 @@ nginx:
     - 443:443
     - 80:80
 
-redis:
+redislayers:
   image: systemapic/redis:layers
   ports: 
     - 6379
@@ -65,7 +66,7 @@ redisstats:
   volumes_from:
     - redis_stats_store_dev
 
-kueredis:
+redistemp:
   image: systemapic/redis:kue
   ports: 
     - 6379
