@@ -13,7 +13,7 @@ wu:
   ports: 
     - 3001
   volumes_from:
-    - data_store_dev
+    - data_store_dev_common
   volumes: 
     - /var/www/wu:/var/www/wu
   command: ./server.sh
@@ -30,7 +30,7 @@ pile:
   ports:
     - 3003
   volumes_from:
-    - data_store_dev
+    - data_store_dev_common
   volumes:
     - /var/www/pile:/var/www/pile 
   command: ./pile-server.sh
