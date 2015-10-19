@@ -12,6 +12,7 @@ wu:
     - postgis
   ports: 
     - 3001
+  log_driver: "json-file"
   volumes_from:
     - data_store_dev_common
   volumes: 
@@ -21,11 +22,11 @@ wu:
 pile: 
   image: systemapic/pile
   links: 
+    - wu
     - mongo
     - redislayers
     - redisstats
     - redistemp
-    - wu
     - postgis
   ports:
     - 3003
@@ -35,14 +36,6 @@ pile:
     - /var/www/pile:/var/www/pile 
   command: ./pile-server.sh
 
-postgis:
-  image: systemapic/postgis
-  ports:
-    - 5432
-  volumes_from:
-    - postgis_store_dev
-  command: ./start.sh
-
 nginx:
   image: systemapic/nginx
   links: 
@@ -51,6 +44,14 @@ nginx:
   ports:
     - 443:443
     - 80:80
+
+postgis:
+  image: systemapic/postgis
+  ports:
+    - 5432
+  volumes_from:
+    - postgis_store_dev
+  command: ./start.sh
 
 redislayers:
   image: systemapic/redis:layers
