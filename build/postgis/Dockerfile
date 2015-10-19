@@ -21,6 +21,7 @@ RUN service postgresql start && /bin/su postgres -c "createuser -d -s -r -l dock
 RUN echo "listen_addresses = '*'" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "port = 5432" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "log_statement = ddl" >> /etc/postgresql/9.3/main/postgresql.conf
+# RUN echo "log_statement = all" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "log_min_error_statement = ERROR" >> /etc/postgresql/9.3/main/postgresql.conf
 
 # pgtune
