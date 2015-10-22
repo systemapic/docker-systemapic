@@ -1,3 +1,1 @@
-postgis/node_modules/*
-postgis/data/*
-backup/*
+saved_images/*
