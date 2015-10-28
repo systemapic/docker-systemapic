@@ -1,1 +1,4 @@
 saved_images/*
+build/nginx/*.key
+*.key
+*.pem

@@ -14,8 +14,9 @@ RUN apt-get update && apt-get install -y nmap fish htop nmon bmon
 
 # Copy latest config files
 ADD ./dev.systemapic.nginx.conf /etc/nginx/
-ADD ./systemapic_com.crt /etc/nginx/ssl/systemapic_com.crt
-ADD ./systemapic_com.key /etc/nginx/ssl/systemapic_com.key
+ADD ./dhparams.pem /etc/nginx/
+ADD ./ssl_certificate.pem /etc/nginx/ssl/ssl_certificate.pem
+ADD ./ssl_certificate.key /etc/nginx/ssl/ssl_certificate.key
 ADD ./502.html /etc/nginx/error/
 
 # forward request and error logs to docker log collector
