@@ -13,6 +13,8 @@ wu:
   ports: 
     - 3001
   log_driver: "json-file"
+  environment:
+    - SYSTEMAPIC_PRODMODE=false
   volumes_from:
     - data_store_dev_common
   volumes: 

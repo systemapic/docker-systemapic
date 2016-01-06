@@ -1,4 +1,9 @@
 #!/bin/bash
-dc kill
-dc up -d
-dc logs
+echo -e "\e[93mKilling containers...\e[39m"
+docker-compose kill
+echo -e "\e[93mDeleting containers...\e[39m"
+./delete_containers.sh
+echo -e "\e[93mStarting containers...\e[39m"
+docker-compose up -d
+echo -e "\e[93mOpening logs...\e[39m"
+docker-compose logs
