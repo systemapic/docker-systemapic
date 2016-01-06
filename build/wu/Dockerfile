@@ -38,6 +38,9 @@ RUN apt-get install -y sysstat
 # Set terminal env
 ENV TERM xterm
 
+# set prod mode
+ENV SYSTEMAPIC_PRODMODE true
+
 # Define working directory.
 WORKDIR /var/www/wu
 
