@@ -1,14 +1,3 @@
-##
-# geodata/gdal
-#
-# This creates an Ubuntu derived base image that installs the latest GDAL
-# subversion checkout compiled with a broad range of drivers.  The build
-# process closely follows that defined in
-# <https://github.com/OSGeo/gdal/blob/trunk/.travis.yml>
-#
-# Forked from: https://github.com/geo-data/gdal-docker
-
-# Ubuntu 14.04 Trusty Tahyr
 FROM ubuntu:trusty
 
 MAINTAINER Knut Ole Sjøli <@kosjoli>
@@ -30,18 +19,9 @@ RUN apt-get install -y \
 
 RUN apt-get install -y curl
 
-# Install Node.js 10.40
-RUN gpg --keyserver pool.sks-keyservers.net --recv-keys 7937DFD2AB06298B2293C3187D33FF9D0246406D 114F43EE0176B71C7BC219DD50A3051F888C628D
-ENV NODE_VERSION 0.10.40
-ENV NPM_VERSION 2.11.3
-RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
-    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-    && gpg --verify SHASUMS256.txt.asc \
-    && grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
-    && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-    && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
-    && npm install -g npm@"$NPM_VERSION" \
-    && npm cache clear
+# Install NodeJS 10.40
+ADD ./install-nodejs1040.sh /tmp/
+RUN sh /tmp/install-nodejs1040.sh
 
 # Install Postgresql
 ADD ./install-postgres.sh /tmp/
@@ -69,78 +49,10 @@ ADD ./test-gdal.sh /tmp/
 RUN sh /tmp/test-gdal.sh
 
 # Install Mapnik dependencies
-RUN apt-get install -y \ 
-    software-properties-common python-software-properties \
-    libboost-dev libboost-filesystem-dev libboost-program-options-dev \
-    libboost-python-dev libboost-regex-dev libboost-system-dev libboost-thread-dev \
-    libboost-filesystem-dev \
-    libboost-program-options-dev \
-    libboost-python-dev libboost-regex-dev \
-    libboost-system-dev libboost-thread-dev libtiff5 libtiff5-dev \
-    libicu-dev \
-    python-dev libxml2 libxml2-dev \
-    libfreetype6 libfreetype6-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libproj-dev \
-    libtiff-dev \
-    libcairo2 libcairo2-dev python-cairo python-cairo-dev \
-    libcairomm-1.0-1 libcairomm-1.0-dev \
-    ttf-unifont ttf-dejavu ttf-dejavu-core ttf-dejavu-extra \
-    git build-essential python-nose \
-    libgdal1-dev libsqlite3-dev fish htop nano curl wget 
-
-# Install Mapnik dependencies
 ADD ./install-mapnik-dependencies.sh /tmp/
 RUN sh /tmp/install-mapnik-dependencies.sh
 
-# Install latest boost
-# ADD ./install-boost.sh /tmp/
-# RUN sh /tmp/install-boost.sh
-RUN add-apt-repository ppa:mapnik/nightly-trunk
-RUN apt-get update -y
-RUN apt-get install -y libboost-dev \
-    libboost-filesystem-dev \
-    libboost-program-options-dev \
-    libboost-python-dev \
-    libboost-regex-dev \
-    libboost-system-dev \
-    libboost-thread-dev \
-    libtiff5 \
-    libtiff5-dev \
-    libicu-dev \
-    python-dev \
-    libxml2 \
-    libxml2-dev \
-    libfreetype6 \
-    libfreetype6-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libproj-dev \
-    libtiff-dev \
-    libcairo2 \
-    libcairo2-dev \
-    python-cairo \
-    python-cairo-dev \
-    libcairomm-1.0-1 \
-    libcairomm-1.0-dev \
-    ttf-unifont \
-    ttf-dejavu \
-    ttf-dejavu-core \
-    ttf-dejavu-extra \
-    python-nose \
-    libgdal1-dev \
-    libsqlite3-dev \
-    libmapnik \
-    libmapnik-dev \
-    mapnik-utils \
-    # python-mapnik \
-    mapnik-input-plugin-gdal \
-    mapnik-input-plugin-ogr \
-    mapnik-input-plugin-postgis \
-    mapnik-input-plugin-sqlite 
-    # mapnik-input-plugin-osm
-
+RUN apt-get install -y git 
 # Install Mapnik
 ADD ./install-mapnik.sh /tmp/
 RUN sh /tmp/install-mapnik.sh
