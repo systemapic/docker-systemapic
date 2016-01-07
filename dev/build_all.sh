@@ -10,7 +10,15 @@ cd mongo
 ./build.sh
 cd ..
 
-cd redis
+cd redis:kue
+./build.sh
+cd ..
+
+cd redis:layers
+./build.sh
+cd ..
+
+cd redis:stats
 ./build.sh
 cd ..
 
@@ -25,3 +33,5 @@ cd ..
 cd wu
 ./build.sh
 cd ..
+
+echo 'All built!'
