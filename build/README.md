@@ -1,14 +1,14 @@
 ## Docker containers
 
 ##### Our main containers are:
-1. wu (image: systemapic/wu)  
-2. pile (image: systemapic/pile)  
-3. postgis (image: systemapic/postgis)  
-4. mongo (image: systemapic/mongo)  
-5. rediskue (image: systemapic/redis:kue)  
-6. redislayers (image: systemapic/redis:layers)  
-7. redisstats (image: systemapic/redis:stats)  
-8. nginx (image: systemapic/nginx)  
+1. wu (image: `systemapic/wu`)  
+2. pile (image: `systemapic/pile`)  
+3. postgis (image: `systemapic/postgis`)  
+4. mongo (image: `systemapic/mongo`)  
+5. rediskue (image: `systemapic/redis:kue`)  
+6. redislayers (image: `systemapic/redis:layers`)  
+7. redisstats (image: `systemapic/redis:stats`)  
+8. nginx (image: `systemapic/nginx`)  
 
 They are started using `docker-compose.yml`, in `/dev/`.
 
