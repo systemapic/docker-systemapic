@@ -1,9 +1,17 @@
-# creates an image with ALL gis dependencies installed (gdal, node, mapnik, etc)
-# replaces gdalmapniknode, gis (but not gis:node1040)
+##
+# geodata/gdal
+#
+# This creates an Ubuntu derived base image that installs the latest GDAL
+# subversion checkout compiled with a broad range of drivers.  The build
+# process closely follows that defined in
+# <https://github.com/OSGeo/gdal/blob/trunk/.travis.yml>
+#
+# Forked from: https://github.com/geo-data/gdal-docker
 
+# Ubuntu 14.04 Trusty Tahyr
 FROM ubuntu:trusty
 
-MAINTAINER Knut Ole Sjøli <knutole@systemapic.com>
+MAINTAINER Knut Ole Sjøli <@kosjoli>
 
 # Ensure the package repository is up to date
 RUN apt-get update -y
@@ -19,6 +27,21 @@ RUN apt-get install -y \
     mysql-client \
     mysql-server \
     unzip
+
+RUN apt-get install -y curl
+
+# Install Node.js 10.40
+RUN gpg --keyserver pool.sks-keyservers.net --recv-keys 7937DFD2AB06298B2293C3187D33FF9D0246406D 114F43EE0176B71C7BC219DD50A3051F888C628D
+ENV NODE_VERSION 0.10.40
+ENV NPM_VERSION 2.11.3
+RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
+    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+    && gpg --verify SHASUMS256.txt.asc \
+    && grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
+    && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
+    && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
+    && npm install -g npm@"$NPM_VERSION" \
+    && npm cache clear
 
 # Install Postgresql
 ADD ./install-postgres.sh /tmp/
@@ -41,10 +64,13 @@ RUN sh /tmp/install-gdal-deps.sh
 ADD ./install-gdal.sh /tmp/
 RUN sh /tmp/install-gdal.sh
 
+# Run GDAL tests
+ADD ./test-gdal.sh /tmp/
+RUN sh /tmp/test-gdal.sh
+
 # Install Mapnik dependencies
-RUN apt-get install software-properties-common python-software-properties -y
-# RUN add-apt-repository ppa:mapnik/boost && apt-get update
 RUN apt-get install -y \ 
+    software-properties-common python-software-properties \
     libboost-dev libboost-filesystem-dev libboost-program-options-dev \
     libboost-python-dev libboost-regex-dev libboost-system-dev libboost-thread-dev \
     libboost-filesystem-dev \
@@ -62,25 +88,64 @@ RUN apt-get install -y \
     libcairomm-1.0-1 libcairomm-1.0-dev \
     ttf-unifont ttf-dejavu ttf-dejavu-core ttf-dejavu-extra \
     git build-essential python-nose \
-    libgdal1-dev libsqlite3-dev fish htop nano || die
+    libgdal1-dev libsqlite3-dev fish htop nano curl wget 
 
 # Install Mapnik dependencies
 ADD ./install-mapnik-dependencies.sh /tmp/
 RUN sh /tmp/install-mapnik-dependencies.sh
 
-# install latest boost
-ADD ./install-boost.sh /tmp/
-RUN sh /tmp/install-boost.sh
+# Install latest boost
+# ADD ./install-boost.sh /tmp/
+# RUN sh /tmp/install-boost.sh
+RUN add-apt-repository ppa:mapnik/nightly-trunk
+RUN apt-get update -y
+RUN apt-get install -y libboost-dev \
+    libboost-filesystem-dev \
+    libboost-program-options-dev \
+    libboost-python-dev \
+    libboost-regex-dev \
+    libboost-system-dev \
+    libboost-thread-dev \
+    libtiff5 \
+    libtiff5-dev \
+    libicu-dev \
+    python-dev \
+    libxml2 \
+    libxml2-dev \
+    libfreetype6 \
+    libfreetype6-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libproj-dev \
+    libtiff-dev \
+    libcairo2 \
+    libcairo2-dev \
+    python-cairo \
+    python-cairo-dev \
+    libcairomm-1.0-1 \
+    libcairomm-1.0-dev \
+    ttf-unifont \
+    ttf-dejavu \
+    ttf-dejavu-core \
+    ttf-dejavu-extra \
+    python-nose \
+    libgdal1-dev \
+    libsqlite3-dev \
+    libmapnik \
+    libmapnik-dev \
+    mapnik-utils \
+    # python-mapnik \
+    mapnik-input-plugin-gdal \
+    mapnik-input-plugin-ogr \
+    mapnik-input-plugin-postgis \
+    mapnik-input-plugin-sqlite 
+    # mapnik-input-plugin-osm
 
 # Install Mapnik
 ADD ./install-mapnik.sh /tmp/
 RUN sh /tmp/install-mapnik.sh
 
-# Install Node.js
-ADD ./install-nodejs.latest.sh /tmp/
-RUN sh /tmp/install-nodejs.latest.sh
-
-# Install PhanomJS
+# Install PhantomJS
 ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
 RUN sh /tmp/install-phantomjs.sh
 
@@ -88,74 +153,11 @@ RUN sh /tmp/install-phantomjs.sh
 ADD ./install-graphicsmagick.sh /tmp/install-graphicsmagick.sh
 RUN sh /tmp/install-graphicsmagick.sh
 
-# Run the tests
-ADD ./test-gdal.sh /tmp/
-RUN sh /tmp/test-gdal.sh
-
 # Install extras
 RUN npm install grunt-cli -g
 RUN npm install nodemon -g
 RUN npm install forever -g
-RUN apt-get update && apt-get install -y nmap pigz zip
-
-
-# extras
-RUN ls
-RUN npm install grunt-cli -g
-RUN npm install nodemon -g
-RUN npm install forever -g
-RUN apt-get update && apt-get install -y nmap pigz
-
-# HPN SSH
-
-# Set the env variable DEBIAN_FRONTEND to noninteractive
-ENV             DEBIAN_FRONTEND noninteractive
-ENV             INITRD No
-
-
-# Install updates
-RUN             echo "deb http://ppa.launchpad.net/w-rouesnel/openssh-hpn/ubuntu trusty main" > /etc/apt/sources.list.d/w-rouesnel-openssh-hpn.list
-RUN             echo "deb-src http://ppa.launchpad.net/w-rouesnel/openssh-hpn/ubuntu trusty main" >> /etc/apt/sources.list.d/w-rouesnel-openssh-hpn.list
-RUN             apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0762518E
-RUN             apt-get update && apt-get -y upgrade
-RUN             apt-get install -y openssh-server
-
-# Setup openssh
-RUN             mkdir /var/run/sshd
-RUN             echo "HPNDisabled no" >> /etc/ssh/sshd_config
-RUN             echo "TcpRcvBufPoll yes" >> /etc/ssh/sshd_config
-RUN             echo "HPNBufferSize 8192" >> /etc/ssh/sshd_config
-RUN             echo "NoneEnabled yes" >> /etc/ssh/sshd_config
-
-# # phantomjs
-# RUN apt-get update && apt-get install -y build-essential \ 
-#     g++ \
-#     flex \
-#     bison \
-#     gperf \
-#     ruby \
-#     perl \
-#     libsqlite3-dev \
-#     libfontconfig1-dev \
-#     libicu-dev \
-#     libfreetype6 \
-#     libssl-dev \
-#     libpng-dev \
-#     libjpeg-dev
-
-# ADD ./install_phantomjs.sh /home/install_phantomjs.sh
-# RUN sh /home/install_phantomjs.sh
-# RUN ln -s /home/phantomJS/phantomjs/bin/phantomjs /usr/bin/phantomjs
-
-# install gm
-# ADD ./install_graphicsmagick.sh /home/install_graphicsmagick.sh
-# RUN sh /home/install_graphicsmagick.sh
-
-# install extras
-RUN apt-get update && apt-get install -y zip
-
-# Cleanup
-RUN apt-get -y autoremove && apt-get -y autoclean
+RUN apt-get update && apt-get install -y nmap pigz zip mlocate redis-tools
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

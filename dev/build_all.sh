@@ -10,17 +10,17 @@ cd mongo
 ./build.sh
 cd ..
 
-cd redis:kue
+cd redis/kue
 ./build.sh
-cd ..
+cd ../..
 
-cd redis:layers
+cd redis/layers
 ./build.sh
-cd ..
+cd ../..
 
-cd redis:stats
+cd redis/stats
 ./build.sh
-cd ..
+cd ../..
 
 cd postgis
 ./build.sh

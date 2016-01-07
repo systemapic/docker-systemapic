@@ -12,6 +12,7 @@ cd ..
 
 # build
 docker build -t systemapic/wu .
+# docker build -t debug/wu:test5 .
 
 # clean up
 rm wu/ -r

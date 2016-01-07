@@ -12,6 +12,7 @@ cd ..
 
 # build
 docker build -t systemapic/pile .
+# docker build -t debug/pile:node1040 .
 
 # clean up
 rm pile/ -r

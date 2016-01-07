@@ -1,117 +1,83 @@
-vile: 
-    image: systemapic/vile
-    links: 
-        - rkue
-        - rtoken
-    ports:
-        - 3003
-    volumes_from:
-        - data_store_dev # data container
-    # volumes:
-        # - /var/www/vile:/var/www/vile # local copy of vile
-    command: ./vile-server.sh
-
+# systemapic / dev
+#
+# - whole systemapic dev setup
+# - sharing /wu and /pile folders with localhost 
 wu:
-    image: systemapic/wu
-    links:
-        - rkue
-        - rtoken
-        - mongo
-        - vile
-    ports: 
-        - 3001
-    volumes_from:
-        - data_store_dev
-    # volumes: 
-        # - /var/www/wu:/var/www/wu # local copy of wu
-    command: ./server.sh
+  image: systemapic/wu
+  links:
+    - mongo
+    - redislayers
+    - redisstats
+    - redistemp
+    - postgis
+  ports: 
+    - 3001
+  log_driver: "json-file"
+  environment:
+    - SYSTEMAPIC_PRODMODE=true
+  volumes_from:
+    - data_store_dev_common
+  volumes: 
+    - /var/www/wu:/var/www/wu
+  command: ./server.sh
 
-sshd:
-    image: systemapic/sshd
-    volumes_from:
-        - data_store_dev
-    ports:
-        - 2222:2222
+pile: 
+  image: systemapic/pile
+  links: 
+    - wu
+    - mongo
+    - redislayers
+    - redisstats
+    - redistemp
+    - postgis
+  ports:
+    - 3003
+  volumes_from:
+    - data_store_dev_common
+  volumes:
+    - /var/www/pile:/var/www/pile 
+  command: ./pile-server.sh
 
 nginx:
-    image: systemapic/nginx
-    links: 
-        - vile
-        - wu
-    ports:
-        - 443:443
-        - 80:80
+  image: systemapic/nginx
+  links: 
+    - pile
+    - wu
+  ports:
+    - 443:443
+    - 80:80
 
-rkue:
-    image: systemapic/rkue
-    ports:
-        - 6379
+postgis:
+  image: systemapic/postgis
+  ports:
+    - 5432
+  volumes_from:
+    - postgis_store_dev
+  command: ./start.sh
 
-rtoken:
-    image: systemapic/rtoken
-    ports: 
-        - 6379
+redislayers:
+  image: systemapic/redis:layers
+  ports: 
+    - 6379
+  volumes_from:
+    - redis_store_dev
+
+redisstats:
+  image: systemapic/redis:stats
+  ports: 
+    - 6379
+  volumes_from:
+    - redis_stats_store_dev
+
+redistemp:
+  image: systemapic/redis:kue
+  ports: 
+    - 6379
 
 mongo: 
-    image: systemapic/mongo
-    ports:
-        - 27017
-    volumes_from:
-        - mongo_store_dev # data container
-
-sshd:
-    image: systemapic/sshd
-    ports:
-        - 2222:2222
-    volumes_from:
-        - data_store_dev
-
-
-# vile: 
-#     image: systemapic/vile
-#     links: 
-#         - rkue
-#         - rtoken
-#     ports:
-#         - 3003
-#     volumes_from:
-#         - data_store_dev # data container
-#     command: ./vile-server.sh prod
-
-# nginx:
-#     image: systemapic/nginx
-#     links: 
-#         - vile
-#         - wu
-#     ports:
-#         - 443:443
-#         - 80:80
-
-# rkue:
-#     image: systemapic/rkue
-#     ports:
-#         - 6379
-
-# rtoken:
-#     image: systemapic/rtoken
-#     ports: 
-#         - 6379
-
-# mongo: 
-#     image: systemapic/mongo
-#     ports:
-#         - 27017
-#     volumes_from:
-#         - mongo_store_dev # data container
-
-# wu:
-#     image: systemapic/wu
-#     links:
-#         - rkue
-#         - rtoken
-#         - mongo
-#     volumes_from:
-#         - data_store_dev
-#     command: ./server.sh prod
-
-
+  image: systemapic/mongo
+  ports:
+    - 27017
+  volumes_from:
+    - mongo_store_dev 
+    
