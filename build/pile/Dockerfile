@@ -5,7 +5,8 @@
 #
 
 # Ubuntu 14.04 Trusty Tahyr
-FROM systemapic/gis:node1040
+# FROM systemapic/gis:node1040
+FROM systemapic/gis:node-1040
 
 # Copy package.json
 ADD ./pile/package.json /tmp/package.json

@@ -4,10 +4,10 @@
 # This creates an image for the wu.js server
 #
 
-# from ubuntu + gdal + mapnik + node + pigz + hpnssh
-FROM systemapic/gis
+FROM systemapic/gis:node-1040
 
-# Install Gdal globally
+# Install GDAL globally
+RUN npm install node-pre-gyp -g
 RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
 
 # Copy package.json

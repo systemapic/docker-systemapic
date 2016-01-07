@@ -10,7 +10,7 @@
 7. redisstats (image: `systemapic/redis:stats`)  
 8. nginx (image: `systemapic/nginx`)  
 
-They are started using `docker-compose.yml`, in `/dev/`.
+They are started using `docker-compose.yml`, in `/dev/` (ie. by running `./restart.sh`)
 
 ##### Our storage containers are:  
 1. data_store_dev_common  

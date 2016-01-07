@@ -10,18 +10,28 @@ cd mongo
 ./build.sh
 cd ..
 
-cd rkue
+cd redis/kue
+./build.sh
+cd ../..
+
+cd redis/layers
+./build.sh
+cd ../..
+
+cd redis/stats
+./build.sh
+cd ../..
+
+cd postgis
 ./build.sh
 cd ..
 
-cd rtoken
-./build.sh
-cd ..
-
-cd vile
+cd pile
 ./build.sh
 cd ..
 
 cd wu
 ./build.sh
 cd ..
+
+echo 'All built!'
