@@ -37,6 +37,7 @@ RUN echo "wal_buffers = 16MB" >> /etc/postgresql/9.3/main/postgresql.conf
 RUN echo "default_statistics_target = 500" >> /etc/postgresql/9.3/main/postgresql.conf
 
 
+
 EXPOSE 5432
 
 ENV TERM xterm
