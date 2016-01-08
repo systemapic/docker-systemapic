@@ -9,8 +9,9 @@
 6. redislayers (image: `systemapic/redis:layers`)  
 7. redisstats (image: `systemapic/redis:stats`)  
 8. nginx (image: `systemapic/nginx`)  
+9. backup (image: `systemapic/backup:postgis`)  
 
-They are started using `docker-compose.yml`, in `/dev/` (ie. by running `./restart.sh`)
+They are started using `docker-compose.yml`, in `/dev/[domain].com/` (ie. by running `./restart.sh`)
 
 ##### Our storage containers are:  
 1. data_store_dev_common  
@@ -38,6 +39,11 @@ They are started using `docker-compose.yml`, in `/dev/` (ie. by running `./resta
     - contains the objects stored by the webserver (eg. users, projects, file objects, layer objects, etc.)  
     - mounts on `/data/db`  
     - created thus: `docker create -v /data/db --name mongo_store_dev systemapic/ubuntu`  
+6. postgis_backup_store  
+    - used by `backup`  
+    - contains a backup dump of `postgis_store_dev`  
+    - mounts on `/backup/postgis`  
+    - created thus: `docker create -v /backup/postgis --name postgis_backup_store systemapic/ubuntu`  
 
 All storage is contained in storage containers. That means that the main containers can be stopped, destroyed, recreated, without it affecting the data that's stored. This also means that - in theory - the containers can be moved to another server and the contents of the portal stays the same.
 
