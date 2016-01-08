@@ -79,4 +79,12 @@ mongo:
     - 27017
   volumes_from:
     - mongo_store_dev2
-    
+
+backup: 
+  image: systemapic/backup:postgis
+  ports:
+    - 5432
+  links:
+    - postgis
+  volumes_from:
+    - postgis_backup_store
