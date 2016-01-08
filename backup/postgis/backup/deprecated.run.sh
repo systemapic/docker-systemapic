@@ -1,7 +1,7 @@
 #!/bin/bash
 
-STORAGE_CONTAINER=debug_pg_backup_6
-BACKUP_PATH=/data/backup6
+STORAGE_CONTAINER=postgis_backup_store
+BACKUP_PATH=/backup/postgis
 
 docker build -t debug/pg_backup .
 docker create -v /data --name $STORAGE_CONTAINER systemapic/ubuntu

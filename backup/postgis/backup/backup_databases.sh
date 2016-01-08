@@ -3,7 +3,9 @@
 export PGUSER=docker 
 export PGPASSWORD=docker 
 export PGDATABASE=template1
-export PGHOST
+export PGHOST=postgis
+
+echo "Backing up PostGIS..."
 
 if test -z "${PGHOST}"; then
 	echo -n "Enter postgis ip or hostname (no PGHOST env found): "
