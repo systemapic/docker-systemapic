@@ -9,5 +9,7 @@ cd ${BASEOUTDIR}
 
 sh /tmp/backup_databases.sh ${BACKUPNAME}-inprogress || exit 1
 
-rm -rf ${BACKUPNAME} && mv ${BACKUPNAME}-inprogress ${BACKUPNAME}
-ln -fs ${BACKUPNAME} postgis-backup-last
+rm -rf ${BACKUPNAME} &&
+mv ${BACKUPNAME}-inprogress ${BACKUPNAME} &&
+rm postgis-backup-last &&
+ln -s ${BACKUPNAME} postgis-backup-last
