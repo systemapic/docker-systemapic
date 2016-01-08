@@ -8,3 +8,4 @@ docker rm dev2systemapiccom_redisstats_1
 docker rm dev2systemapiccom_redistemp_1
 docker rm dev2systemapiccom_mongo_1
 docker rm dev2systemapiccom_postgis_1
+docker rm dev2systemapiccom_backup_1

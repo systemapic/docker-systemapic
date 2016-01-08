@@ -8,7 +8,7 @@ ADD ./do_backup.sh /tmp/
 RUN touch /tmp/backup.log
 
 # add cron job (once per day at midnight)
-RUN echo '00 00 * * * root bash /tmp/do_backup.sh >> /tmp/backup.log 2>&1' >> /etc/cron.d/backup-cron
+RUN echo '55 * * * * root bash /tmp/do_backup.sh >> /tmp/backup.log 2>&1' >> /etc/cron.d/backup-cron
 
 # run forever
 CMD cron && tail -f /tmp/backup.log
