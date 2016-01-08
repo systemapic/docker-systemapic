@@ -79,10 +79,9 @@ mongo:
 
 backup: 
   image: systemapic/backup:postgis
+  ports:
+    - 5432
   links:
     - postgis
   volumes_from:
     - postgis_backup_store
-  environment:
-    - PGHOST=postgis
-  # command: bash /tmp/backup_databases.sh /backup/postgis # debug
