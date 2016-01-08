@@ -11,7 +11,7 @@ if test -e "${OUTDIR}"; then
   rm -r $OUTDIR
 fi
 
-sh /tmp/backup_databases.sh $OUTDIR
+sh /tmp/backup_databases.sh $OUTDIR || exit 1
 cd ${BASEOUTDIR}
 rm -f postgis-backup-last
 ln -s ${BACKUPNAME} postgis-backup-last
