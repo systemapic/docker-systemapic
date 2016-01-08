@@ -47,8 +47,8 @@ nginx:
     - 80:80
 
 postgis:
-  image: systemapic/postgis
-  # image: systemapic/postgis:all_logs
+  # image: systemapic/postgis
+  image: systemapic/postgis:all_logs
   ports:
     - 5432
   volumes_from:
