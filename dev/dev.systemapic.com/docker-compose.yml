@@ -11,6 +11,7 @@ wu:
     - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
+    - SYSTEMAPIC_DOMAIN=dev.systemapic.com
   volumes_from:
     - data_store_dev_common
   volumes: 
