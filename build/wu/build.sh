@@ -10,9 +10,13 @@ STAMP=$(git show --pretty=format:%ai --abbrev-commit "$REV" | head -n 1);
 touch -d "$STAMP" package.json;
 cd ..
 
+# add systemapic.js to public/ 
+cd wu
+git clone git@github.com:systemapic/systemapic.js.git public
+cd ..
+
 # build
 docker build -t systemapic/wu .
-# docker build -t debug/wu:test5 .
 
 # clean up
 rm wu/ -r
