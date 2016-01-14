@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --build-arg PGVER=9.3 -t systemapic/postgis .
+docker build --build-arg PGVER=9.3 -t systemapic/postgis:93-21 .
