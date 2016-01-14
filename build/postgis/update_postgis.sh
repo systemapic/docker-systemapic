@@ -29,8 +29,7 @@ ret=0
 dbs=0
 for DB in `${PSQL} -c \
   "select datname from pg_catalog.pg_database where datname not in 
-  ('template0', 'template1', 'postgres', 'systemapic')
-AND datname like 'tt%'"`; do
+  ('template0', 'template1', 'postgres', 'systemapic')"`; do
   # TODO: check from which version we come ?
   echo
 	echo "[database ${DB}]"
