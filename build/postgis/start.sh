@@ -1,9 +1,19 @@
 #!/bin/bash
 
-DATADIR="/var/lib/postgresql/9.3/main"
-CONF="/etc/postgresql/9.3/main/postgresql.conf"
-POSTGRES="/usr/lib/postgresql/9.3/bin/postgres"
-INITDB="/usr/lib/postgresql/9.3/bin/initdb"
+test -n "$1" || {
+  echo "Usage: $0 <pg_version>"
+  echo "  pg_version is in Major.Minor format"
+  exit 1
+} >&2
+
+PGVER="$1"
+
+echo "Starting PostgreSQL ${PGVER}"
+
+DATADIR="/var/lib/postgresql/${PGVER}/main"
+CONF="/etc/postgresql/${PGVER}/main/postgresql.conf"
+POSTGRES="/usr/lib/postgresql/${PGVER}/bin/postgres"
+INITDB="/usr/lib/postgresql/${PGVER}/bin/initdb"
 USERNAME="docker"
 PASS="docker"
 DBNAME="systemapic"
