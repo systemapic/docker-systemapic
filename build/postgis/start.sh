@@ -18,6 +18,9 @@ USERNAME="docker"
 PASS="docker"
 DBNAME="systemapic"
 
+# set ownership of datadir
+chown -R postgres $DATADIR
+
 # test if DATADIR is existent
 if [ ! -d $DATADIR ]; then
   echo "Creating Postgres data at $DATADIR"
@@ -27,7 +30,7 @@ fi
 # test if DATADIR has content
 if [ ! "$(ls -A $DATADIR)" ]; then
   echo "Initializing Postgres Database at $DATADIR"
-  chown -R postgres $DATADIR
+  # chown -R postgres $DATADIR
   su postgres sh -c "$INITDB $DATADIR"
   su postgres sh -c "$POSTGRES --single -D $DATADIR -c config_file=$CONF" <<< "CREATE USER $USERNAME WITH SUPERUSER PASSWORD '$PASS';"
 

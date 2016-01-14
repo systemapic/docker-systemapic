@@ -14,6 +14,7 @@ wu:
     - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
+    - SYSTEMAPIC_DOMAIN=dev2.systemapic.com
   volumes_from:
     - data_store_dev2
   volumes: 
@@ -48,13 +49,14 @@ nginx:
 
 postgis:
   # image: systemapic/postgis
-  image: systemapic/postgis:all_logs
+  # image: systemapic/postgis:all_logs
+  image: systemapic/postgis:93-21
   ports:
     - 5432
   volumes_from:
-    #- postgis_store_dev2
+    # - postgis_store_dev2
     - testme_pgdata_store2
-  command: ./start.sh
+  # command: ./start.sh
 
 redislayers:
   image: systemapic/redis:layers
