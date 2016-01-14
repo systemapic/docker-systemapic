@@ -72,5 +72,12 @@ RUN apt-get install -y fish htop
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
+ADD update_postgis.sh /update_postgis.sh
+RUN chmod 0755 /update_postgis.sh
+
 ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}
+
+ENV PGHOST localhost
+ENV PGUSER docker
+ENV PGPASSWORD docker
