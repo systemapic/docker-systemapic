@@ -18,26 +18,29 @@ if test "$TGTVER" != "-"; then
   TOMSG=" to version '${TGTVER}'"
 fi
 
+WAIT=10
+
 ${PSQL} -c '\conninfo'
-echo "Press ENTER to update PostGIS on all cluster databases${TOMSG}"
-read
+echo "Will update PostGIS on all cluster databases${TOMSG} in $WAIT seconds"
+echo "Press ^C to quit now"
+sleep $WAIT
 
 ret=0
 dbs=0
-${PSQL} -c \
+for DB in `${PSQL} -c \
   "select datname from pg_catalog.pg_database where datname not in 
-  ('template0', 'template1', 'postgres', 'systemapic')" |
-while read DB; do
+  ('template0', 'template1', 'postgres', 'systemapic')"`; do
   # TODO: check from which version we come ?
-	echo "Upgrading database ${DB} ..."
-  cat<<EOF | ${PSQL} ${DB}
+  echo
+	echo "[database ${DB}]"
+  cat<<EOF | ${PSQL} --set ON_ERROR_STOP=1 ${DB} 2>&1
   SELECT 'FROM: ' || postgis_full_version();
   --SET STATEMENT_TIMEOUT TO 5000;
-  SELECT '-POSTGIS-';
+  SELECT 'updating postgis';
   ALTER EXTENSION postgis UPDATE${TOCMD};
-  SELECT '-POSTGIS_TOPOLOGY-';
+  SELECT 'updating postgis_topology';
   ALTER EXTENSION postgis_topology UPDATE${TOCMD};
-  SELECT '-POSTGIS_TIGER_GEOCODER-';
+  SELECT 'updating postgis_tiger_geocoder';
   ALTER EXTENSION postgis_tiger_geocoder UPDATE${TOCMD};
   SELECT 'TO: ' || postgis_full_version();
 EOF
