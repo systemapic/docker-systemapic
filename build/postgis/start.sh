@@ -48,12 +48,13 @@ pgsqlpid=$!
 
 if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
   if test "${EXISTING_CLUSTER}" = 'yes'; then
-    echo "Will not restore dumps from ${SYSTEMAPIC_RESTORE_POSTGIS_FROM} in pre-existing DATADIR ${DATADIR}" >&2
+    echo "SYSTEMAPIC_RESTORE_POSTGIS_FROM is set but DATADIR ${DATADIR} is pre-existing" >&2
+    exit 1
   else
     # NOTE:
     #  we count on restore_databases.sh waiting 10 secs before starting
     $0/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
   fi
+else
+  wait $pgsqlpid
 fi
-
-wait $pgsqlpid
