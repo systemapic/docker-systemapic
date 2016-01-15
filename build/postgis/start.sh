@@ -51,8 +51,13 @@ if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
     echo "SYSTEMAPIC_RESTORE_POSTGIS_FROM is set but DATADIR ${DATADIR} is pre-existing" >&2
     exit 1
   else
-    # NOTE:
-    #  we count on restore_databases.sh waiting 10 secs before starting
+    echo "Waiting for postgres start for restoring databases"
+    export PGDATABASE=template1
+    PSQL="psql -X"
+    while :; do
+            sleep 5;
+            ${PSQL} -c "select version();" && break;
+    done
     `dirname $0`/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
   fi
 else
