@@ -17,6 +17,7 @@ INITDB="/usr/lib/postgresql/${PGVER}/bin/initdb"
 USERNAME="docker"
 PASS="docker"
 DBNAME="systemapic"
+EXISTING_CLUSTER=yes
 
 # test if DATADIR is existent
 if [ ! -d $DATADIR ]; then
@@ -29,6 +30,7 @@ chown -R postgres ${DATADIR} || exit 1
 
 # test if DATADIR has content
 if [ ! "$(ls -A $DATADIR)" ]; then
+  EXISTING_CLUSTER=no
   echo "Initializing Postgres Database at $DATADIR"
   # chown -R postgres $DATADIR
   su postgres sh -c "$INITDB $DATADIR" || exit 1
@@ -37,11 +39,21 @@ if [ ! "$(ls -A $DATADIR)" ]; then
 CREATE USER $USERNAME WITH SUPERUSER PASSWORD '$PASS';
 CREATE DATABASE $DBNAME;
 EOF
-  
 fi
 
 trap "echo \"Sending SIGTERM to postgres\"; killall -s SIGTERM postgres" SIGTERM
 
 su postgres sh -c "$POSTGRES -D $DATADIR -c config_file=$CONF" &
+pgsqlpid=$!
 
-wait $!
+if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
+  if test "${EXISTING_CLUSTER}" = 'yes'; then
+    echo "Will not restore dumps from ${SYSTEMAPIC_RESTORE_POSTGIS_FROM} in pre-existing DATADIR ${DATADIR}" >&2
+  else
+    # NOTE:
+    #  we count on restore_databases.sh waiting 10 secs before starting
+    $0/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
+  fi
+fi
+
+wait $pgsqlpid
