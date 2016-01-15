@@ -37,7 +37,7 @@ for dump in ${BACKUPDIR}/db_*.dump; do
 done
 
 echo "Attempted to restore ${dbs} databases"
-if "${fail}" -gt 0; then
+if test "${fail}" -gt 0; then
   echo "WARNING: restore was not clean in ${fail} databases, check the logs!" >&2
 fi
 
