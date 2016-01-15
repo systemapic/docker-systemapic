@@ -32,14 +32,14 @@ for dump in ${BACKUPDIR}/db_*.dump; do
   dbs=$((dbs+1))
 	dbname=`basename $dump .dump | sed 's/^db_//'`
 	echo "[database ${dbname}]"
-	createdb ${dbname} && {
-    pg_restore -d ${dbname} ${dump} || {
-      dropdb ${dbname} 
-      false # to force fail...
-    }
-  } || fail=$((fail+1))
+  # do not restore in an existing db
+	createdb ${dbname} && pg_restore -d ${dbname} ${dump} || fail=$((fail+1))
 done
 
-echo "Attempted to restore ${dbs} databases, ${fail} failed"
+echo "Attempted to restore ${dbs} databases"
+if "${fail}" -gt 0; then
+  echo "WARNING: restore was not clean in ${fail} databases, check the logs!" >&2
+fi
+
 exit $fail
 #psql -l
