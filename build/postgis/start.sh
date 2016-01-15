@@ -20,21 +20,23 @@ DBNAME="systemapic"
 
 # test if DATADIR is existent
 if [ ! -d $DATADIR ]; then
-  echo "Creating Postgres data at $DATADIR"
-  mkdir -p $DATADIR || exit 1
+  echo "Creating PostgreSQL DATADIR at $DATADIR"
+  mkdir -p ${DATADIR} || exit 1
 fi
 
 # set ownership of datadir
-chown -R postgres $DATADIR || exit 1
+chown -R postgres ${DATADIR} || exit 1
 
 # test if DATADIR has content
 if [ ! "$(ls -A $DATADIR)" ]; then
   echo "Initializing Postgres Database at $DATADIR"
   # chown -R postgres $DATADIR
   su postgres sh -c "$INITDB $DATADIR" || exit 1
-  su postgres sh -c "$POSTGRES --single -D $DATADIR -c config_file=$CONF" <<< "CREATE USER $USERNAME WITH SUPERUSER PASSWORD '$PASS';" || exit 1
 
-  su - postgres -c "createdb $DBNAME" || exit 1
+  su postgres sh -c "$POSTGRES --single -D $DATADIR -c config_file=$CONF"<<EOF || exit 1
+CREATE USER $USERNAME WITH SUPERUSER PASSWORD '$PASS';
+CREATE DATABASE $DBNAME;
+EOF
   
 fi
 
