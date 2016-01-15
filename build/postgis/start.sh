@@ -53,7 +53,7 @@ if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
   else
     # NOTE:
     #  we count on restore_databases.sh waiting 10 secs before starting
-    $0/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
+    `dirname $0`/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
   fi
 else
   wait $pgsqlpid
