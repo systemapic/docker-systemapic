@@ -73,7 +73,6 @@ redistemp:
 
 mongo: 
   image: systemapic/mongo
-  # image: mongo
   ports:
     - 27017
   volumes_from:

@@ -34,6 +34,7 @@ RUN cp /tmp/node_modules /var/www/wu/ -r
 # Install extras
 RUN apt-get update
 RUN apt-get install -y sysstat
+RUN npm install mocha -g
 
 # Set terminal env
 ENV TERM xterm
