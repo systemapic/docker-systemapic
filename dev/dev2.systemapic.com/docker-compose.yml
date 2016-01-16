@@ -50,12 +50,15 @@ nginx:
 postgis:
   # image: systemapic/postgis
   # image: systemapic/postgis:all_logs
-  image: systemapic/postgis:93-21
+  #image: systemapic/postgis:93-21
+  image: systemapic/postgis:94-21
   ports:
     - 5432
   volumes_from:
     # - postgis_store_dev2
-    - testme_pgdata_store2
+    #- testme_pgdata_store2
+    #- postgresql93_store_dev2
+    - postgresql94_store_dev2
   # command: ./start.sh
 
 redislayers:
