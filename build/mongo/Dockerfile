@@ -1,6 +1,3 @@
-#MongoDB Image for MeteorHacks
-
-# FROM systemapic/ubuntu
 FROM mongo:latest
 MAINTAINER @kosjoli
 
