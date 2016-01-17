@@ -1,4 +1,4 @@
-# dev.systemapic.com
+# beta.systemapic.com
 wu:
   image: systemapic/wu
   links:
@@ -11,7 +11,7 @@ wu:
     - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
-    - SYSTEMAPIC_DOMAIN=dev.systemapic.com
+    - SYSTEMAPIC_DOMAIN=beta.systemapic.com
   volumes_from:
     - data_store_dev_common
   volumes: 
@@ -71,13 +71,20 @@ redistemp:
   ports: 
     - 6379
 
+redistokens:
+  image: systemapic/redis:tokens
+  ports: 
+    - 6379
+  volumes_from:
+    - store_dev_redis_tokens
+
 mongo: 
   image: systemapic/mongo
   ports:
     - 27017
   volumes_from:
     - mongo_store_dev
-  command: "mongod -f /etc/mongod.conf"
+  # command: "mongod -f /etc/mongod.conf"
   
 
 # backup: 
