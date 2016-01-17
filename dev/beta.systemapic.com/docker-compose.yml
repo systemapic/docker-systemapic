@@ -1,4 +1,4 @@
-# dev.systemapic.com
+# beta.systemapic.com
 wu:
   image: systemapic/wu
   links:
@@ -6,13 +6,12 @@ wu:
     - redislayers
     - redisstats
     - redistemp
-    - redistokens
     - postgis
   ports: 
     - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
-    - SYSTEMAPIC_DOMAIN=dev.systemapic.com
+    - SYSTEMAPIC_DOMAIN=beta.systemapic.com
   volumes_from:
     - data_store_dev_common
   volumes: 
@@ -26,7 +25,6 @@ pile:
     - mongo
     - redislayers
     - redisstats
-    - redistokens
     - redistemp
     - postgis
   ports:
@@ -87,12 +85,13 @@ mongo:
   volumes_from:
     - mongo_store_dev
   # command: "mongod -f /etc/mongod.conf"
+  
 
-backup: 
-  image: systemapic/backup:postgis
-  ports:
-    - 5432
-  links:
-    - postgis
-  volumes_from:
-    - postgis_backup_store
+# backup: 
+#   image: systemapic/backup:postgis
+#   ports:
+#     - 5432
+#   links:
+#     - postgis
+#   volumes_from:
+#     - postgis_backup_store
