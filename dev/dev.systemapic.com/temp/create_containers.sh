@@ -2,13 +2,13 @@
 
 
 PREFIX=store_dev
-SUFFIX=temp4
+SUFFIX=tmp10
 
 
 # postgis backup
 POSTGIS_BACKUP=$PREFIX"_postgis_backup_"$SUFFIX
 echo "Creating PostGIS backup volume $POSTGIS_BACKUP"
-docker create -v /var/lib/postgresql --name $POSTGIS_BACKUP systemapic/ubuntu || exit 1;
+docker create -v /backup/postgis --name $POSTGIS_BACKUP systemapic/ubuntu || exit 1;
 
 # postgis
 POSTGIS=$PREFIX"_postgis_"$SUFFIX
