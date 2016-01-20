@@ -79,7 +79,7 @@ mongo:
     - mongo_store_dev3
 
 # backup: 
-#   image: systemapic/backup:postgis
+#   image: systemapic/postgis:backup
 #   ports:
 #     - 5432
 #   links:
