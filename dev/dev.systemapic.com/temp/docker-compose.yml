@@ -58,7 +58,7 @@ postgis:
     # - store_dev_postgis_backup_restored
     # - store_dev_postgis_temp4
     # - store_dev_postgis_temp5
-    - store_dev_postgis_temp6
+    - store_dev_postgis_temp10
   environment:
     # - PGVER=9.4
     - SYSTEMAPIC_RESTORE_POSTGIS_FROM=pgbk_test2

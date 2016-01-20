@@ -10,7 +10,7 @@ if test -z "$1"; then
 fi
 BACKUPDIR="$1"
 test -e "${BACKUPDIR}" || {
-	echo "Backup dir does not exist, will not proceed" >&2
+	echo "Backup dir ${BACKUPDIR} does not exist, will not proceed" >&2
 	exit 1
 }
 
