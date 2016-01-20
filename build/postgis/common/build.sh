@@ -5,7 +5,7 @@ function build() {
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="systemapic/postgis"
-  TAG="${PGVER_SHORT}-21"
+  TAG="${PGVER_SHORT}-22"
   FULLNAME="${NAME}:${TAG}"
   LATESTNAME="${NAME}:latest"
   echo "Building $PGVER $FULLNAME"

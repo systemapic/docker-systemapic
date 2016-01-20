@@ -24,11 +24,22 @@ RUN update-locale LANG=en_US.UTF-8
 RUN apt-get -y update && apt-get install -y \
   postgresql-contrib-${PGVER} \
   postgresql-${PGVER} \
-  postgresql-${PGVER}-postgis-2.1
-# We do not install recommends because they could bring in
-# non-wanted PostgreSQL versions.
-# See https://github.com/systemapic/docker-systemapic/issues/13
-RUN apt-get -y update && apt-get -y install --no-install-recommends postgis
+  postgresql-server-dev-${PGVER}
+
+RUN apt-get -y update && apt-get install -y \
+	build-essential autoconf \
+	libtool \
+	libgeos-dev \
+	libproj-dev \
+	libjson-c-dev \
+	libgdal-dev \
+	libxml2-dev
+
+RUN wget https://github.com/postgis/postgis/archive/2.2.1.tar.gz && \
+  tar xzf 2.2.1.tar.gz && \
+  cd postgis-2.2.1 && \
+  ./autogen.sh && ./configure && make install && \
+  cd -;
 
 # access configuration
 RUN echo "host    all             all             0.0.0.0/0 md5" >> /etc/postgresql/${PGVER}/main/pg_hba.conf
