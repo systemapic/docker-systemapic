@@ -56,10 +56,12 @@ postgis:
     # - store_postgis_devtemp
     # - store_postgis_devtemp_restored5
     # - store_dev_postgis_backup_restored
-    - store_dev_postgis_temp4
-  # environment:
+    # - store_dev_postgis_temp4
+    # - store_dev_postgis_temp5
+    - store_dev_postgis_temp6
+  environment:
     # - PGVER=9.4
-    # - SYSTEMAPIC_RESTORE_POSTGIS_FROM=store_backup_devtemp
+    - SYSTEMAPIC_RESTORE_POSTGIS_FROM=pgbk_test2
   command: ./start.sh
 
 redislayers:
@@ -99,16 +101,18 @@ mongo:
     # - store_mongo_devtemp_4
     # - store_dev_mongo_temp4
     - tmp_mongo_5
-# backup: 
-#   # image: systemapic/backup:postgis
-#   image: systemapic/postgis:backup
-#   ports:
-#     - 5432
-#   links:
-#     - postgis
-#   volumes_from:
-#     # - store_backup_devtemp
-#     # - store_dev_postgis_backup
-#     - store_dev_postgis_backup_temp4
-#   environment:
-#     - SYSTEMAPIC_PRODMODE=false
+
+backup: 
+  # image: systemapic/backup:postgis
+  image: systemapic/postgis:backup
+  ports:
+    - 5432
+  links:
+    - postgis
+  volumes_from:
+    # - store_backup_devtemp
+    # - store_dev_postgis_backup
+    # - store_dev_postgis_backup_temp4
+    - pgbk_test2
+  environment:
+    - SYSTEMAPIC_PRODMODE=false
