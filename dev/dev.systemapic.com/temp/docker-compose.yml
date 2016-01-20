@@ -47,13 +47,14 @@ nginx:
     - 80:80
 
 postgis:
-  image: systemapic/postgis
+  image: systemapic/postgis:latest
   ports:
     - 5432
   volumes_from:
     # - store_postgis_devtemp
-    - store_postgis_devtemp_restored
+    - store_postgis_devtemp_restored5
   environment:
+    - PGVER=9.4
     - SYSTEMAPIC_RESTORE_POSTGIS_FROM=store_backup_devtemp
   command: ./start.sh
 
