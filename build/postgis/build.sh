@@ -21,6 +21,7 @@ NAME="systemapic/postgis"
 TAG="${PGVER_SHORT}-21"
 FULLNAME="${NAME}:${TAG}"
 LATESTNAME="${NAME}:latest"
+echo "Building $PGVER $FULLNAME"
 docker build --build-arg PGVER=${PGVER} -t ${FULLNAME} . || exit 1
 
 echo "Image ${FULLNAME} built"
