@@ -14,7 +14,8 @@ wu:
     - SYSTEMAPIC_PRODMODE=false
     - SYSTEMAPIC_DOMAIN=dev.systemapic.com
   volumes_from:
-    - store_data_devtemp
+    # - store_data_devtemp
+    - store_dev_data_temp4
   volumes: 
     - /var/www/wu:/var/www/wu
   command: ./server.sh
@@ -32,7 +33,8 @@ pile:
   ports:
     - 3003
   volumes_from:
-    - store_data_devtemp
+    # - store_data_devtemp
+    - store_dev_data_temp4
   volumes:
     - /var/www/pile:/var/www/pile 
   command: ./pile-server.sh
@@ -52,10 +54,12 @@ postgis:
     - 5432
   volumes_from:
     # - store_postgis_devtemp
-    - store_postgis_devtemp_restored5
-  environment:
-    - PGVER=9.4
-    - SYSTEMAPIC_RESTORE_POSTGIS_FROM=store_backup_devtemp
+    # - store_postgis_devtemp_restored5
+    # - store_dev_postgis_backup_restored
+    - store_dev_postgis_temp4
+  # environment:
+    # - PGVER=9.4
+    # - SYSTEMAPIC_RESTORE_POSTGIS_FROM=store_backup_devtemp
   command: ./start.sh
 
 redislayers:
@@ -63,14 +67,16 @@ redislayers:
   ports: 
     - 6379
   volumes_from:
-    - store_redis_devtemp
+    # - store_redis_devtemp
+    - store_dev_redis_layers_temp4
 
 redisstats:
   image: systemapic/redis:stats
   ports: 
     - 6379
   volumes_from:
-    - store_redis_stats_devtemp
+    # - store_redis_stats_devtemp
+    - store_dev_redis_stats_temp4
 
 redistemp:
   image: systemapic/redis:kue
@@ -82,22 +88,27 @@ redistokens:
   ports: 
     - 6379
   volumes_from:
-    - store_redis_tokens_devtemp
+    # - store_redis_tokens_devtemp
+    - store_dev_redis_tokens_temp4
 
 mongo: 
   image: systemapic/mongo:latest
   ports:
     - 27017
   volumes_from:
-    - store_mongo_devtemp_5
-
-backup: 
-  image: systemapic/backup:postgis
-  ports:
-    - 5432
-  links:
-    - postgis
-  volumes_from:
-    - store_backup_devtemp
-  environment:
-    - SYSTEMAPIC_PRODMODE=false
+    # - store_mongo_devtemp_4
+    # - store_dev_mongo_temp4
+    - tmp_mongo_5
+# backup: 
+#   # image: systemapic/backup:postgis
+#   image: systemapic/postgis:backup
+#   ports:
+#     - 5432
+#   links:
+#     - postgis
+#   volumes_from:
+#     # - store_backup_devtemp
+#     # - store_dev_postgis_backup
+#     - store_dev_postgis_backup_temp4
+#   environment:
+#     - SYSTEMAPIC_PRODMODE=false
