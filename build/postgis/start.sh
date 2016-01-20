@@ -58,6 +58,7 @@ if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
             sleep 5;
             ${PSQL} -c "select version();" && break;
     done
+    echo "Attempting restore from ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"
     `dirname $0`/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
   fi
 else
