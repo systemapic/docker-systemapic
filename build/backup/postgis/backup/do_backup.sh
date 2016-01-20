@@ -13,5 +13,5 @@ sh /tmp/backup_databases.sh ${BACKUPNAME}-inprogress || exit 1
 
 rm -rf ${BACKUPNAME} &&
 mv ${BACKUPNAME}-inprogress ${BACKUPNAME} &&
-rm postgis-backup-last &&
+rm -f postgis-backup-last &&
 ln -s ${BACKUPNAME} postgis-backup-last
