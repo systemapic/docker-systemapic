@@ -1,31 +1,38 @@
 #!/bin/bash
 
-PASS=bigsecret
-USER=systemapic
-
 # need to setup admin for secure access
-
+# 0. check if inited
 # 1. start mongodb without auth
 # 2. add admin/user with pass
 # 3. restart mongo with auth config
 
+init_mongo () {
+	echo "Running MongDB start script!";
 
-mongod -f /etc/mongod.conf &
+	# start without AUTH
+	mongod -f /etc/mongod.conf &
+	LAST_PID=$!
 
-mongo --eval "use admin"
-mongo --eval "db.system.users.remove({})"
-mongo --eval "db.system.version.remove({})"
-mongo --eval "db.system.version.insert({ '_id' : 'authSchema', 'currentVersion' : 3 })"
+	# wait for up
+	sleep 3
 
-mongo --eval "use systemapic"
-mongo --eval "db.createUser({user : 'systemapic', pwd: 'pwd', roles : [{role : 'root', db: 'admin'}, {role : 'dbOwner', db: 'systemapic'}]})"
+	# run script
+	mongo /etc/first_run.js
 
-kill $1
+	# mark inited
+	touch /data/db/systemapic.inited
 
-mongod -f /etc/mongod.conf --auth &
+	# kill mongo
+	kill $LAST_PID;
 
-mongo --eval "db.runCommand({connectionStatus : 1})"
+	# wait for down
+	sleep 3
+}
 
-kill $1
+# if script has been updated, or never inited, run init_mongo
+if [[ /etc/first_run.js -nt /data/db/systemapic.inited ]]; then
+	init_mongo
+fi
 
-echo done
+echo "Restarting with AUTH";
+mongod -f /etc/mongod.conf --auth
