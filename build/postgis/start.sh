@@ -1,13 +1,13 @@
 #!/bin/bash
 
-test -n "$1" || {
-  echo "Usage: $0 <pg_version>"
-  echo "  pg_version is in Major.Minor format"
-  exit 1
-} >&2
+# test -n "$1" || {
+#   echo "Usage: $0 <pg_version>"
+#   echo "  pg_version is in Major.Minor format"
+#   exit 1
+# } >&2
 
 PGVER="$1"
-
+PGVER=9.4
 echo "Starting PostgreSQL ${PGVER}"
 
 DATADIR="/var/lib/postgresql/${PGVER}/main"
@@ -58,6 +58,7 @@ if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
             sleep 5;
             ${PSQL} -c "select version();" && break;
     done
+    echo "Attempting restore from ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"
     `dirname $0`/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
   fi
 else
