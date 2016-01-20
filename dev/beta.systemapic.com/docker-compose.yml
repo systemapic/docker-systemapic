@@ -88,7 +88,7 @@ mongo:
   
 
 # backup: 
-#   image: systemapic/backup:postgis
+#   image: systemapic/postgis:backup
 #   ports:
 #     - 5432
 #   links:
