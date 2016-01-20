@@ -5,8 +5,6 @@ export PGPASSWORD=docker
 export PGDATABASE=template1
 export PGHOST=postgis
 
-echo "Backing up PostGIS..."
-
 if test -z "${PGHOST}"; then
 	echo -n "Enter postgis ip or hostname (no PGHOST env found): "
 	read PGHOST
@@ -22,6 +20,9 @@ if test -e "${OUTDIR}"; then
 	echo "Output dir already exist, will not proceed" >&2
 	exit 1
 fi
+
+echo "Backing up PostGIS to ${OUTDIR}..."
+
 
 mkdir -p "${OUTDIR}" || exit 1
 
