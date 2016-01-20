@@ -81,12 +81,11 @@ redistokens:
     - store_dev_redis_tokens
 
 mongo: 
-  image: systemapic/mongo
+  image: systemapic/mongo:latest
   ports:
     - 27017
   volumes_from:
     - mongo_store_dev
-  # command: "mongod -f /etc/mongod.conf"
 
 backup: 
   image: systemapic/backup:postgis
