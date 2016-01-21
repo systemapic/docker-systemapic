@@ -14,10 +14,12 @@ BINDIR="/usr/lib/postgresql/${PGVER}/bin/"
 POSTGRES="${BINDIR}/postgres"
 INITDB="${BINDIR}/initdb"
 
-# TODO: take these as environment variable ?
-USERNAME="docker"
-PASS="docker"
-DBNAME="systemapic"
+source /systemapic/config/env || exit 1
+
+USERNAME="${SYSTEMAPIC_PGSQL_USERNAME}"
+PASS="${SYSTEMAPIC_PGSQL_PASSWORD}"
+DBNAME="${SYSTEMAPIC_PGSQL_DBNAME}"
+
 
 EXISTING_CLUSTER=yes
 
