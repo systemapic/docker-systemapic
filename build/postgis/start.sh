@@ -88,19 +88,6 @@ BEGIN
     ALTER USER "${USERNAME}" SUPERUSER PASSWORD '${PASS}';
   END IF;
 
-  -- Ensure user owns all databases
-  FOR rec IN
-    SELECT d.datname, u.usename
-    FROM pg_catalog.pg_user u, pg_database d
-    WHERE u.usesysid = d.datdba
-      AND u.usename != '${USERNAME}'
-      AND d.datname NOT IN ( 'template1','template0','postgres' )
-  LOOP
-    RAISE WARNING 'Changing ownership of database % from "%" to "${USERNAME}"', rec.datname, rec.usename;
-    EXECUTE 'ALTER DATABASE ' || quote_ident(rec.datname)
-      || ' OWNER TO "${USERNAME}"';
-  END LOOP;
-
 END;
 \$\$
 LANGUAGE 'plpgsql';
