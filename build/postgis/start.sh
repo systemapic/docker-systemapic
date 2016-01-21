@@ -7,7 +7,6 @@
 # } >&2
 
 PGVER="$1"
-PGVER=9.4
 echo "Starting PostgreSQL ${PGVER}"
 
 DATADIR="/var/lib/postgresql/${PGVER}/main"
