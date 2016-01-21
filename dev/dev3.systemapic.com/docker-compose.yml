@@ -7,8 +7,6 @@ wu:
     - redisstats
     - redistemp
     - postgis
-  ports: 
-    - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
     - SYSTEMAPIC_DOMAIN=dev3.systemapic.com
@@ -27,8 +25,6 @@ pile:
     - redisstats
     - redistemp
     - postgis
-  ports:
-    - 3003
   volumes_from:
     - data_store_dev3
   volumes:
@@ -46,35 +42,25 @@ nginx:
 
 postgis:
   image: systemapic/postgis:latest
-  ports:
-    - 5432
   volumes_from:
     - postgis_store_dev5
   command: ./start.sh
 
 redislayers:
   image: systemapic/redis:layers
-  ports: 
-    - 6379
   volumes_from:
     - redis_store_dev3
 
 redisstats:
   image: systemapic/redis:stats
-  ports: 
-    - 6379
   volumes_from:
     - redis_stats_store_dev3
 
 redistemp:
   image: systemapic/redis:kue
-  ports: 
-    - 6379
 
 mongo: 
   image: systemapic/mongo
-  ports:
-    - 27017
   volumes_from:
     - mongo_store_dev3
 

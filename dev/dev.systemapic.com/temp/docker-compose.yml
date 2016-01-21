@@ -8,8 +8,6 @@ wu:
     - redistemp
     - redistokens
     - postgis
-  ports: 
-    - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
     - SYSTEMAPIC_DOMAIN=dev.systemapic.com
@@ -30,8 +28,6 @@ pile:
     - redistokens
     - redistemp
     - postgis
-  ports:
-    - 3003
   volumes_from:
     # - store_data_devtemp
     - store_dev_data_temp4
@@ -50,8 +46,6 @@ nginx:
 
 postgis:
   image: systemapic/postgis:latest
-  ports:
-    - 5432
   volumes_from:
     # - store_postgis_devtemp
     # - store_postgis_devtemp_restored5
@@ -66,53 +60,41 @@ postgis:
 
 redislayers:
   image: systemapic/redis:layers
-  ports: 
-    - 6379
   volumes_from:
     # - store_redis_devtemp
     - store_dev_redis_layers_temp4
 
 redisstats:
   image: systemapic/redis:stats
-  ports: 
-    - 6379
   volumes_from:
     # - store_redis_stats_devtemp
     - store_dev_redis_stats_temp4
 
 redistemp:
   image: systemapic/redis:kue
-  ports: 
-    - 6379
 
 redistokens:
   image: systemapic/redis:tokens
-  ports: 
-    - 6379
   volumes_from:
     # - store_redis_tokens_devtemp
     - store_dev_redis_tokens_temp4
 
 mongo: 
   image: systemapic/mongo:latest
-  ports:
-    - 27017
   volumes_from:
     # - store_mongo_devtemp_4
     # - store_dev_mongo_temp4
     - tmp_mongo_5
 
-backup: 
-  # image: systemapic/backup:postgis
-  image: systemapic/postgis:backup
-  ports:
-    - 5432
-  links:
-    - postgis
-  volumes_from:
-    # - store_backup_devtemp
-    # - store_dev_postgis_backup
-    # - store_dev_postgis_backup_temp4
-    - pgbk_test2
-  environment:
-    - SYSTEMAPIC_PRODMODE=false
+# backup: 
+#   # image: systemapic/backup:postgis
+#   image: systemapic/postgis:backup
+#   links:
+#     - postgis
+#   volumes_from:
+#     # - store_backup_devtemp
+#     # - store_dev_postgis_backup
+#     # - store_dev_postgis_backup_temp4
+#     - pgbk_test2
+#   environment:
+#     - SYSTEMAPIC_PRODMODE=false
