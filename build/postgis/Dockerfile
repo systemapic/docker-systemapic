@@ -73,8 +73,8 @@ RUN chmod 0755 /update_postgis.sh
 ADD restore_databases.sh /restore_databases.sh
 RUN chmod 0755 /restore_databases.sh
 
-ADD default_env.txt /systemapic/config/env
-RUN chmod 0600 /systemapic/config/env
+ADD default_env.txt /systemapic/configs/env
+RUN chmod 0600 /systemapic/configs/env
 
 ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}
