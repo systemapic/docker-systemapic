@@ -8,8 +8,6 @@ wu:
     - redistemp
     - redistokens
     - postgis
-  ports: 
-    - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
     - SYSTEMAPIC_DOMAIN=dev.systemapic.com
@@ -29,8 +27,6 @@ pile:
     - redistokens
     - redistemp
     - postgis
-  ports:
-    - 3003
   volumes_from:
     - data_store_dev_common
   volumes:
@@ -48,52 +44,38 @@ nginx:
 
 postgis:
   image: systemapic/postgis
-  ports:
-    - 5432
   volumes_from:
     - postgis_store_dev
   command: ./start.sh
 
 redislayers:
   image: systemapic/redis:layers
-  ports: 
-    - 6379
   volumes_from:
     - redis_store_dev
 
 redisstats:
   image: systemapic/redis:stats
-  ports: 
-    - 6379
   volumes_from:
     - redis_stats_store_dev
 
 redistemp:
   image: systemapic/redis:kue
-  ports: 
-    - 6379
 
 redistokens:
   image: systemapic/redis:tokens
-  ports: 
-    - 6379
   volumes_from:
     - store_dev_redis_tokens
 
 mongo: 
   image: systemapic/mongo:latest
-  ports:
-    - 27017
   volumes_from:
     - mongo_store_dev
 
-backup: 
-  image: systemapic/backup:postgis
-  ports:
-    - 5432
-  links:
-    - postgis
-  volumes_from:
-    - postgis_backup_store
-  environment:
-    - SYSTEMAPIC_PRODMODE=false
+# backup: 
+#   image: systemapic/backup:postgis
+#   links:
+#     - postgis
+#   volumes_from:
+#     - postgis_backup_store
+#   environment:
+#     - SYSTEMAPIC_PRODMODE=false
