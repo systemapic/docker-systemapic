@@ -28,7 +28,7 @@ cd ..
 
 cd backup/postgis/backup
 ./build.sh
-cd ..
+cd -
 
 cd pile
 ./build.sh

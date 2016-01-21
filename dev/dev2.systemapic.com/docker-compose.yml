@@ -10,8 +10,10 @@ wu:
     - redisstats
     - redistemp
     - postgis
-  ports: 
-    - 3001
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports: 
+#    - 3001
   environment:
     - SYSTEMAPIC_PRODMODE=false
     - SYSTEMAPIC_DOMAIN=dev2.systemapic.com
@@ -30,8 +32,10 @@ pile:
     - redisstats
     - redistemp
     - postgis
-  ports:
-    - 3003
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports:
+#    - 3003
   volumes_from:
     - data_store_dev2  
   volumes:
@@ -52,8 +56,10 @@ postgis:
   # image: systemapic/postgis:all_logs
   #image: systemapic/postgis:93-21
   image: systemapic/postgis:94-21
-  ports:
-    - 5432
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports:
+#    - 5432
   volumes_from:
     # - postgis_store_dev2
     #- testme_pgdata_store2
@@ -63,34 +69,44 @@ postgis:
 
 redislayers:
   image: systemapic/redis:layers
-  ports: 
-    - 6379
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports: 
+#    - 6379
   volumes_from:
     - redis_store_dev2
 
 redisstats:
   image: systemapic/redis:stats
-  ports: 
-    - 6379
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports: 
+#    - 6379
   volumes_from:
     - redis_stats_store_dev2
 
 redistemp:
   image: systemapic/redis:kue
-  ports: 
-    - 6379
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports: 
+#    - 6379
 
 mongo: 
   image: systemapic/mongo
-  ports:
-    - 27017
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports:
+#    - 27017
   volumes_from:
     - mongo_store_dev2
 
 backup: 
   image: systemapic/postgis:backup
-  ports:
-    - 5432
+# Specifying "ports" here maps them to the outside world,
+# See https://github.com/systemapic/docker-systemapic/issues/18
+#  ports:
+#    - 5432
   links:
     - postgis
   volumes_from:
