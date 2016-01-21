@@ -59,9 +59,9 @@ postgis:
     # - store_dev_postgis_temp4
     # - store_dev_postgis_temp5
     - store_dev_postgis_temp10
-  environment:
+  # environment:
     # - PGVER=9.4
-    - SYSTEMAPIC_RESTORE_POSTGIS_FROM=pgbk_test2
+    # - SYSTEMAPIC_RESTORE_POSTGIS_FROM=pgbk_test2
   command: ./start.sh
 
 redislayers:
