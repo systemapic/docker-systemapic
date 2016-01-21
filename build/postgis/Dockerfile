@@ -43,13 +43,6 @@ RUN ( \
   echo "log_min_error_statement = ERROR"; \
 ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
 
-# docker user creation
-# TODO: use createuser shell command ?
-RUN service postgresql start && \
-    /bin/su postgres -c "createuser -d -s -r -l docker" && \
-    /bin/su postgres -c "psql postgres -c \"ALTER USER docker WITH ENCRYPTED PASSWORD 'docker'\"" && \
-    service postgresql stop
-
 # pgtune
 RUN ( \
   echo "max_connections = 100"; \
@@ -63,6 +56,8 @@ RUN ( \
   echo "default_statistics_target = 500"; \
 ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
 
+# TODO: stop relying on service start/stop to fix /var/run/postgresql
+RUN service postgresql start && service postgresql stop
 
 EXPOSE 5432
 
@@ -82,5 +77,5 @@ ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}
 
 ENV PGHOST localhost
-ENV PGUSER docker
-ENV PGPASSWORD docker
+ENV PGUSER postgres
+ENV PGDATABASE template1
