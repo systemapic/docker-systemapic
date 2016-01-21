@@ -28,6 +28,10 @@ sleep $WAIT
 
 fail=0
 dbs=0
+if test -f ${BACKUPDIR}/_globals.dump; then
+  echo "[globals]"
+  psql -f ${BACKUPDIR}/_globals.dump template1
+fi
 for dump in ${BACKUPDIR}/db_*.dump; do
   dbs=$((dbs+1))
 	dbname=`basename $dump .dump | sed 's/^db_//'`

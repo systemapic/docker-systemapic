@@ -79,6 +79,5 @@ RUN chmod 0600 /systemapic/configs/env
 ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}
 
-ENV PGHOST localhost
 ENV PGUSER postgres
 ENV PGDATABASE template1

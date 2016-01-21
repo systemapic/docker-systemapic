@@ -47,7 +47,6 @@ pgsqlpid=$!
 
 export PGDATABASE=template1
 export PGUSER=postgres
-export PGHOST=localhost
 
 echo "Waiting for postgres start for restoring databases"
 PSQL="psql -X"
@@ -62,7 +61,7 @@ if test -n "${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"; then
     exit 1
   else
     echo "Attempting restore from ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}"
-    `dirname $0`/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
+    sudo -u postgres `dirname $0`/restore_databases.sh ${SYSTEMAPIC_RESTORE_POSTGIS_FROM}
   fi
   exit 0
 fi
