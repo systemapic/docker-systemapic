@@ -103,6 +103,24 @@ if test "$exists" != "yes"; then
   sudo -u postgres createdb -O "${USERNAME}" "${DBNAME}"
 fi
 
+# Ensure DBNAME is loaded with needed extensions
+# NOTE: would fail if the database does not allow
+#       connections, should this be handled somehow ?
+cat<<EOF | sudo -u postgres ${PSQL} -tA "${DBNAME}"
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS postgis_topology;
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder;
+EOF
+
+# Ensure DBNAME is marked as a template
+cat<<EOF | sudo -u postgres ${PSQL} -tA template1
+UPDATE pg_catalog.pg_database
+   SET datistemplate = true,
+       datallowconn = false
+ WHERE datname='${DBNAME}';
+EOF
+
 # TODO: drop unkonwn users ?
 
 wait $pgsqlpid
