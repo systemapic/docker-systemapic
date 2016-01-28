@@ -1,10 +1,12 @@
 #!/bin/bash
 
-test -n "$1" || {
-  echo "Usage: $0 <docker-compose.yml>" >&2
+DC=docker-compose.yml
+test -n "$1" && DC="$1"
+
+test -f "${DC}" || {
+  echo "$DC not found try passing its path as argument" >&2
   exit 1
 }
-DC="$1"
 
 dcreate() {
   name=$1
