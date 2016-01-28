@@ -13,14 +13,18 @@ if test -z "$SYSTEMAPIC_DOMAIN"; then
 fi
 
 SKIP=
+ONLY=
 
 while getopts "v:" opt; do
   case $opt in
-    v) SKIP=$OPTARG; echo "SKIP:$SKIP"; shift;;
-    *) echo got $opt;;
+    v) SKIP=$OPTARG; echo "SKIP:$SKIP";;
   esac
 done
-shift $OPTIND
+shift $((OPTIND-1))
+if test -n "$1"; then
+  echo "ONLY:$ONLY"
+  ONLY=$1
+fi
 
 echo "--------------------------------------------------------------"
 echo "Building all dockers for target domain ${SYSTEMAPIC_DOMAIN}"
@@ -28,8 +32,17 @@ echo "--------------------------------------------------------------"
 
 cd ../build
 for dir in $DIRS; do
+  if test -n "$ONLY"; then
+     #echo "Checking against $ONLY"
+     if echo $dir | grep -q -- "$ONLY"; then
+      :
+     else
+      echo "Skipping $dir (does not match pattern)"
+      continue
+     fi
+  fi
   if test -n "$SKIP" && echo $dir | grep -q -- "$SKIP"; then
-    echo "Skipping $dir"
+    echo "Skipping $dir (in skip list)"
     continue
   fi
   echo "Building $dir from $PWD"
