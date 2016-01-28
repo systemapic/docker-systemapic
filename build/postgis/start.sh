@@ -51,7 +51,7 @@ export PGUSER=postgres
 echo "Waiting for postgres start for restoring databases"
 PSQL="psql -X"
 while :; do
-        sleep 5;
+        sleep 10;
         sudo -u postgres ${PSQL} -c "select version();" && break;
 done
 
