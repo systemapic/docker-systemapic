@@ -28,12 +28,15 @@ echo "--------------------------------------------------------------"
 
 cd ../build
 for dir in $DIRS; do
-  if echo $dir | grep -q -- "$SKIP"; then
+  if test -n "$SKIP" && echo $dir | grep -q -- "$SKIP"; then
     echo "Skipping $dir"
     continue
   fi
   echo "Building $dir from $PWD"
-  cd $dir && ./build.sh && cd - || exit 1
+  cd $dir && ./build.sh && cd - || {
+    echo "Build failed in $dir";
+    exit 1;
+  }
 done
 
 echo 'All built!'
