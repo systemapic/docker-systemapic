@@ -53,9 +53,17 @@ ADD ./install-mapnik-dependencies.sh /tmp/
 RUN sh /tmp/install-mapnik-dependencies.sh
 
 RUN apt-get install -y git 
+
+# Download Mapnik
+ADD ./download-mapnik.sh /tmp/
+RUN sh /tmp/download-mapnik.sh /tmp/mapnik
+
 # Install Mapnik
 ADD ./install-mapnik.sh /tmp/
-RUN sh /tmp/install-mapnik.sh
+RUN sh /tmp/install-mapnik.sh /tmp/mapnik
+
+# Remove mapnik sources
+RUN rm -rf /tmp/mapnik
 
 # Install PhantomJS
 ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
