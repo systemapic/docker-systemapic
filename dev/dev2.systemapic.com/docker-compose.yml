@@ -61,10 +61,10 @@ postgis:
 #  ports:
 #    - 5432
   volumes_from:
+    - postgresql94_store_dev2
     # - postgis_store_dev2
     #- testme_pgdata_store2
     #- postgresql93_store_dev2
-    - postgresql94_store_dev2
   # command: ./start.sh
 
 redislayers:
