@@ -1,16 +1,33 @@
-##
-# knutole/dev-nginx-server
-#
-# This creates the dev.systemapic.com front-end ngnix server, for vile.js and systemapic.js
-# 
-
-# Ubuntu 14.04 Trusty Tahyr, custom build of nginx
-FROM knutole/nginx
+# Ubuntu 14.04 Trusty Tahyr
+FROM ubuntu:trusty
 
 MAINTAINER Knut Ole Sjøli <knutole@systemapic.com>
 
-# add extras
-RUN apt-get update && apt-get install -y nmap fish htop nmon bmon
+# Ensure the package repository is up to date
+# RUN apt-get update -y
+
+# Install basic dependencies
+RUN apt-get update -y && apt-get install -y \
+    software-properties-common \
+    python-software-properties \
+    build-essential \
+    wget \
+    subversion \
+    unzip \
+    htop \
+    fish \
+    tar \
+    libgcrypt11-dev \
+    zlib1g-dev \
+    nmap \
+    fish \
+    htop \
+    nmon \
+    bmon
+
+# Install NginX
+ADD ./install-nginx.sh /tmp/
+RUN sh /tmp/install-nginx.sh
 
 # Copy latest config files
 ADD ./nginx.conf /etc/nginx/
