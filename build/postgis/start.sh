@@ -95,23 +95,27 @@ EOF
 
 # Ensure DBNAME exists or create one
 # (cannot be done in the DO block above)
-exists=`sudo -u postgres ${PSQL} -tA -c "\
-SELECT 'yes' FROM pg_catalog.pg_database WHERE datname = '${DBNAME}' \
+allows=`sudo -u postgres ${PSQL} -tA -c "\
+SELECT datallowconn FROM pg_catalog.pg_database WHERE datname = '${DBNAME}' \
 " template1`
-if test "$exists" != "yes"; then
+if test x"$allows" = "x"; then
   echo "WARNING: Creating missing \"${DBNAME}\" database";
   sudo -u postgres createdb -O "${USERNAME}" "${DBNAME}"
 fi
 
-# Ensure DBNAME is loaded with needed extensions
-# NOTE: would fail if the database does not allow
-#       connections, should this be handled somehow ?
+# Ensure DBNAME is loaded with needed extensions,
+# NOTE: if connections are not allowed, we take it as a sign
+#       of completed templating work.
+if test x"$allows" = "xt"; then
 cat<<EOF | sudo -u postgres ${PSQL} -tA "${DBNAME}"
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
 CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
 CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder;
 EOF
+else
+  echo "NOTE: assuming '${DBNAME}' setup is good, not accepting connections"
+fi
 
 # Ensure DBNAME is marked as a template
 cat<<EOF | sudo -u postgres ${PSQL} -tA template1
