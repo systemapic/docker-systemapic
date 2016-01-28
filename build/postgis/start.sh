@@ -107,6 +107,7 @@ fi
 # NOTE: if connections are not allowed, we take it as a sign
 #       of completed templating work.
 if test x"$allows" = "xt"; then
+echo "NOTICE: Spatially enabling \"${DBNAME}\" database";
 cat<<EOF | sudo -u postgres ${PSQL} -tA "${DBNAME}"
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
@@ -114,10 +115,11 @@ CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
 CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder;
 EOF
 else
-  echo "NOTE: assuming '${DBNAME}' setup is good, not accepting connections"
+  echo "NOTICE: Assuming '${DBNAME}' is already spatially enabled"
 fi
 
 # Ensure DBNAME is marked as a template
+echo "NOTICE: Ensuring '${DBNAME}' is an unconnectable template"
 cat<<EOF | sudo -u postgres ${PSQL} -tA template1
 UPDATE pg_catalog.pg_database
    SET datistemplate = true,
