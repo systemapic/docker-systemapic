@@ -10,7 +10,7 @@ if test -n "$SYSTEMAPIC_SRC_JS"; then
   JS_REFERENCE="--reference $SYSTEMAPIC_SRC_JS"
 fi
 
-trap "echo 'Cleaning up wu'; rm -rf `dirname $0`/pile" 0
+trap "echo 'Cleaning up wu'; rm -rf `dirname $0`/wu" 0
 
 # clone
 git clone $WU_REFERENCE git@github.com:systemapic/wu.git wu
