@@ -15,11 +15,11 @@ cp config/$SYSTEMAPIC_DOMAIN.nginx.conf nginx.conf || abort "Build failed! $SYST
 
 # create crypto
 echo 'Creating Strong Diffie-Hellmann Group'
-openssl dhparam -out dhparams.pem 2048
+openssl dhparam -out dhparams.pem 2048 || exit 1
 
 # build
 echo 'Building image'
-docker build -t systemapic/nginx .
+docker build -t systemapic/nginx . || exit 1
 
 # clean up
 rm nginx.conf
