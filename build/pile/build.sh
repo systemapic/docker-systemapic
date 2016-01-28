@@ -1,7 +1,19 @@
 #!/bin/bash
 
+REFERENCE=
+if test "$1" = "--reference"; then
+  shift
+  if test -n "$1"; then
+    REFERENCE="--reference $1"
+  else
+    echo "--reference needs a parameter"
+  fi
+fi
+
+trap "echo 'Cleaning up pile'; rm -rf `dirname $0`/pile" 0
+
 # clone
-git clone git@github.com:systemapic/pile.git
+git clone --depth 1 $REFERENCE git@github.com:systemapic/pile.git
 
 # stamp package.json with original time
 cd pile
@@ -14,5 +26,3 @@ cd ..
 docker build -t systemapic/pile .
 # docker build -t debug/pile:node1040 .
 
-# clean up
-rm pile/ -r
