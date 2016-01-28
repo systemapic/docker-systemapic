@@ -4,7 +4,8 @@ DIRS="deps/ubuntu deps/gis nginx mongo redis/kue redis/layers redis/stats postgi
 
 if test -z "$SYSTEMAPIC_DOMAIN"; then
   DEFAULT_SYSTEMAPIC_DOMAIN=dev.systemapic.com
-  echo -n "Enter target domain [${DEFAULT_SYSTEMAPIC_DOMAIN}]: "
+  echo "No SYSTEMAPIC_DOMAIN env variable set,"
+  echo -n "enter target domain here [${DEFAULT_SYSTEMAPIC_DOMAIN}]: "
   read SYSTEMAPIC_DOMAIN
   if test -z "$SYSTEMAPIC_DOMAIN"; then
     SYSTEMAPIC_DOMAIN=${DEFAULT_SYSTEMAPIC_DOMAIN}
