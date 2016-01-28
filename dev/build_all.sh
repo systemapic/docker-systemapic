@@ -12,12 +12,26 @@ if test -z "$SYSTEMAPIC_DOMAIN"; then
   export SYSTEMAPIC_DOMAIN
 fi
 
+SKIP=
+
+while getopts "v:" opt; do
+  case $opt in
+    v) SKIP=$OPTARG; echo "SKIP:$SKIP"; shift;;
+    *) echo got $opt;;
+  esac
+done
+shift $OPTIND
+
 echo "--------------------------------------------------------------"
 echo "Building all dockers for target domain ${SYSTEMAPIC_DOMAIN}"
 echo "--------------------------------------------------------------"
 
 cd ../build
 for dir in $DIRS; do
+  if echo $dir | grep -q -- "$SKIP"; then
+    echo "Skipping $dir"
+    continue
+  fi
   echo "Building $dir from $PWD"
   cd $dir && ./build.sh && cd - || exit 1
 done
