@@ -19,7 +19,7 @@ openssl dhparam -out dhparams.pem 2048
 
 # build
 echo 'Building image'
-docker build -t systemapic/nginx .
+docker build -t systemapic/nginx:latest .
 
 # clean up
 rm nginx.conf
