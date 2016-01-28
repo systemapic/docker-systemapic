@@ -1,6 +1,9 @@
 #!/bin/bash
 
 REFERENCE=
+if test -n "$SYSTEMAPIC_SRC_PILE"; then
+  REFERENCE="--reference $SYSTEMAPIC_SRC_PILE"
+fi
 if test "$1" = "--reference"; then
   shift
   if test -n "$1"; then
