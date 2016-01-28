@@ -7,7 +7,11 @@ There are different servers, so go in respective folder to `./restart.sh` and se
 `docker-compose.yml` decides what's being run, which containers are connected to each other, etc.  
 
 - To start server and all containers: `./restart.sh`
-- To build all containers: `./build_all.sh`
+
+All docker images will need to be available.
+
+- To build all service images: `./build_all.sh`
+- TODO: specify how to build store containers
 
 ---
 #### References:
