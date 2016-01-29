@@ -1,6 +1,6 @@
 # dev.systemapic.com
 wu:
-  image: systemapic/wu
+  image: systemapic/wu:latest
   links:
     - mongo
     - redislayers
@@ -18,7 +18,7 @@ wu:
   command: ./server.sh
 
 pile: 
-  image: systemapic/pile
+  image: systemapic/pile:latest
   links: 
     - wu
     - mongo
@@ -34,7 +34,7 @@ pile:
   command: ./pile-server.sh
 
 nginx:
-  image: systemapic/nginx
+  image: systemapic/nginx:latest
   links: 
     - pile
     - wu
@@ -43,7 +43,7 @@ nginx:
     - 80:80
 
 postgis:
-  image: systemapic/postgis
+  image: systemapic/postgis:latest
   volumes_from:
     - postgis_store_dev
   command: ./start.sh
@@ -70,12 +70,3 @@ mongo:
   image: systemapic/mongo:latest
   volumes_from:
     - mongo_store_dev
-
-# backup: 
-#   image: systemapic/backup:postgis
-#   links:
-#     - postgis
-#   volumes_from:
-#     - postgis_backup_store
-#   environment:
-#     - SYSTEMAPIC_PRODMODE=false
