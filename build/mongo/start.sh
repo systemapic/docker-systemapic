@@ -6,11 +6,13 @@
 # 2. add admin/user with pass
 # 3. restart mongo with auth config
 
+CONFIGFILE=/etc/mongod.conf
+
 init_mongo () {
 	echo "Running MongDB start script!";
 
 	# start without AUTH
-	mongod -f /etc/mongod.conf &
+	mongod -f $CONFIGFILE &
 	LAST_PID=$!
 
 	# wait for up
@@ -34,5 +36,5 @@ if [[ /etc/first_run.js -nt /data/db/systemapic.inited ]]; then
 	init_mongo
 fi
 
-echo "Restarting with AUTH";
-mongod -f /etc/mongod.conf --auth
+echo "Starting MongoDB with AUTH";
+mongod -f $CONFIGFILE --auth
