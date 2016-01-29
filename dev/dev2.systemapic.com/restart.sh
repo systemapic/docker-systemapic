@@ -1,5 +1,10 @@
 #!/bin/bash
 
+test -f /var/www/wu/config/server-config.js || {
+  echo "ERROR: a /var/www/wu/config/server-config.js file is needed for wu to run" >&2
+  exit 1
+}
+
 echo -e "\e[93mKilling containers...\e[39m"
 docker-compose kill
 echo -e "\e[93mDeleting containers...\e[39m"
