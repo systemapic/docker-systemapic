@@ -5,8 +5,13 @@ function abort() {
 	exit 1;
 }
 
-# check domain ENV is set
-[ -z "$SYSTEMAPIC_DOMAIN" ] && abort "Restart failed! Need to set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=dev.systemapic.com"
+test -n "$1" && SYSTEMAPIC_DOMAIN="$1"
+
+# check SYSTEMAPIC_DOMAIN is set
+test -z "$SYSTEMAPIC_DOMAIN" &&
+  abort "Usage: $0 <domain> (or set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=dev.systemapic.com)"
+export SYSTEMAPIC_DOMAIN
+
 echo "--------------------------------------------------------------------"
 echo "Restarting services for domain $SYSTEMAPIC_DOMAIN"
 echo "--------------------------------------------------------------------"
