@@ -14,8 +14,12 @@ echo "Copying config file"
 cp config/$SYSTEMAPIC_DOMAIN.nginx.conf nginx.conf || abort "Build failed! $SYSTEMAPIC_DOMAIN.nginx.conf doesn't exist";
 
 # create crypto
-echo 'Creating Strong Diffie-Hellmann Group'
-openssl dhparam -out dhparams.pem 2048 || exit 1
+if test -f dhparams.pem; then
+  echo 'Using pre-existing Strong Diffie-Hellmann Group'
+else
+  echo 'Creating Strong Diffie-Hellmann Group'
+  openssl dhparam -out dhparams.pem 2048 || exit 1
+fi
 
 # build
 echo 'Building image'
