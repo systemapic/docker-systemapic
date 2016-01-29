@@ -5,13 +5,15 @@ function abort() {
 	exit 1;
 }
 
+# check domain ENV is set
+[ -z "$SYSTEMAPIC_DOMAIN" ] && abort "Restart failed! Need to set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=dev.systemapic.com"
+echo "--------------------------------------------------------------------"
+echo "Restarting services for domain $SYSTEMAPIC_DOMAIN"
+echo "--------------------------------------------------------------------"
+
 # check config file exists for wu and pile
 test -f /var/www/wu/config/server-config.js || abort "ERROR: A /var/www/wu/config/server-config.js file is needed for wu to run"
 test -f /var/www/pile/config/pile-config.js || abort "ERROR: A /var/www/pile/config/pile-config.js file is needed for pile to run"
-
-# check domain ENV is set
-echo "Checking host domain...$SYSTEMAPIC_DOMAIN"
-[ -z "$SYSTEMAPIC_DOMAIN" ] && abort "Restart failed! Need to set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=dev.systemapic.com"
 
 # get file and name (eg. dev.systemapic.com.yml and dev)
 COMPOSEFILE="$SYSTEMAPIC_DOMAIN".yml
