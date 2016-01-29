@@ -1,3 +1,9 @@
 [submodule "configs"]
 	path = configs
 	url = git@github.com:systemapic/configs.git
+[submodule "modules/wu"]
+	path = modules/wu
+	url = git@github.com:systemapic/wu.git
+[submodule "modules/pile"]
+	path = modules/pile
+	url = git@github.com:systemapic/pile.git
