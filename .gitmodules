@@ -7,3 +7,6 @@
 [submodule "modules/pile"]
 	path = modules/pile
 	url = git@github.com:systemapic/pile.git
+[submodule "modules/systemapic.js"]
+	path = modules/systemapic.js
+	url = git@github.com:systemapic/systemapic.js.git
