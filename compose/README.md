@@ -8,11 +8,10 @@ Domain will be chosen automatically by checking `$SYSTEMAPIC_DOMAIN` env variabl
 
 The `.yml` files decides what's being run, which containers are connected to each other, etc. 
 
+For example, if $SYSTEMAPIC_DOMAIN=dev.systemapic.com, then `dev.systemapic.com.yml` compose setup will be run.
+
+- To build all images: `./build_all.sh`
 - To start server and all containers: `./restart.sh`
-
-All docker images will need to be available.
-
-- To build all service images: `./build_all.sh`
 
 ---
 #### References:
