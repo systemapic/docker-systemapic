@@ -31,7 +31,7 @@ echo "--------------------------------------------------------------"
 echo "Building all dockers for target domain ${SYSTEMAPIC_DOMAIN}"
 echo "--------------------------------------------------------------"
 
-cd ../build
+cd `dirname $0`
 for dir in $DIRS; do
   if test -n "$ONLY"; then
      #echo "Checking against $ONLY"
