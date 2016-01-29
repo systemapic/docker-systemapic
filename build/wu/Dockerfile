@@ -11,7 +11,7 @@ RUN npm install node-pre-gyp -g
 RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
 
 # Copy package.json
-ADD ./wu/package.json /tmp/package.json
+ADD wu/package.json /tmp/package.json
 WORKDIR /tmp
 RUN export MAKEFLAGS="-j 7"
 RUN npm install
@@ -20,7 +20,7 @@ RUN npm install
 ENV NODE_PATH /usr/local/lib/node_modules
 
 # Copy latest wu
-ADD ./wu /var/www/wu
+ADD wu/ /var/www/wu
 
 # Inject config
 ADD ./server-config.js /var/www/wu/config/server-config.js
