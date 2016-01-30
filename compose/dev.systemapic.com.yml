@@ -1,72 +1,87 @@
-# dev.systemapic.com
-wu:
-  image: systemapic/wu:latest
-  links:
-    - mongo
-    - redislayers
-    - redisstats
-    - redistemp
-    - redistokens
-    - postgis
-  environment:
-    - SYSTEMAPIC_PRODMODE=false
-    - SYSTEMAPIC_DOMAIN=dev.systemapic.com
-  volumes_from:
-    - data_store_dev_common
-  volumes: 
-    - /var/www/wu:/var/www/wu
-  command: ./server.sh
+# wu:
+#   image: systemapic/wu:latest
+#   links:
+#     - mongo
+#     - redislayers
+#     - redisstats
+#     - redistemp
+#     - redistokens
+#     - postgis
+#   environment:
+#     - SYSTEMAPIC_DOMAIN=${SYSTEMAPIC_DOMAIN}
+#     - SYSTEMPAIC_PRODMODE=false
+#   volumes_from:
+#     - data_store_dev_common
+#   volumes: 
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#     # - /var/www/wu:/var/www/wu
+#   # command: ./server.sh
 
-pile: 
-  image: systemapic/pile:latest
-  links: 
-    - wu
-    - mongo
-    - redislayers
-    - redisstats
-    - redistokens
-    - redistemp
-    - postgis
-  volumes_from:
-    - data_store_dev_common
-  volumes:
-    - /var/www/pile:/var/www/pile 
-  command: ./pile-server.sh
+# pile: 
+#   image: systemapic/pile:latest
+#   links: 
+#     - wu
+#     - mongo
+#     - redislayers
+#     - redisstats
+#     - redistokens
+#     - redistemp
+#     - postgis
+#   volumes_from:
+#     - data_store_dev_common
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#     # - /var/www/pile:/var/www/pile 
+#   # command: ./pile-server.sh
 
-nginx:
-  image: systemapic/nginx:latest
-  links: 
-    - pile
-    - wu
-  ports:
-    - 443:443
-    - 80:80
+# nginx:
+#   image: systemapic/nginx:latest
+#   links: 
+#     - pile
+#     - wu
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#   ports:
+#     - 443:443
+#     - 80:80
 
 postgis:
   image: systemapic/postgis:latest
+  volumes:
+    - /docks/config/dev.systemapic.com:/systemapic/config
   volumes_from:
     - postgis_store_dev
   command: ./start.sh
 
-redislayers:
-  image: systemapic/redis:layers
-  volumes_from:
-    - redis_store_dev
+# redislayers:
+#   image: systemapic/redis:layers
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#   volumes_from:
+#     - redis_store_dev
 
-redisstats:
-  image: systemapic/redis:stats
-  volumes_from:
-    - redis_stats_store_dev
+# redisstats:
+#   image: systemapic/redis:stats
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#   volumes_from:
+#     - redis_stats_store_dev
 
-redistemp:
-  image: systemapic/redis:kue
+# redistemp:
+#   image: systemapic/redis:kue
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
 
-redistokens:
-  image: systemapic/redis:tokens
-  volumes_from:
-    - store_dev_redis_tokens
+# redistokens:
+#   image: systemapic/redis:tokens
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#   volumes_from:
+#     - store_dev_redis_tokens
 
-mongo: 
-  image: systemapic/mongo:latest
-  volumes_from:
-    - mongo_store_dev
+# mongo: 
+#   image: systemapic/mongo:latest
+#   volumes:
+#     - /docks/config/dev.systemapic.com:/systemapic/config
+#   volumes_from:
+#     - mongo_store_dev

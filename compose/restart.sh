@@ -19,8 +19,7 @@ ARR=(${SYSTEMAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
 # kill, delete, start fresh, get logs
-echo -e "\e[93mKilling containers...\e[39m"
-docker-compose -f $COMPOSEFILE -p $COMPOSENAME kill
+./kill.sh
 echo -e "\e[93mDeleting containers...\e[39m"
 ./delete_containers.sh
 echo -e "\e[93mStarting containers...\e[39m"
