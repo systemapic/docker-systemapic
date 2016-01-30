@@ -22,9 +22,6 @@ ENV NODE_PATH /usr/local/lib/node_modules
 # Copy latest wu
 ADD wu/ /var/www/wu
 
-# Inject config
-ADD ./server-config.js /var/www/wu/config/server-config.js
-
 # log folder
 RUN mkdir /var/www/wu/log
 
@@ -36,10 +33,14 @@ RUN apt-get update
 RUN apt-get install -y sysstat
 RUN npm install mocha -g
 
+# Add start script
+ADD ./start.sh /var/www/wu/start.sh
+RUN chmod +x /var/www/wu/start.sh
+
 # Set terminal env
 ENV TERM xterm
 
-# set prod mode
+# set default prod mode
 ENV SYSTEMAPIC_PRODMODE true
 
 # Define working directory.
@@ -47,3 +48,6 @@ WORKDIR /var/www/wu
 
 # Expose port
 EXPOSE 3001
+
+# Define default command.
+CMD ["./start.sh"]

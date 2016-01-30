@@ -3,6 +3,9 @@
 FROM ubuntu:trusty
 ARG PGVER
 
+# set PGVER manually
+ENV PGVER 9.4
+
 RUN test -n "${PGVER}" || ( \
   echo 'PGVER build arg is mandatory,' \
        'try --build-arg PGVER=9.3'; \

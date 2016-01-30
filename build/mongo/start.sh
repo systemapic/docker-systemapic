@@ -19,7 +19,7 @@ init_mongo () {
 	sleep 3
 
 	# run script
-	mongo /etc/first_run.js
+	mongo /etc/init_mongo.js
 
 	# mark inited
 	touch /data/db/systemapic.inited
@@ -32,7 +32,7 @@ init_mongo () {
 }
 
 # if script has been updated, or never inited, run init_mongo
-if [[ /etc/first_run.js -nt /data/db/systemapic.inited ]]; then
+if [[ /etc/init_mongo.js -nt /data/db/systemapic.inited ]]; then
 	init_mongo
 fi
 
