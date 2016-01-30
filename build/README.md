@@ -8,10 +8,13 @@
 5. rediskue (image: `systemapic/redis:kue`)  
 6. redislayers (image: `systemapic/redis:layers`)  
 7. redisstats (image: `systemapic/redis:stats`)  
-8. nginx (image: `systemapic/nginx`)  
-9. backup (image: `systemapic/backup:postgis`)  
+8. redistokens (image: `systemapic/redis:tokens`)  
+9. nginx (image: `systemapic/nginx`)  
+10. backup (image: `systemapic/backup:postgis`)  
 
-They are started using `docker-compose.yml`, in `/dev/[domain].com/` (ie. by running `./restart.sh`)
+They are started using `./restart.sh`, in `/docks/compose/`. `restart.sh` will read `$SYSTEMAPIC_DOMAIN` env on host, and run corresponding compose file.
+
+All storage containers can be created automatically, based on the stores required in `.yml` file, by running `./create_storage_containers.sh`.
 
 ##### Our storage containers are:  
 1. data_store_dev_common  
@@ -34,12 +37,17 @@ They are started using `docker-compose.yml`, in `/dev/[domain].com/` (ie. by run
     - contains stats  
     - mounts on `/data`  
     - created thus: `docker create -v /data --name redis_stats_store_dev systemapic/ubuntu`  
-5. mongo_store_dev  
+5. redis_tokens_store_dev  
+    - used by `redistokens`  
+    - contains access tokens  
+    - mounts on `/data`  
+    - created thus: `docker create -v /data --name redis_tokens_store_dev systemapic/ubuntu`  
+6. mongo_store_dev  
     - used by `mongo`  
     - contains the objects stored by the webserver (eg. users, projects, file objects, layer objects, etc.)  
     - mounts on `/data/db`  
     - created thus: `docker create -v /data/db --name mongo_store_dev systemapic/ubuntu`  
-6. postgis_backup_store  
+7. postgis_backup_store  
     - used by `backup`  
     - contains a backup dump of `postgis_store_dev`  
     - mounts on `/backup/postgis`  
