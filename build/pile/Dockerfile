@@ -21,8 +21,10 @@ ADD ./pile /var/www/pile
 RUN mkdir /var/www/pile/log
 
 # Inject config
-RUN mkdir /var/www/pile/config 
-ADD ./pile-config.js /var/www/pile/config/pile-config.js
+# RUN mkdir /var/www/pile/config 
+# ADD ./pile-config.js /var/www/pile/config/pile-config.js
+
+ADD ./start.sh /var/www/pile/start.sh
 
 # Install node_modules
 RUN cp /tmp/node_modules /var/www/pile/ -r
@@ -37,4 +39,5 @@ ENV TERM xterm
 EXPOSE 3003
 
 # Define default command.
-CMD ["./pile-server.sh"]
+# CMD ["./pile-server.sh"]
+CMD ["./start.sh"]

@@ -14,7 +14,7 @@ BINDIR="/usr/lib/postgresql/${PGVER}/bin/"
 POSTGRES="${BINDIR}/postgres"
 INITDB="${BINDIR}/initdb"
 
-source /systemapic/configs/env || exit 1
+source /systemapic/config/env.sh || exit 1
 
 USERNAME="${SYSTEMAPIC_PGSQL_USERNAME}"
 PASS="${SYSTEMAPIC_PGSQL_PASSWORD}"

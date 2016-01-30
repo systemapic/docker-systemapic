@@ -23,7 +23,9 @@ ENV NODE_PATH /usr/local/lib/node_modules
 ADD wu/ /var/www/wu
 
 # Inject config
-ADD ./server-config.js /var/www/wu/config/server-config.js
+# ADD ./server-config.js /var/www/wu/config/server-config.js
+
+ADD ./start.sh /var/www/wu/start.sh
 
 # log folder
 RUN mkdir /var/www/wu/log
@@ -39,7 +41,7 @@ RUN npm install mocha -g
 # Set terminal env
 ENV TERM xterm
 
-# set prod mode
+# set default prod mode
 ENV SYSTEMAPIC_PRODMODE true
 
 # Define working directory.
@@ -47,3 +49,6 @@ WORKDIR /var/www/wu
 
 # Expose port
 EXPOSE 3001
+
+# Define default command.
+CMD ["./start.sh"]
