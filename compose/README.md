@@ -12,6 +12,7 @@ For example, if $SYSTEMAPIC_DOMAIN=dev.systemapic.com, then `dev.systemapic.com.
 
 - To build all images: `./build_all.sh`
 - To start server and all containers: `./restart.sh`
+- To stop all containers : `./kill.sh`
 
 ---
 #### References:

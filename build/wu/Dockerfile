@@ -22,11 +22,6 @@ ENV NODE_PATH /usr/local/lib/node_modules
 # Copy latest wu
 ADD wu/ /var/www/wu
 
-# Inject config
-# ADD ./server-config.js /var/www/wu/config/server-config.js
-
-ADD ./start.sh /var/www/wu/start.sh
-
 # log folder
 RUN mkdir /var/www/wu/log
 
@@ -37,6 +32,10 @@ RUN cp /tmp/node_modules /var/www/wu/ -r
 RUN apt-get update
 RUN apt-get install -y sysstat
 RUN npm install mocha -g
+
+# Add start script
+ADD ./start.sh /var/www/wu/start.sh
+RUN chmod +x /var/www/wu/start.sh
 
 # Set terminal env
 ENV TERM xterm

@@ -24,10 +24,12 @@ RUN mkdir /var/www/pile/log
 # RUN mkdir /var/www/pile/config 
 # ADD ./pile-config.js /var/www/pile/config/pile-config.js
 
-ADD ./start.sh /var/www/pile/start.sh
-
 # Install node_modules
 RUN cp /tmp/node_modules /var/www/pile/ -r
+
+# add start script
+ADD ./start.sh /var/www/pile/start.sh
+RUN chmod +x /var/www/pile/start.sh
 
 # Define working directory.
 WORKDIR /var/www/pile
