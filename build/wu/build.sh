@@ -2,6 +2,8 @@
 
 BD=`dirname $0`
 
+echo "BD: $BD"
+
 trap "echo 'Cleaning up'; rm -rf $BD/wu" 0
 
 # docker doesn't allow ADDing paths above Dockerfile dirname

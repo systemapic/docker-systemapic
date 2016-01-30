@@ -16,12 +16,8 @@ echo "--------------------------------------------------------------------"
 echo "Restarting services for domain $SYSTEMAPIC_DOMAIN"
 echo "--------------------------------------------------------------------"
 
-# check config file exists for wu and pile
-#test -f /var/www/wu/config/server-config.js || abort "ERROR: A /var/www/wu/config/server-config.js file is needed for wu to run"
-#test -f /var/www/pile/config/pile-config.js || abort "ERROR: A /var/www/pile/config/pile-config.js file is needed for pile to run"
-
 # get file and name (eg. dev.systemapic.com.yml and dev)
-COMPOSEFILE="$SYSTEMAPIC_DOMAIN".yml
+COMPOSEFILE="yml/$SYSTEMAPIC_DOMAIN".yml
 ARR=(${SYSTEMAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 

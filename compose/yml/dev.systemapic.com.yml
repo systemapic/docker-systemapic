@@ -9,13 +9,14 @@ wu:
     - postgis
   environment:
     - SYSTEMAPIC_DOMAIN=${SYSTEMAPIC_DOMAIN}
-    - SYSTEMPAIC_PRODMODE=false
+    - SYSTEMAPIC_PRODMODE=false
   volumes_from:
     - data_store_dev_common
   volumes: 
     - /docks/config/dev.systemapic.com:/systemapic/config
-    - /var/www/wu:/var/www/wu
-  command: ./server.sh
+    # - ../modules/wu:/var/www/wu
+    # - /var/www/wu:/var/www/wu
+  # command: ./server.sh
 
 pile: 
   image: systemapic/pile:latest
