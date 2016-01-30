@@ -14,8 +14,7 @@ wu:
     - data_store_dev_common
   volumes: 
     - /docks/config/dev.systemapic.com:/systemapic/config
-    # - ../modules/wu:/var/www/wu
-    # - /var/www/wu:/var/www/wu
+    # - /docks/modules/wu:/var/www/wu     # add these to lines to do local edits (from /docks/modules/wu/)
   # command: ./server.sh
 
 pile: 

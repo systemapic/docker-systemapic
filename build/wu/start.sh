@@ -28,4 +28,20 @@ fi
 
 # start server
 cd /var/www/wu
-./server.sh
+# ./server.sh
+
+cd server
+if $SYSTEMAPIC_PRODMODE; then
+
+	echo 'Production mode'
+	grunt prod
+	echo 'Running in production mode...'
+	forever server.js prod
+else
+	echo 'Development mode'
+	grunt dev
+	grunt watch &
+	echo 'Running in development mode...'
+	nodemon --watch ../api --watch ../config --watch server.js --watch ../routes server.js
+fi
+cd ..
