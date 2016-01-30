@@ -1,5 +1,5 @@
 [submodule "configs"]
-	path = configs
+	path = config
 	url = git@github.com:systemapic/configs.git
 [submodule "modules/wu"]
 	path = modules/wu

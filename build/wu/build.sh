@@ -10,4 +10,3 @@ mkdir wu && cp -r ../../modules/wu/* wu || exit 1
 
 # build
 docker build -t systemapic/wu .
-

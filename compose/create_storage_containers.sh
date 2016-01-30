@@ -48,11 +48,6 @@ while read C; do
     REDISSTATS=$C
     echo "Creating Redis Stats volume $REDISSTATS"
     dcreate $REDISSTATS /data || exit 1
-  # postgis
-  elif echo "$C" | grep -q '^post'; then
-    POSTGIS=$C
-    echo "Creating PostGIS volume $POSTGIS"
-    dcreate $POSTGIS /var/lib/postgresql || exit 1
   # redis tokens
   elif echo "$C" | grep -q 'redis_tokens'; then
     REDISTOKENS=$C
@@ -63,6 +58,11 @@ while read C; do
     REDISLAYERS=$C
     echo "Creating Redis Layers volume $REDISLAYERS"
     dcreate $REDISLAYERS /data || exit 1
+  # postgis
+  elif echo "$C" | grep -q '^post'; then
+    POSTGIS=$C
+    echo "Creating PostGIS volume $POSTGIS"
+    dcreate $POSTGIS /var/lib/postgresql || exit 1
   else
     echo "Don't know how to build referenced data container '$C'" >&2
   fi
