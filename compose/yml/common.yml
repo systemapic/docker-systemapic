@@ -10,8 +10,12 @@ wu:
 
 pile: 
   image: systemapic/pile:latest
+  environment:
+    SYSTEMAPIC_DOMAIN: ${SYSTEMAPIC_DOMAIN}
+    SYSTEMAPIC_PRODMODE: 'true'
   volumes:
     - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - /docks/modules/pile:/systemapic/dev # local dev copy is added to /dev, prod copy is cloned by build.sh 
 
 nginx:
   image: systemapic/nginx:latest

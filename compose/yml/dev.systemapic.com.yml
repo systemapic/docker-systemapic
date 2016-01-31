@@ -27,6 +27,8 @@ pile:
     - redistokens
     - redistemp
     - postgis
+  environment:
+    SYSTEMAPIC_PRODMODE: 'false'
   volumes_from:
     - data_store_dev_common
 

@@ -22,7 +22,7 @@ ARR=(${SYSTEMAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
 # kill, delete, start fresh, get logs
-./kill.sh
+./stop_containers.sh
 echo -e "\e[93mDeleting containers...\e[39m"
 ./delete_containers.sh
 echo -e "\e[93mStarting containers...\e[39m"
