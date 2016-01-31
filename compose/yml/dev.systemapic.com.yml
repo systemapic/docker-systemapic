@@ -95,9 +95,8 @@ mongo:
 # postgis: Storage for geo-data #
 #################################
 postgis:
-  image: systemapic/postgis:latest
-  volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
+  extends:
+    file: common.yml
+    service: postgis
   volumes_from:
     - postgis_store_dev
-  command: ./start.sh
