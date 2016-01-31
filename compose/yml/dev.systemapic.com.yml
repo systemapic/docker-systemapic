@@ -40,6 +40,54 @@ nginx:
     - pile
     - wu
 
+
+# REDIS
+# -----
+# - based on redis service in common.yml
+# - services differ only in stores and config
+# store for layers
+redislayers:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    - redis_store_dev
+  command: "redis-server /systemapic/config/redis.layers.conf"
+
+# store for statistics
+redisstats:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    - redis_stats_store_dev
+  command: "redis-server /systemapic/config/redis.stats.conf"
+
+# store for access tokens
+redistokens:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    - store_dev_redis_tokens
+  command: "redis-server /systemapic/config/redis.tokens.conf"
+
+# ephemeral 
+redistemp:
+  extends:
+    file: common.yml
+    service: redis
+  command: "redis-server /systemapic/config/redis.temp.conf"
+
+# store for web-server models
+mongo: 
+  extends:
+    file: common.yml
+    service: mongo
+  volumes_from:
+    - mongo_store_dev
+
+# store for geodata
 postgis:
   image: systemapic/postgis:latest
   volumes:
@@ -47,37 +95,3 @@ postgis:
   volumes_from:
     - postgis_store_dev
   command: ./start.sh
-
-# todo: base all redis on single image; config stored elsewhere
-redislayers:
-  image: systemapic/redis:layers
-  volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
-  volumes_from:
-    - redis_store_dev
-
-redisstats:
-  image: systemapic/redis:stats
-  volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
-  volumes_from:
-    - redis_stats_store_dev
-
-redistemp:
-  image: systemapic/redis:kue
-  volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
-
-redistokens:
-  image: systemapic/redis:tokens
-  volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
-  volumes_from:
-    - store_dev_redis_tokens
-
-mongo: 
-  image: systemapic/mongo:latest
-  volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
-  volumes_from:
-    - mongo_store_dev
