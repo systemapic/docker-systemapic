@@ -40,4 +40,3 @@ postgis:
   image: systemapic/postgis:latest
   volumes:
     - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
-  command: ./start.sh
