@@ -1,3 +1,6 @@
+######################### 
+# wu: Systemapic Server #
+#########################
 wu:
   extends:
     file: common.yml
@@ -15,13 +18,15 @@ wu:
   volumes_from:
     - data_store_dev_common
 
+################################
+# pile: Systemapic Tile Server #
+################################
 pile: 
   extends:
     file: common.yml
     service: pile
   links: 
-    - wu
-    - mongo
+    - wu # todo: remove? (or use directly instead of API as doing currently)
     - redislayers
     - redisstats
     - redistokens
@@ -32,6 +37,9 @@ pile:
   volumes_from:
     - data_store_dev_common
 
+########################################
+# nginx: Reverse-proxy for wu and pile #
+########################################
 nginx:
   extends:
     file: common.yml
@@ -40,12 +48,9 @@ nginx:
     - pile
     - wu
 
-
-# REDIS
-# -----
-# - based on redis service in common.yml
-# - services differ only in stores and config
-# store for layers
+###############################################
+# redis: Simple key-value storage             #
+###############################################
 redislayers:
   extends:
     file: common.yml
@@ -54,7 +59,6 @@ redislayers:
     - redis_store_dev
   command: "redis-server /systemapic/config/redis.layers.conf"
 
-# store for statistics
 redisstats:
   extends:
     file: common.yml
@@ -63,7 +67,6 @@ redisstats:
     - redis_stats_store_dev
   command: "redis-server /systemapic/config/redis.stats.conf"
 
-# store for access tokens
 redistokens:
   extends:
     file: common.yml
@@ -72,14 +75,15 @@ redistokens:
     - store_dev_redis_tokens
   command: "redis-server /systemapic/config/redis.tokens.conf"
 
-# ephemeral 
 redistemp:
   extends:
     file: common.yml
     service: redis
   command: "redis-server /systemapic/config/redis.temp.conf"
 
-# store for web-server models
+####################################
+# mongo: Storage for server models #
+####################################
 mongo: 
   extends:
     file: common.yml
@@ -87,7 +91,9 @@ mongo:
   volumes_from:
     - mongo_store_dev
 
-# store for geodata
+#################################
+# postgis: Storage for geo-data #
+#################################
 postgis:
   image: systemapic/postgis:latest
   volumes:
