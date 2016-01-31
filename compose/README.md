@@ -11,8 +11,16 @@ This is the folder in which everything is built and run.
 There are compose files for respective domains. 
 
 Configurations for containers are mounted from `/docks/config/$SYSTEMAPIC_DOMAIN/` folder on `localhost`,  
-like this: `/docks/config/dev.systemapic.com:/systemapic/config`. Thus, each container will have available config  
-for relevant domain in `/systemapic/config` folder (inside container).
+in `common.yml` file. For example:  
+```yml
+redis:
+  image: redis:latest
+  volumes:
+    - /docks/config/dev.systemapic.com:/systemapic/config
+
+```
+
+Thus, each container has available config for its relevant domain in `/systemapic/config` folder (inside container).
 
 Domain will be chosen automatically by checking `SYSTEMAPIC_DOMAIN`
 env variable on host. This ENV must be set.

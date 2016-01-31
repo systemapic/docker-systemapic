@@ -48,9 +48,9 @@ nginx:
     - pile
     - wu
 
-###############################################
-# redis: Simple key-value storage             #
-###############################################
+###################################
+# redis: Simple key-value storage #
+###################################
 redislayers:
   extends:
     file: common.yml
