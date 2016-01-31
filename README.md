@@ -1,14 +1,11 @@
 ### Docker files for Systemapic.
 
-## Depends
-Minimum required Docker version: 1.9.0 (due to `--build-arg`)
-Recommended Docker Compose version: 1.5.2
 
 ## Usage
 All current run-files are contained in `/compose/`. 
 
-#### Environment
-Set $SYSTEMAPIC_DOMAIN environment variable on your localhost (eg. `dev.systemapic.com`, without `https://`). This is a required ENV variable. Default value is `$SYSTEMAPIC_DOMAIN=localhost`.
+#### Set environment
+Set ``$SYSTEMAPIC_DOMAIN environment variable on your localhost (eg. `dev.systemapic.com`, without `https://`). This is a required ENV variable. Default value is `$SYSTEMAPIC_DOMAIN=localhost`.
 
 Set `$SYSTEMAPIC_PRODMODE=false` for running code from `modules/`. Set to `true` for running latest git repository code, with prod-flags set in servers. 
 
@@ -23,8 +20,10 @@ All builds files are contained in [https://github.com/systemapic/docker-systemap
 
 Run `build/build_all.sh` to build all required Docker images.
 
+## Depends
+Minimum required `Docker` version: 1.9.0 (due to `--build-arg`)  
+Recommended `Docker Compose` version: 1.5.2  
 
-## Repositories
 All necessary code is included in `/modules/` as submodules of this repo.  
  - systemapic/wu  
    - systemapic/systemapic.js (as submodule to wu)  
