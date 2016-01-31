@@ -11,7 +11,7 @@
     "url": "https://github.com/systemapic/docker-systemapic.git"
   },
   "author": "knutole@systemapic.com",
-  "contributors" : ["strk@keybit.net"],
+  "contributors" : ["jorgen@systemapic.com", "strk@keybit.net", "icygler@hwdtech.ru"],
   "license": "GPLv2",
   "bugs": {
     "url": "https://github.com/systemapic/docker-systemapic/issues"
