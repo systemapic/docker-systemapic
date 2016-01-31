@@ -1,81 +1,103 @@
-# beta.systemapic.com
+######################### 
+# wu: Systemapic Server #
+#########################
 wu:
-  image: systemapic/wu
+  extends:
+    file: common.yml
+    service: wu
   links:
     - mongo
     - redislayers
     - redisstats
     - redistemp
+    - redistokens
     - postgis
   environment:
-    - SYSTEMAPIC_PRODMODE=false
-    - SYSTEMAPIC_DOMAIN=beta.systemapic.com
+    SYSTEMAPIC_PRODMODE: 'false'
+  working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_dev_common
-  volumes: 
-    - /var/www/wu:/var/www/wu
-  command: ./server.sh
 
+################################
+# pile: Systemapic Tile Server #
+################################
 pile: 
-  image: systemapic/pile
+  extends:
+    file: common.yml
+    service: pile
   links: 
-    - wu
-    - mongo
+    - wu # todo: remove? (or use directly instead of API as doing currently)
     - redislayers
     - redisstats
+    - redistokens
     - redistemp
     - postgis
+  environment:
+    SYSTEMAPIC_PRODMODE: 'false'
   volumes_from:
     - data_store_dev_common
-  volumes:
-    - /var/www/pile:/var/www/pile 
-  command: ./pile-server.sh
 
+########################################
+# nginx: Reverse-proxy for wu and pile #
+########################################
 nginx:
-  image: systemapic/nginx
+  extends:
+    file: common.yml
+    service: nginx
   links: 
     - pile
     - wu
-  ports:
-    - 443:443
-    - 80:80
 
-postgis:
-  image: systemapic/postgis
-  volumes_from:
-    - postgis_store_dev
-  command: ./start.sh
-
+###################################
+# redis: Simple key-value storage #
+###################################
 redislayers:
-  image: systemapic/redis:layers
+  extends:
+    file: common.yml
+    service: redis
   volumes_from:
     - redis_store_dev
+  command: "redis-server /systemapic/config/redis.layers.conf"
 
 redisstats:
-  image: systemapic/redis:stats
+  extends:
+    file: common.yml
+    service: redis
   volumes_from:
     - redis_stats_store_dev
-
-redistemp:
-  image: systemapic/redis:kue
+  command: "redis-server /systemapic/config/redis.stats.conf"
 
 redistokens:
-  image: systemapic/redis:tokens
+  extends:
+    file: common.yml
+    service: redis
   volumes_from:
     - store_dev_redis_tokens
+  command: "redis-server /systemapic/config/redis.tokens.conf"
 
+redistemp:
+  extends:
+    file: common.yml
+    service: redis
+  command: "redis-server /systemapic/config/redis.temp.conf"
+
+####################################
+# mongo: Storage for server models #
+####################################
 mongo: 
-  image: systemapic/mongo
+  extends:
+    file: common.yml
+    service: mongo
   volumes_from:
     - mongo_store_dev
-  # command: "mongod -f /etc/mongod.conf"
-  
 
-# backup: 
-#   image: systemapic/postgis:backup
-#   ports:
-#     - 5432
-#   links:
-#     - postgis
-#   volumes_from:
-#     - postgis_backup_store
+#################################
+# postgis: Storage for geo-data #
+#################################
+postgis:
+  extends:
+    file: common.yml
+    service: postgis
+  volumes_from:
+    - postgis_store_dev
+

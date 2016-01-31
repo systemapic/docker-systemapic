@@ -1,113 +1,102 @@
-# systemapic / dev
-#
-# - whole systemapic dev setup
-# - sharing /wu and /pile folders with localhost 
+######################### 
+# wu: Systemapic Server #
+#########################
 wu:
-  image: systemapic/wu
+  extends:
+    file: common.yml
+    service: wu
   links:
     - mongo
     - redislayers
     - redisstats
     - redistemp
+    - redistokens
     - postgis
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports: 
-#    - 3001
   environment:
-    - SYSTEMAPIC_PRODMODE=false
-    - SYSTEMAPIC_DOMAIN=localhost
+    SYSTEMAPIC_PRODMODE: 'false'
+  working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_localhost
-  volumes: 
-    - ../modules/wu:/var/www/wu
-  command: ./server.sh
 
+################################
+# pile: Systemapic Tile Server #
+################################
 pile: 
-  image: systemapic/pile
+  extends:
+    file: common.yml
+    service: pile
   links: 
-    - wu
-    - mongo
+    - wu # todo: remove? (or use directly instead of API as doing currently)
     - redislayers
     - redisstats
+    - redistokens
     - redistemp
     - postgis
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports:
-#    - 3003
+  environment:
+    SYSTEMAPIC_PRODMODE: 'false'
   volumes_from:
-    - data_store_localhost  
-  volumes:
-    - ../modules/pile:/var/www/pile 
-  command: ./pile-server.sh
+    - data_store_localhost
 
+########################################
+# nginx: Reverse-proxy for wu and pile #
+########################################
 nginx:
-  image: systemapic/nginx
+  extends:
+    file: common.yml
+    service: nginx
   links: 
     - pile
     - wu
-  ports:
-    - 443:443
-    - 8080:80
 
-postgis:
-  # image: systemapic/postgis
-  # image: systemapic/postgis:all_logs
-  #image: systemapic/postgis:93-21
-  image: systemapic/postgis:94-21
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports:
-#    - 5432
-  volumes_from:
-    - postgresql94_store_localhost
-    # - postgis_store_localhost
-    #- testme_pgdata_store2
-    #- postgresql93_store_localhost
-  # command: ./start.sh
-
+###################################
+# redis: Simple key-value storage #
+###################################
 redislayers:
-  image: systemapic/redis:layers
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports: 
-#    - 6379
+  extends:
+    file: common.yml
+    service: redis
   volumes_from:
     - redis_store_localhost
+  command: "redis-server /systemapic/config/redis.layers.conf"
 
 redisstats:
-  image: systemapic/redis:stats
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports: 
-#    - 6379
+  extends:
+    file: common.yml
+    service: redis
   volumes_from:
     - redis_stats_store_localhost
+  command: "redis-server /systemapic/config/redis.stats.conf"
+
+redistokens:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    - redis_tokens_store_localhost
+  command: "redis-server /systemapic/config/redis.tokens.conf"
 
 redistemp:
-  image: systemapic/redis:kue
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports: 
-#    - 6379
+  extends:
+    file: common.yml
+    service: redis
+  command: "redis-server /systemapic/config/redis.temp.conf"
 
+####################################
+# mongo: Storage for server models #
+####################################
 mongo: 
-  image: systemapic/mongo
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports:
-#    - 27017
+  extends:
+    file: common.yml
+    service: mongo
   volumes_from:
     - mongo_store_localhost
 
-backup: 
-  image: systemapic/postgis:backup
-# Specifying "ports" here maps them to the outside world,
-# See https://github.com/systemapic/docker-systemapic/issues/18
-#  ports:
-#    - 5432
-  links:
-    - postgis
+#################################
+# postgis: Storage for geo-data #
+#################################
+postgis:
+  extends:
+    file: common.yml
+    service: postgis
   volumes_from:
-    - postgis_backup_store
+    - postgresql94_store_localhost
