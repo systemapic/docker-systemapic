@@ -1,20 +1,16 @@
 var fs = require('fs');
 
-fs.readFile('/systemapic/config/mongo.json', 'utf-8', function (err, json) {
+var configFile = '/systemapic/config/mongo.json';
+
+// read config
+fs.readFile(configFile, 'utf-8', function (err, json) {
 	if (err) throw err;
 
+	// parse config
 	var config = JSON.parse(json);
-
-	// settings
-	// var password = 'qHZrRctXdkd2pt5AuexKeDb7Sag55zdRxZw5XUEW';
-	// var db_user = 'systemapic';
-
 	var password = config.password;
 	var user = config.user;
 	var database = config.database || 'systemapic';
-
-	console.log('password:', password);
-	console.log('user:', user);
 
 	// prime db for auth
 	var admin = connect('localhost:27017/admin');
