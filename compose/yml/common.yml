@@ -25,6 +25,9 @@ nginx:
   volumes:
     - /docks/config/dev.systemapic.com:/systemapic/config
 
+redis:
+  image: redis:latest
+
 # postgis:
 #   image: systemapic/postgis:latest
 #   command: ./start.sh
