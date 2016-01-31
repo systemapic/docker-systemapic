@@ -16,7 +16,7 @@ in `common.yml` file. For example:
 redis:
   image: redis:latest
   volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 ```
 
