@@ -1,0 +1,41 @@
+wu:
+  image: systemapic/wu:latest
+  environment:
+    SYSTEMAPIC_DOMAIN: ${SYSTEMAPIC_DOMAIN}
+    SYSTEMAPIC_PRODMODE: 'true'
+  working_dir: /systemapic/prod
+  volumes:
+    - /docks/modules/wu:/systemapic/dev # local dev copy is added to /dev, prod copy is cloned by build.sh 
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+
+pile: 
+  image: systemapic/pile:latest
+  volumes:
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+
+nginx:
+  image: systemapic/nginx:latest
+  ports:
+    - 443:443
+    - 80:80
+  volumes:
+    - /docks/config/dev.systemapic.com:/systemapic/config
+
+# postgis:
+#   image: systemapic/postgis:latest
+#   command: ./start.sh
+
+# redislayers:
+#   image: systemapic/redis:layers
+
+# redisstats:
+#   image: systemapic/redis:stats
+
+# redistemp:
+#   image: systemapic/redis:kue
+
+# redistokens:
+#   image: systemapic/redis:tokens
+
+# mongo: 
+#   image: systemapic/mongo:latest

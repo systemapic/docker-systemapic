@@ -5,43 +5,59 @@ function abort() {
 	exit 1;
 }
 
-WU_DIR=/var/www/wu
+function dev_mode() {
+	echo 'Development mode'
+	grunt dev
+	grunt watch &
+	echo 'Running dev mode...'
+	nodemon --watch ../api --watch ../config --watch server.js --watch ../routes server.js
+}
+
+function prod_mode() {
+	echo 'Production mode'
+	grunt prod
+	echo 'Running prod mode...'
+	forever server.js
+}
+
+# set wu dir (local dev code, or prod code from git)
+# ---
+# Both prod- and dev code-bases are available in the container. Prod-code is cloned from git on build, 
+# while dev-code is mounted from localhost /docks/modules/wu. $SYSTEMAPIC_PRODMODE env on localhost 
+# decides which code-base is in use (in effect here and in compose yml's)
+if $SYSTEMAPIC_PRODMODE; then
+	WU_DIR=/systemapic/prod
+else
+	WU_DIR=/systemapic/dev
+fi
+
+# set env
 WU_CONFIG_DIR=$WU_DIR/config
-NPM_MODULES_DIR=$WU_DIR/npm_modules
+NODE_MODULES_DIR=$WU_DIR/node_modules
 SYSTEMAPIC_CONFIG_DIR=/systemapic/config
 
-# check config is connected
+# ensure config
 if [ ! -d "$SYSTEMAPIC_CONFIG_DIR" ]; then
 	abort "Configuration not installed, should be at $SYSTEMAPIC_CONFIG_DIR. Quitting!"
 fi
 
-# copy config file
+# install config
 mkdir -p $WU_CONFIG_DIR
-cp $SYSTEMAPIC_CONFIG_DIR/wu-config.js $WU_CONFIG_DIR/server-config.js
+cp $SYSTEMAPIC_CONFIG_DIR/wu-config.js $WU_CONFIG_DIR/wu-config.js
 
-# ensure npm is installed
-if [ ! -d "$NPM_MODULES_DIR" ]; then
-  # Control will enter here if $DIRECTORY doesn't exist.
+# ensure node modules are installed
+if [ ! -d "$NODE_MODULES_DIR" ]; then
   echo "Installing node modules..."
   npm install || abort "Failed to install node modules. Quitting!"
 fi
 
+# ensure log folder
+mkdir -p $WU_DIR/log
+
 # start server
-cd /var/www/wu
-# ./server.sh
-
-cd server
+cd $WU_DIR/server
 if $SYSTEMAPIC_PRODMODE; then
-
-	echo 'Production mode'
-	grunt prod
-	echo 'Running in production mode...'
-	forever server.js prod
+	prod_mode
 else
-	echo 'Development mode'
-	grunt dev
-	grunt watch &
-	echo 'Running in development mode...'
-	nodemon --watch ../api --watch ../config --watch server.js --watch ../routes server.js
+	dev_mode
 fi
-cd ..

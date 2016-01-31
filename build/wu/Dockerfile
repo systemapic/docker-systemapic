@@ -9,6 +9,8 @@ FROM systemapic/gis
 # Install GDAL globally
 RUN npm install node-pre-gyp -g
 RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
+RUN npm install mocha -g
+RUN apt-get update -y && apt-get install -y sysstat
 
 # Copy package.json
 ADD wu/package.json /tmp/package.json
@@ -16,38 +18,25 @@ WORKDIR /tmp
 RUN export MAKEFLAGS="-j 7"
 RUN npm install
 
-# Set path for global node_modules
-ENV NODE_PATH /usr/local/lib/node_modules
-
 # Copy latest wu
-ADD wu/ /var/www/wu
-
-# log folder
-RUN mkdir /var/www/wu/log
+RUN mkdir -p /systemapic/prod
+ADD wu/ /systemapic/prod
 
 # Install node_modules
-RUN cp /tmp/node_modules /var/www/wu/ -r
-
-# Install extras
-RUN apt-get update
-RUN apt-get install -y sysstat
-RUN npm install mocha -g
+RUN mv /tmp/node_modules /systemapic/prod/node_modules
 
 # Add start script
-ADD ./start.sh /var/www/wu/start.sh
-RUN chmod +x /var/www/wu/start.sh
+ADD start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Set terminal env
 ENV TERM xterm
 
-# set default prod mode
-ENV SYSTEMAPIC_PRODMODE true
-
-# Define working directory.
-WORKDIR /var/www/wu
+# Set path for global node_modules
+ENV NODE_PATH /usr/local/lib/node_modules
 
 # Expose port
 EXPOSE 3001
 
 # Define default command.
-CMD ["./start.sh"]
+CMD /start.sh

@@ -1,7 +1,5 @@
 wu:
-  extends:
-    file: common.yml
-    service: wu
+  image: systemapic/wu:latest
   links:
     - mongo
     - redislayers
@@ -10,15 +8,17 @@ wu:
     - redistokens
     - postgis
   environment:
-    SYSTEMAPIC_PRODMODE: 'false'
-  working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
+    - SYSTEMAPIC_DOMAIN=${SYSTEMAPIC_DOMAIN}
+    - SYSTEMAPIC_PRODMODE=false
   volumes_from:
     - data_store_dev_common
+  volumes: 
+    - /docks/config/dev.systemapic.com:/systemapic/config
+    # - /docks/modules/wu:/var/www/wu     # add these to lines to do local edits (from /docks/modules/wu/)
+  # command: ./server.sh
 
 pile: 
-  extends:
-    file: common.yml
-    service: pile
+  image: systemapic/pile:latest
   links: 
     - wu
     - mongo
@@ -29,14 +29,21 @@ pile:
     - postgis
   volumes_from:
     - data_store_dev_common
+  volumes:
+    - /docks/config/dev.systemapic.com:/systemapic/config
+    # - /var/www/pile:/var/www/pile 
+  # command: ./pile-server.sh
 
 nginx:
-  extends:
-    file: common.yml
-    service: nginx
+  image: systemapic/nginx:latest
   links: 
     - pile
     - wu
+  volumes:
+    - /docks/config/dev.systemapic.com:/systemapic/config
+  ports:
+    - 443:443
+    - 80:80
 
 postgis:
   image: systemapic/postgis:latest
@@ -46,7 +53,6 @@ postgis:
     - postgis_store_dev
   command: ./start.sh
 
-# todo: base all redis on single image; config stored elsewhere
 redislayers:
   image: systemapic/redis:layers
   volumes:
