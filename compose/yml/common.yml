@@ -24,20 +24,20 @@ nginx:
     - 443:443
     - 80:80
   volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 redis:
   image: redis:latest
   volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 mongo: 
   image: systemapic/mongo:latest
   volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 postgis:
   image: systemapic/postgis:latest
   volumes:
-    - /docks/config/dev.systemapic.com:/systemapic/config
+    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
   command: ./start.sh
