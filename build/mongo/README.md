@@ -1,2 +1,6 @@
-`mongod.conf` is general, thus added to `/etc/mongod.conf` on build. 
-AUTH configs used in `init_mongo.js` script, which runs on first run, is stored in `/docks/config/$SYSTEMAPIC_DOMAIN/` folder.
+## MongoDB store
+Used for models in web-server (`wu`), storing ie. users, projects, layers, etc.
+
+`AUTH` and general configurations are stored in `/docks/config/$SYSTEMAPIC_DOMAIN/` folder in `mongo.json` and `mongod.conf`.
+
+On first run, `init_mongo.js` script is run, enabling `AUTH` on MongoDB.

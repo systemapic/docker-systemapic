@@ -1,15 +1,15 @@
 ## Docker containers
 
 ##### Our main containers are:
-1. wu (image: `systemapic/wu`)  
-2. pile (image: `systemapic/pile`)  
-3. postgis (image: `systemapic/postgis`)  
-4. mongo (image: `systemapic/mongo`)  
-5. rediskue (image: `systemapic/redis:kue`)  
-6. redislayers (image: `systemapic/redis:layers`)  
-7. redisstats (image: `systemapic/redis:stats`)  
-8. redistokens (image: `systemapic/redis:tokens`)  
-9. nginx (image: `systemapic/nginx`)  
+1. wu (image: `systemapic/wu:latest`)  
+2. pile (image: `systemapic/pile:latest`)  
+3. postgis (image: `systemapic/postgis:latest`)  
+4. mongo (image: `systemapic/mongo:latest`)  
+5. rediskue (image: `redis:latest`)  
+6. redislayers (image: `redis:latest`)  
+7. redisstats (image: `redis:latest`)  
+8. redistokens (image: `redis:latest`)  
+9. nginx (image: `systemapic/nginx:latest`)  
 10. backup (image: `systemapic/backup:postgis`)  
 
 They are started using `./restart.sh`, in `/docks/compose/`. `restart.sh` will read `$SYSTEMAPIC_DOMAIN` env on host, and run corresponding compose file.
@@ -53,5 +53,5 @@ All storage containers can be created automatically, based on the stores require
     - mounts on `/backup/postgis`  
     - created thus: `docker create -v /backup/postgis --name postgis_backup_store systemapic/ubuntu`  
 
-All storage is contained in storage containers. That means that the main containers can be stopped, destroyed, recreated, without it affecting the data that's stored. This also means that - in theory - the containers can be moved to another server and the contents of the portal stays the same.
+All storage is contained in storage containers. That means that the main containers can be stopped, destroyed, recreated, without it affecting the data that's stored. This also means that - in theory - the containers can be moved to another server and the contents of the portal will be moved also.
 

@@ -1,12 +1,19 @@
 #!/bin/bash
 
-# need to setup admin for secure access
-# 0. check if inited
-# 1. start mongodb without auth
-# 2. add admin/user with pass
-# 3. restart mongo with auth config
+# MongoDB needs to be inited with auth settings
+# ---------------------------------------------
+# 1: check if inited
+# 1.1: start mongodb without auth
+# 1.2: add admin/user with pass
+# 2: restart mongo with auth config
 
-CONFIGFILE=/etc/mongod.conf
+# config path (never changes)
+CONFIGFILE=/systemapic/config/mongod.conf
+
+function abort() {
+	echo $1
+	exit 1;
+}
 
 init_mongo () {
 	echo "Running MongDB start script!";
@@ -16,10 +23,10 @@ init_mongo () {
 	LAST_PID=$!
 
 	# wait for up
-	sleep 3
+	sleep 3 # todo: check if up instead
 
-	# run script
-	mongo /etc/init_mongo.js
+	# run init script (adding AUTH capabilities)
+	mongo /init_mongo.js
 
 	# mark inited
 	touch /data/db/systemapic.inited
@@ -28,13 +35,16 @@ init_mongo () {
 	kill $LAST_PID;
 
 	# wait for down
-	sleep 3
+	sleep 3 # todo: check if down instead
 }
 
+# ensure log dir
+touch /etc/mongod.log
+
 # if script has been updated, or never inited, run init_mongo
-if [[ /etc/init_mongo.js -nt /data/db/systemapic.inited ]]; then
-	init_mongo
+if [[ /init_mongo.js -nt /data/db/systemapic.inited ]]; then
+	init_mongo || abort "Failed to initialize MongoDB. Quitting!"
 fi
 
 echo "Starting MongoDB with AUTH";
-mongod -f $CONFIGFILE --auth
+mongod -f $CONFIGFILE --auth || abort "Failed to start MongodB. Quitting!"

@@ -20,8 +20,8 @@ function prod_mode() {
 	forever server.js
 }
 
-# set wu dir (local dev code, or prod code from git)
-# ---
+# Set directory of code-base (local dev code, or prod code from git)
+# ------------------------------------------------------------------
 # Both prod- and dev code-bases are available in the container. Prod-code is cloned from git on build, 
 # while dev-code is mounted from localhost /docks/modules/wu. $SYSTEMAPIC_PRODMODE env on localhost 
 # decides which code-base is in use (in effect here and in compose yml's)
@@ -55,7 +55,7 @@ fi
 # ensure log folder
 mkdir -p $REPO_DIR/log
 
-# start server
+# start server in prod or dev mode
 cd $REPO_DIR/server
 if $SYSTEMAPIC_PRODMODE; then
 	prod_mode
