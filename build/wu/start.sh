@@ -26,14 +26,15 @@ function prod_mode() {
 # while dev-code is mounted from localhost /docks/modules/wu. $SYSTEMAPIC_PRODMODE env on localhost 
 # decides which code-base is in use (in effect here and in compose yml's)
 if $SYSTEMAPIC_PRODMODE; then
-	WU_DIR=/systemapic/prod
+	REPO_DIR=/systemapic/prod
 else
-	WU_DIR=/systemapic/dev
+	REPO_DIR=/systemapic/dev
 fi
+cd $REPO_DIR
 
 # set env
-WU_CONFIG_DIR=$WU_DIR/config
-NODE_MODULES_DIR=$WU_DIR/node_modules
+CONFIG_DIR=$REPO_DIR/config
+NODE_MODULES_DIR=$REPO_DIR/node_modules
 SYSTEMAPIC_CONFIG_DIR=/systemapic/config
 
 # ensure config
@@ -42,8 +43,8 @@ if [ ! -d "$SYSTEMAPIC_CONFIG_DIR" ]; then
 fi
 
 # install config
-mkdir -p $WU_CONFIG_DIR
-cp $SYSTEMAPIC_CONFIG_DIR/wu-config.js $WU_CONFIG_DIR/wu-config.js
+mkdir -p $CONFIG_DIR
+cp $SYSTEMAPIC_CONFIG_DIR/wu-config.js $CONFIG_DIR/wu-config.js
 
 # ensure node modules are installed
 if [ ! -d "$NODE_MODULES_DIR" ]; then
@@ -52,10 +53,10 @@ if [ ! -d "$NODE_MODULES_DIR" ]; then
 fi
 
 # ensure log folder
-mkdir -p $WU_DIR/log
+mkdir -p $REPO_DIR/log
 
 # start server
-cd $WU_DIR/server
+cd $REPO_DIR/server
 if $SYSTEMAPIC_PRODMODE; then
 	prod_mode
 else
