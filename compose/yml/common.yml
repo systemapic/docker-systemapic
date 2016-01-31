@@ -1,13 +1,10 @@
-# The Systemapic Server
+# see domain-specific .yml for documentation
 wu:
   image: systemapic/wu:latest
-  # domain env set from env on localhost
   environment:
     SYSTEMAPIC_DOMAIN: ${SYSTEMAPIC_DOMAIN}
     SYSTEMAPIC_PRODMODE: 'true'
   working_dir: /systemapic/prod # todo: remove (currently needed for doing `docker run ... grunt test`, but can be fixed with `./test.sh` script, or something better)
-  # local dev code is added to /systemapic/dev; prod copy is cloned by build.sh to /systemapic/prod
-  # config folder from localhost is mounted on /systemapic/config
   volumes:
     - /docks/modules/wu:/systemapic/dev 
     - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
@@ -19,7 +16,7 @@ pile:
     SYSTEMAPIC_PRODMODE: 'true'
   volumes:
     - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
-    - /docks/modules/pile:/systemapic/dev # local dev copy is added to /dev, prod copy is cloned by build.sh 
+    - /docks/modules/pile:/systemapic/dev
 
 nginx:
   image: systemapic/nginx:latest
@@ -39,7 +36,8 @@ mongo:
   volumes:
     - /docks/config/dev.systemapic.com:/systemapic/config
 
-# postgis:
-#   image: systemapic/postgis:latest
-#   command: ./start.sh
-
+postgis:
+  image: systemapic/postgis:latest
+  volumes:
+    - /docks/config/dev.systemapic.com:/systemapic/config
+  command: ./start.sh
