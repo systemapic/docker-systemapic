@@ -21,10 +21,13 @@ USERNAME="${SYSTEMAPIC_PGSQL_USERNAME}"
 PASS="${SYSTEMAPIC_PGSQL_PASSWORD}"
 DBNAME="${SYSTEMAPIC_PGSQL_DBNAME}"
 
-echo "PGVER: $PGVER"
-echo "Username: $USERNAME"
-echo "Pass: $PASS"
-echo "Db: $DBNAME"
+echo "PostgreSQL Configuration:"
+echo "===================================="
+echo "PostgreSQL version: $PGVER"
+echo "PostgreSQL username: $USERNAME"
+echo "PostgreSQL auth: $PASS"
+echo "PostgreSQL database: $DBNAME"
+echo "===================================="
 
 EXISTING_CLUSTER=yes
 
