@@ -1,6 +1,6 @@
 ## Docker Compose
 
-This is the folder in which everything is built and run.
+This is the folder in which Systemapic Cloud Server is built and run.
 
 ## Usage
 - To build all images: `./build_all.sh`
@@ -8,7 +8,8 @@ This is the folder in which everything is built and run.
 - To stop all containers : `./kill.sh`
 
 ## Configuration
-There are compose files for respective domains. 
+
+The `common.yml` file describes services, while domain specific `.yml` file (eg. `dev.systemapic.com.yml`) overrides common and adds specific stores, environment, etc.
 
 Configurations for containers are mounted from `/docks/config/$SYSTEMAPIC_DOMAIN/` folder on `localhost`,  
 in `common.yml` file. For example:  
@@ -31,6 +32,6 @@ to each other, etc.
 For example, if `SYSTEMAPIC_DOMAIN=dev.systemapic.com`, then
 `dev.systemapic.com.yml` compose setup will be run, and configuration from `/docks/config/dev.systemapic.com/` will be used.
 
---
+
 ## References:
 [Docker compose](https://docs.docker.com/compose/)
