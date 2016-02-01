@@ -127,13 +127,13 @@ else
 fi
 
 # Ensure DBNAME is marked as a template
-echo "NOTICE: Ensuring '${DBNAME}' is an unconnectable template"
-cat<<EOF | sudo -u postgres ${PSQL} -tA template1
-UPDATE pg_catalog.pg_database
-   SET datistemplate = true,
-       datallowconn = false
- WHERE datname='${DBNAME}';
-EOF
+# echo "NOTICE: Ensuring '${DBNAME}' is an unconnectable template"
+# cat<<EOF | sudo -u postgres ${PSQL} -tA template1
+# UPDATE pg_catalog.pg_database
+#    SET datistemplate = true,
+#        datallowconn = false
+#  WHERE datname='${DBNAME}';
+# EOF
 
 # TODO: drop unkonwn users ?
 
