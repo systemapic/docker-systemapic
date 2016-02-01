@@ -1,6 +1,7 @@
 #!/bin/bash
 
-DIRS="deps/ubuntu deps/gis nginx mongo redis/kue redis/layers redis/stats postgis backup/postgis/backup pile wu"
+# DIRS="deps/ubuntu deps/gis nginx mongo redis/kue redis/layers redis/stats postgis backup/postgis/backup pile wu"
+DIRS="deps/ubuntu deps/gis nginx mongo postgis pile wu"
 
 if test -z "$SYSTEMAPIC_DOMAIN"; then
   DEFAULT_SYSTEMAPIC_DOMAIN=dev.systemapic.com
