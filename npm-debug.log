@@ -1,15 +1,15 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'run-script', 'pull' ]
 2 info using npm@2.1.4
 3 info using node@v0.10.25
 4 verbose node symlink /usr/bin/node
-5 verbose run-script [ 'prestart', 'start', 'poststart' ]
-6 info prestart systemapic@1.3.8
-7 info start systemapic@1.3.8
+5 verbose run-script [ 'prepull', 'pull', 'postpull' ]
+6 info prepull systemapic@1.3.8
+7 info pull systemapic@1.3.8
 8 verbose unsafe-perm in lifecycle true
-9 info systemapic@1.3.8 Failed to exec start script
-10 verbose stack Error: systemapic@1.3.8 start: `cd compose && ./restart.sh`
-10 verbose stack Exit status 139
+9 info systemapic@1.3.8 Failed to exec pull script
+10 verbose stack Error: systemapic@1.3.8 pull: `cd scripts && ./update_all_repos.sh`
+10 verbose stack Exit status 126
 10 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:212:16)
 10 verbose stack     at ChildProcess.EventEmitter.emit (events.js:98:17)
 10 verbose stack     at maybeClose (child_process.js:743:16)
@@ -17,17 +17,17 @@
 11 verbose pkgid systemapic@1.3.8
 12 verbose cwd /docks
 13 error Linux 3.13.0-36-generic
-14 error argv "node" "/usr/local/bin/npm" "start"
+14 error argv "node" "/usr/local/bin/npm" "run-script" "pull"
 15 error node v0.10.25
 16 error npm  v2.1.4
 17 error code ELIFECYCLE
-18 error systemapic@1.3.8 start: `cd compose && ./restart.sh`
-18 error Exit status 139
-19 error Failed at the systemapic@1.3.8 start script.
+18 error systemapic@1.3.8 pull: `cd scripts && ./update_all_repos.sh`
+18 error Exit status 126
+19 error Failed at the systemapic@1.3.8 pull script.
 19 error This is most likely a problem with the systemapic package,
 19 error not with npm itself.
 19 error Tell the author that this fails on your system:
-19 error     cd compose && ./restart.sh
+19 error     cd scripts && ./update_all_repos.sh
 19 error You can get their info via:
 19 error     npm owner ls systemapic
 19 error There is likely additional logging output above.

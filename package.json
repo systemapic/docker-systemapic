@@ -4,7 +4,8 @@
   "description": "Systemapic Cloud Server",
   "scripts": {
     "test": "cd scripts && ./test.sh",
-    "start" : "cd compose && ./restart.sh"
+    "start" : "cd compose && ./restart.sh",
+    "pull" : "cd scripts && ./update_all_repos.sh"
   },
   "repository": {
     "type": "git",
