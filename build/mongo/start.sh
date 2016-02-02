@@ -28,14 +28,14 @@ init_mongo () {
 	# run init script (adding AUTH capabilities)
 	mongo /init_mongo.js
 
-	# mark inited
-	touch /data/db/systemapic.inited
-
 	# kill mongo
 	kill $LAST_PID;
 
 	# wait for down
 	sleep 3 # todo: check if down instead
+
+	# mark inited
+	touch /data/db/systemapic.inited
 }
 
 # ensure log dir

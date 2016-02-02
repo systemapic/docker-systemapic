@@ -89,7 +89,7 @@ mongo:
     file: common.yml
     service: mongo
   volumes_from:
-    - mongo_store_dev3
+    - mongo_store_dev3_debug
 
 #################################
 # postgis: Storage for geo-data #
