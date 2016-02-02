@@ -1,3 +1,4 @@
 saved_images/*
 *.key
 *.pem
+npm-debug.log
