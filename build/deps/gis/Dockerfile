@@ -65,13 +65,13 @@ RUN sh /tmp/install-mapnik.sh /tmp/mapnik
 # Remove mapnik sources
 RUN rm -rf /tmp/mapnik
 
-# Install PhantomJS
-ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
-RUN sh /tmp/install-phantomjs.sh
-
 # Install Graphics Magick
 ADD ./install-graphicsmagick.sh /tmp/install-graphicsmagick.sh
 RUN sh /tmp/install-graphicsmagick.sh
+
+# Install PhantomJS
+ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
+RUN sh /tmp/install-phantomjs.sh
 
 # Install extras
 RUN npm install grunt-cli -g
