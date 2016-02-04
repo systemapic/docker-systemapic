@@ -8,7 +8,10 @@ function abort() {
 function clone_repo() {
 	echo "Pulling latest repository... Version is $VERSION"
 	# clone pile
-	git clone git@github.com:systemapic/pile.git pile || abort "Failed to clone systemapic/pile.git... Quitting!"
+	git clone \
+    --reference ../../modules/pile \
+    git@github.com:systemapic/pile.git pile ||
+    abort "Failed to clone systemapic/pile.git... Quitting!"
 	# cd pile && git checkout version/$VERSION
 }
 

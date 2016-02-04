@@ -4,10 +4,10 @@ wu:
   environment:
     SYSTEMAPIC_DOMAIN: ${SYSTEMAPIC_DOMAIN}
     SYSTEMAPIC_PRODMODE: 'true'
-  working_dir: /systemapic/prod # todo: remove (currently needed for doing `docker run ... grunt test`, but can be fixed with `./test.sh` script, or something better)
+  working_dir: /systemapic/prod # todo: remove (currently needed for doing `docker run ../... grunt test`, but can be fixed with `./test.sh` script, or something better)
   volumes:
-    - /docks/modules/wu:/systemapic/dev 
-    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - ../../modules/wu:/systemapic/dev
+    - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 pile: 
   image: systemapic/pile:latest
@@ -15,25 +15,25 @@ pile:
     SYSTEMAPIC_DOMAIN: ${SYSTEMAPIC_DOMAIN}
     SYSTEMAPIC_PRODMODE: 'true'
   volumes:
-    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
-    - /docks/modules/pile:/systemapic/dev
+    - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - ../../modules/pile:/systemapic/dev
 
 nginx:
   image: systemapic/nginx:latest
   volumes:
-    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 redis:
   image: redis:latest
   volumes:
-    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 mongo: 
   image: systemapic/mongo:latest
   volumes:
-    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 postgis:
   image: systemapic/postgis:latest
   volumes:
-    - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
+    - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
