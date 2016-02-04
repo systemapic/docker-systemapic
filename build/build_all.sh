@@ -3,16 +3,18 @@
 # DIRS="deps/ubuntu deps/gis nginx mongo redis/kue redis/layers redis/stats postgis backup/postgis/backup pile wu"
 DIRS="deps/ubuntu deps/gis nginx mongo postgis pile wu"
 
+test -n "$1" && SYSTEMAPIC_DOMAIN="$1"
+
 if test -z "$SYSTEMAPIC_DOMAIN"; then
-  DEFAULT_SYSTEMAPIC_DOMAIN=dev.systemapic.com
-  echo "No SYSTEMAPIC_DOMAIN env variable set,"
+  DEFAULT_SYSTEMAPIC_DOMAIN=localhost
+  echo "No SYSTEMAPIC_DOMAIN env variable set and no parameter given,"
   echo -n "enter target domain here [${DEFAULT_SYSTEMAPIC_DOMAIN}]: "
   read SYSTEMAPIC_DOMAIN
   if test -z "$SYSTEMAPIC_DOMAIN"; then
     SYSTEMAPIC_DOMAIN=${DEFAULT_SYSTEMAPIC_DOMAIN}
   fi
-  export SYSTEMAPIC_DOMAIN
 fi
+export SYSTEMAPIC_DOMAIN
 
 SKIP=
 ONLY=
