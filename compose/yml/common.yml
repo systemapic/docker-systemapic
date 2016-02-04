@@ -6,7 +6,7 @@ wu:
     SYSTEMAPIC_PRODMODE: 'true'
   working_dir: /systemapic/prod # todo: remove (currently needed for doing `docker run ../... grunt test`, but can be fixed with `./test.sh` script, or something better)
   volumes:
-    - ../../module/wu:/systemapic/dev
+    - ../../modules/wu:/systemapic/dev
     - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
 pile: 
