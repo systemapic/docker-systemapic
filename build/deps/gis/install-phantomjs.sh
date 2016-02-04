@@ -28,7 +28,7 @@ apt-get update -y && apt-get install -y build-essential \
 cd /opt/
 mkdir phantomJS
 cd phantomJS
-wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+wget --no-verbose https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
 tar xvf phantomjs-2.1.1-linux-x86_64.tar.bz2
 mv phantomjs-2.1.1-linux-x86_64 phantomjs
 ln -s /opt/phantomJS/phantomjs/bin/phantomjs /usr/bin/phantomjs || exit 1
