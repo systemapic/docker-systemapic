@@ -20,9 +20,6 @@ pile:
 
 nginx:
   image: systemapic/nginx:latest
-  ports:
-    - 443:443
-    - 80:80
   volumes:
     - /docks/config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
 
