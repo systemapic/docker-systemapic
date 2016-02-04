@@ -1,5 +1,8 @@
 #!/bin/bash
 
+BD=$(cd `dirname $0` && pwd)
+trap "echo 'Cleaning up'; rm -rf $BD/wu" EXIT
+
 function abort() {
 	echo $1
 	exit 1;
@@ -8,19 +11,21 @@ function abort() {
 function clone_repo() {
 	echo "Pulling latest repository... Version is $VERSION"
 	# clone wu
-	git clone git@github.com:systemapic/wu.git wu || abort "Failed to clone systemapic/wu.git... Quitting!"
+	git clone \
+    --reference ../../modules/wu \
+    git@github.com:systemapic/wu.git wu ||
+    abort "Failed to clone systemapic/wu.git... Quitting!"
 	cd wu && git checkout version/$VERSION
 
 	# clone systemapic.js (aka public)
 	rm -rf public
-	git clone git@github.com:systemapic/systemapic.js.git public || abort "Failed to clone systemapic/systemapic.js.git... Quitting!"
+	git clone \
+    --reference ../../../modules/wu/public \
+    git@github.com:systemapic/systemapic.js.git public ||
+    abort "Failed to clone systemapic/systemapic.js.git... Quitting!"
 	# cd public && git checkout version/$VERSION # todo
 	cd ..
 }
-
-BD=`dirname $0`
-
-trap "echo 'Cleaning up'; rm -rf $BD/wu" 0
 
 
 
