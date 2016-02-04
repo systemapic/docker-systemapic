@@ -9,7 +9,7 @@ test -n "$1" && SYSTEMAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
 # check SYSTEMAPIC_DOMAIN is set
 test -z "$SYSTEMAPIC_DOMAIN" &&
-  abort "Usage: $0 <domain> (or set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=dev.systemapic.com)"
+  abort "Usage: $0 <domain> (or set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=localhost)"
 export SYSTEMAPIC_DOMAIN
 
 echo "--------------------------------------------------------------------"
