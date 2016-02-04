@@ -40,8 +40,8 @@ All necessary code is included in `/modules/` as submodules of this repo.
    - systemapic/systemapic.js (as submodule to wu)  
  - systemapic/pile  
 
-To init submodules, do:
-`git submodule update --init`  
+To init submodules (and update them to the expected version), do:
+`git submodule update --init --recursive`
 
 To fetch lastest master of all submodules, do:  
 `git submodule foreach --recursive git pull origin master`  
