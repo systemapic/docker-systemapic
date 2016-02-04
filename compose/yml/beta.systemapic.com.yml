@@ -44,6 +44,9 @@ nginx:
   extends:
     file: common.yml
     service: nginx
+  ports:
+    - 443:443
+    - 80:80
   links: 
     - pile
     - wu
