@@ -5,6 +5,13 @@ function abort() {
 	exit 1;
 }
 
+SHOW_LOGS=yes
+
+test "$1" = "--no-logs" && {
+  SHOW_LOGS=no
+  shift
+}
+
 test -n "$1" && SYSTEMAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
 # check SYSTEMAPIC_DOMAIN is set
@@ -33,5 +40,8 @@ docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
         ${BASEDIR}/create_storage_containers.sh
         ${BASEDIR}/yml/${SYSTEMAPIC_DOMAIN}.yml"
-echo -e "\e[93mOpening logs...\e[39m"
-docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs
+
+if [ "$SHOW_LOGS" = "yes" ]; then
+  echo -e "\e[93mOpening logs...\e[39m"
+  docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs
+fi
