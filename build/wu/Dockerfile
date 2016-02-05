@@ -4,7 +4,7 @@
 # This creates an image for the wu.js server
 #
 
-FROM systemapic/gis
+FROM systemapic/gis:latest
 
 # Install GDAL globally
 RUN npm install node-pre-gyp -g
