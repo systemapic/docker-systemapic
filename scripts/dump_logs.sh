@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAINLOG=get_logs.log
+MAINLOG=sytemapic-logs-`date +"%Y%m%d%H%M%S"`.txt
 
 # get docker logs
 docker ps -q | while read -r container_id ; do
@@ -38,6 +38,5 @@ docker ps -q | while read -r container_id ; do
 
 done
 
-# open, remove
-rsub $MAINLOG
-rm $MAINLOG
+# Print filename
+echo $MAINLOG
