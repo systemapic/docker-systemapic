@@ -41,6 +41,7 @@ RUN ( \
   echo "log_statement = none"; \ 
   : echo "log_statement = all"; \
   echo "log_min_error_statement = ERROR"; \
+  echo "log_line_prefix = '%t %a [%p-%l] %q%u@%d '"; \
 ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
 
 # pgtune
