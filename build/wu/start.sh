@@ -5,21 +5,6 @@ function abort() {
 	exit 1;
 }
 
-function dev_mode() {
-	echo 'Development mode'
-	grunt dev
-	grunt watch &
-	echo 'Running dev mode...'
-	nodemon --watch ../api --watch ../config --watch server.js --watch ../routes server.js
-}
-
-function prod_mode() {
-	echo 'Production mode'
-	grunt prod
-	echo 'Running prod mode...'
-	forever server.js
-}
-
 # Set directory of code-base (local dev code, or prod code from git)
 # ------------------------------------------------------------------
 # Both prod- and dev code-bases are available in the container. Prod-code is cloned from git on build, 
@@ -57,8 +42,4 @@ mkdir -p $REPO_DIR/log
 
 # start server in prod or dev mode
 cd $REPO_DIR/server
-if $SYSTEMAPIC_PRODMODE; then
-	prod_mode
-else
-	dev_mode
-fi
+./start-server.sh
