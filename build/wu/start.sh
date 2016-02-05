@@ -41,5 +41,5 @@ fi
 mkdir -p $REPO_DIR/log
 
 # start server in prod or dev mode
-cd $REPO_DIR/server
+cd $REPO_DIR
 ./start-server.sh
