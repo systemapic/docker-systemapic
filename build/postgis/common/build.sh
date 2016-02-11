@@ -37,12 +37,9 @@ while test -n "$1"; do
 done
 
 # prompt version if not specified like `./build.sh 9.3`
-if test "$PGVER" = ""; then
-  read -e -p "Enter PostgreSQL version to build: [$DEFAULT_VERSION] " PGVER
-  echo "Usage: ./build.sh PGVER (like: ./build.sh 9.4)"
-  echo "Aborted."
-  exit 1
-fi
+while test -z "$PGVER"; do
+  read -e -p "Enter PostgreSQL version to build: " PGVER
+done
 
 echo "Building PostgreSQL version: $PGVER"
 
