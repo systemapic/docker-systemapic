@@ -121,6 +121,7 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
 CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
 CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder;
+SELECT postgis_full_version();
 EOF
 else
   echo "NOTICE: Assuming '${DBNAME}' is already spatially enabled"
