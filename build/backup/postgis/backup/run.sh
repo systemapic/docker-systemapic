@@ -10,7 +10,8 @@ test -z "$SYSTEMAPIC_DOMAIN" &&
   abort "Usage: $0 <domain> (or set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=localhost)"
 export SYSTEMAPIC_DOMAIN
 
-CONFIG=$PWD/../../../../config/${SYSTEMAPIC_DOMAIN}
+BASEDIR=$(cd `dirname $0`; pwd)
+CONFIG=${BASEDIR}/../../../../config/${SYSTEMAPIC_DOMAIN}
 
 #systemapic/postgis   backup
 
