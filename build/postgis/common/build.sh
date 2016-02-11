@@ -44,11 +44,15 @@ if test "$PGVER" = ""; then
   exit 1
 fi
 
+echo "Building PostgreSQL version: $PGVER"
+
 # only match supported versions
-if [ "$PGVER" = "9.4" ] || [ "$PGVER" = "9.3" ]; then
+if [ "$PGVER" = "9.4" ] || [ "$PGVER" = "9.3" ] ||
+   [ "$PGVER" = "9.5" ]
+then
   build
 else
-  echo "Build support only for either 9.4 or 9.3. Quitting!"
+  echo "Build support only for 9.3 to 9.5. Quitting!"
   exit 1
 fi
 
