@@ -46,12 +46,15 @@ RUN ( \
 
 # pgtune
 RUN ( \
+  PGVER_SHORT=`echo ${PGVER} | tr -d .`; \
   echo "max_connections = 100"; \
   echo "shared_buffers = 4GB"; \
   echo "effective_cache_size = 12GB"; \
   echo "work_mem = 20971kB"; \
   echo "maintenance_work_mem = 2GB"; \
-  echo "checkpoint_segments = 128"; \
+  if test ${PGVER_SHORT} -lt 95; then \
+    echo "checkpoint_segments = 128"; \
+  fi; \
   echo "checkpoint_completion_target = 0.9"; \
   echo "wal_buffers = 16MB"; \
   echo "default_statistics_target = 500"; \
