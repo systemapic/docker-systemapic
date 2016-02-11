@@ -3,19 +3,6 @@
 function build() {
   
 
-  while test -n "$1"; do
-    opt=$1
-    shift
-    echo "opt:$opt, args:$@"
-    if test "$opt" = "--latest"; then
-      LATEST="yes"
-    elif test "$opt" = "--no-latest"; then
-      LATEST="no"
-    else
-      PGVER="$opt"
-    fi
-  done
-
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="systemapic/postgis"
   TAG="${PGVER_SHORT}-21"
@@ -33,8 +20,21 @@ function build() {
   fi
 }
 
-PGVER=$1
+PGVER=
 LATEST=yes
+
+while test -n "$1"; do
+  opt=$1
+  shift
+  echo "opt:$opt, args:$@"
+  if test "$opt" = "--latest"; then
+    LATEST="yes"
+  elif test "$opt" = "--no-latest"; then
+    LATEST="no"
+  else
+    PGVER="$opt"
+  fi
+done
 
 # prompt version if not specified like `./build.sh 9.3`
 if test "$PGVER" = ""; then
