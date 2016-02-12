@@ -26,9 +26,12 @@ cd ${BASEDIR} &&
   postgis_backup_store \
   /backup/postgis/postgis-backup-last \
   ${STORENAME} \
-  systemapic/postgis:latest &&
-echo "Database restores, you can now restart services" ||
+  systemapic/postgis:latest && {
+echo "Previous PGDATA store (${STORENAME}) was renamed to $BKSTORENAME"
+echo "Database restores, you can now restart services"
+} ||
 {
   echo "Something went wrong, renaming back PostgreSQL store"
   docker rename ${BKSTORENAME} ${STORENAME}
+  exit 1
 }
