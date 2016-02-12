@@ -37,8 +37,8 @@ if [ ! -d $DATADIR ]; then
   mkdir -p ${DATADIR} || exit 1
 fi
 
-# set ownership of datadir
-chown -R postgres ${DATADIR} || exit 1
+# set proper ownership of datadir, if missing
+find ${DATADIR} \! -user postgres -print0 | xargs -0r chown postgres || exit 1
 
 # test if DATADIR has content, or call initdb
 if [ ! "$(ls -A $DATADIR)" ]; then
@@ -47,7 +47,16 @@ if [ ! "$(ls -A $DATADIR)" ]; then
   su postgres sh -c "$INITDB $DATADIR" || exit 1
 fi
 
-trap "echo \"Sending SIGTERM to postgres\"; killall -s SIGTERM postgres" SIGTERM
+cleanup()
+{
+  if test -n "$pgsqlpid"; then
+    echo "Sending SIGTERM to postgres"
+    kill -s SIGTERM $pgsqlpid
+    wait $pgsqlpid
+  fi
+}
+
+trap "cleanup" EXIT
 
 echo "--- Starting PostgreSQL ${PGVER}"
 su postgres sh -c "$POSTGRES -D $DATADIR -c config_file=$CONF" &
@@ -56,7 +65,7 @@ pgsqlpid=$!
 export PGDATABASE=template1
 export PGUSER=postgres
 
-echo "Waiting for postgres start for restoring databases"
+echo "Waiting for PostgreSQL start"
 PSQL="psql -X"
 while :; do
         sleep 10;
@@ -116,25 +125,27 @@ fi
 #       of completed templating work.
 if test x"$allows" = "xt"; then
 echo "NOTICE: Spatially enabling \"${DBNAME}\" database";
-cat<<EOF | sudo -u postgres ${PSQL} -tA "${DBNAME}"
+cat<<EOF | sudo -u postgres ${PSQL} --set ON_ERROR_STOP=1 -tA "${DBNAME}" || exit 1
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
 CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
 CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder;
+SELECT postgis_full_version();
 EOF
 else
   echo "NOTICE: Assuming '${DBNAME}' is already spatially enabled"
 fi
 
 # Ensure DBNAME is marked as a template
-# echo "NOTICE: Ensuring '${DBNAME}' is an unconnectable template"
-# cat<<EOF | sudo -u postgres ${PSQL} -tA template1
-# UPDATE pg_catalog.pg_database
-#    SET datistemplate = true,
-#        datallowconn = false
-#  WHERE datname='${DBNAME}';
-# EOF
+echo "NOTICE: Ensuring '${DBNAME}' is an unconnectable template"
+cat<<EOF | sudo -u postgres ${PSQL} -tA template1
+UPDATE pg_catalog.pg_database
+   SET datistemplate = true,
+       datallowconn = false
+ WHERE datname='${DBNAME}';
+EOF
 
 # TODO: drop unkonwn users ?
 
 wait $pgsqlpid
+pgsqlpid= # to avoid the cleanup failure

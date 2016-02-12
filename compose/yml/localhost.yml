@@ -102,4 +102,4 @@ postgis:
     file: common.yml
     service: postgis
   volumes_from:
-    - postgresql94_store_localhost
+    - postgresql_store_localhost

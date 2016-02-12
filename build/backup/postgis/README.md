@@ -1,25 +1,43 @@
 ### PostGIS backup and restore
 
 
-#### Backup
-
-A `backup` container is attached in `docker-compose.yml` that will
-dump current dbs to `/backup/postgis` on another storage volume
-`postgis_backup_store` every midnight.
-
 ##### Backup volume store
 
-Created thus: `docker create -v /backup/postgis --name postgis_backup_store systemapic/ubuntu`
+Backup volume store can be created with:
+
+`sh
+ docker create -v /backup/postgis --name postgis_backup_store systemapic/ubuntu
+`
+
+#### Backup
+
+Backups can be taken running
+
+`
+  backup/run.sh
+`
+
+They will be taken from the `${SYSTEMAPIC_DOMAIN}_postgis_1`
+container (expected to be running) and put into the
+`postgis_backup_store` container.
 
 #### Restore
 
-Run `./do_restore.sh` in `/restore/`.
-Usage `./do_restore.sh <backup_store> <backup_path> <pgdata_store> <postgis_image>`.
+Latest backup can be restored into a new store usable
+by current systemapic/postgis:latest image running:
 
-This will restore specified backup (<backup_path> in <backup_store>)
-into a fresh store (<pgdata_store>) to be used by the specified postgis
-image (<postgis_image>, which determines postgresql/postgis version).
+`
+  restore/run.sh
+`
 
-The created store can then be swapped in `docker-compose.yml`, togheter
-with the referenced postgis image.
+The current store container (`postgresql_store_${SYSTEMAPIC_DOMAIN}`)
+will be renamed to have a random suffix (pid of the run.sh process)
+and a new one will be created with the data restored.
 
+Restarting service after a successful restore run would be
+a way to upgrade PostgreSQL/PostGIS with a full dump/reload process
+
+WARNING: any change occurring in any of the databases after the
+         backup/run.sh and before the restart is lost so it is
+         recommended to switch the service databases into read-only
+         mode during an upgrade

@@ -1,7 +1,10 @@
 #!/bin/bash
 #export PAGER="/usr/bin/less -S"
-export PGUSER=docker 
-export PGPASSWORD=docker 
+
+source /systemapic/config/env.sh || exit 1
+
+export PGUSER=$SYSTEMAPIC_PGSQL_USERNAME
+export PGPASSWORD=$SYSTEMAPIC_PGSQL_PASSWORD
 export PGDATABASE=template1
 export PGHOST=postgis
 
