@@ -20,13 +20,13 @@ wu:
 
 ################################
 # pile: Systemapic Tile Server #
-################################
+################################ # todo: remove wu link? (or use directly instead of API as doing currently)
 pile: 
   extends:
     file: common.yml
     service: pile
   links: 
-    - wu # todo: remove? (or use directly instead of API as doing currently)
+    - wu 
     - redislayers
     - redisstats
     - redistokens
