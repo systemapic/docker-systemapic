@@ -56,7 +56,7 @@ pgsqlpid=$!
 export PGDATABASE=template1
 export PGUSER=postgres
 
-echo "Waiting for postgres start for restoring databases"
+echo "Waiting for PostgreSQL start"
 PSQL="psql -X"
 while :; do
         sleep 10;
