@@ -71,9 +71,6 @@ RUN apt-get install -y fish htop
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
-ADD update_postgis.sh /update_postgis.sh
-RUN chmod 0755 /update_postgis.sh
-
 ADD restore_databases.sh /restore_databases.sh
 RUN chmod 0755 /restore_databases.sh
 
