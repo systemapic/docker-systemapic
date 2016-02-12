@@ -35,8 +35,8 @@ section, we have:
     The script is used by `start.sh` when SYSTEMAPIC_RESTORE_POSTGIS_FROM
     env is set.
 
-  - `update_postgis.sh`
+  - `update_extensions.sh`
 
-    This script soft-upgrades all postgis-related extensions to
-    the given target version.
+    This script ensures all required extension are loaded in
+    all the databases and the template
 

@@ -7,3 +7,6 @@
 [submodule "modules/pile"]
 	path = modules/pile
 	url = git@github.com:systemapic/pile.git
+[submodule "modules/systemapic-postgresql"]
+	path = modules/systemapic-postgresql
+	url = git@github.com:systemapic/systemapic-postgresql.git
