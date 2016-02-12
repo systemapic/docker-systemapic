@@ -37,8 +37,8 @@ if [ ! -d $DATADIR ]; then
   mkdir -p ${DATADIR} || exit 1
 fi
 
-# set ownership of datadir
-chown -R postgres ${DATADIR} || exit 1
+# set proper ownership of datadir, if missing
+find ${DATADIR} \! -user postgres -print0 | xargs -0r chown postgres || exit 1
 
 # test if DATADIR has content, or call initdb
 if [ ! "$(ls -A $DATADIR)" ]; then
