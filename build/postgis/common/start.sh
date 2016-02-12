@@ -47,7 +47,16 @@ if [ ! "$(ls -A $DATADIR)" ]; then
   su postgres sh -c "$INITDB $DATADIR" || exit 1
 fi
 
-trap "echo \"Sending SIGTERM to postgres\"; killall -s SIGTERM postgres" SIGTERM
+cleanup()
+{
+  if test -n "$pgsqlpid"; then
+    echo "Sending SIGTERM to postgres"
+    kill -s SIGTERM $pgsqlpid
+    wait $pgsqlpid
+  fi
+}
+
+trap "cleanup" EXIT
 
 echo "--- Starting PostgreSQL ${PGVER}"
 su postgres sh -c "$POSTGRES -D $DATADIR -c config_file=$CONF" &
@@ -116,7 +125,7 @@ fi
 #       of completed templating work.
 if test x"$allows" = "xt"; then
 echo "NOTICE: Spatially enabling \"${DBNAME}\" database";
-cat<<EOF | sudo -u postgres ${PSQL} -tA "${DBNAME}"
+cat<<EOF | sudo -u postgres ${PSQL} --set ON_ERROR_STOP=1 -tA "${DBNAME}" || exit 1
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
 CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
@@ -139,3 +148,4 @@ fi
 # TODO: drop unkonwn users ?
 
 wait $pgsqlpid
+pgsqlpid= # to avoid the cleanup failure
