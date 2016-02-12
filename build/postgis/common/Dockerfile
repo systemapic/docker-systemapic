@@ -80,8 +80,20 @@ RUN chmod 0755 /restore_databases.sh
 # ADD default_env.txt /systemapic/configs/env  # added by build_config.sh in /docks/config/... @strk: YES, we need a deafult 
 # RUN chmod 0600 /systemapic/configs/env
 
+ADD update_extensions.sh /update_extensions.sh
+RUN chmod 0755 /update_extensions.sh
+
+RUN apt-get update && apt-get -y install \
+  make \
+  postgresql-server-dev-${PGVER}
+ADD systemapic-postgresql/ /systemapic-postgresql
+RUN cd /systemapic-postgresql && make install && cd -;
+
+
 ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}
 
 ENV PGUSER postgres
 ENV PGDATABASE template1
+ENV PGHOST localhost
+
