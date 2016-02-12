@@ -3,6 +3,11 @@
 STORAGE_CONTAINER=postgis_backup_store
 BACKUP_PATH=/backup/postgis
 
+abort() {
+	echo $1 >&2
+	exit 1;
+}
+
 test -n "$1" && SYSTEMAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
 # check SYSTEMAPIC_DOMAIN is set
