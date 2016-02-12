@@ -2,6 +2,11 @@
 
 function build() {
   
+  if test -d systemapic-postgresql; then
+    ( cd systemapic-postgresql; git pull; ) || return 1
+  else
+    git clone ../../../modules/systemapic-postgresql || return 1
+  fi
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="systemapic/postgis"
@@ -9,7 +14,7 @@ function build() {
   FULLNAME="${NAME}:${TAG}"
   LATESTNAME="${NAME}:latest"
   echo "Building $PGVER $FULLNAME"
-  docker build --build-arg PGVER=${PGVER} -t ${FULLNAME} . || exit 1
+  docker build --build-arg PGVER=${PGVER} -t ${FULLNAME} . || return 1
 
   echo "Image ${FULLNAME} built"
 
@@ -46,7 +51,7 @@ echo "Building PostgreSQL version: $PGVER"
 if [ "$PGVER" = "9.4" ] || [ "$PGVER" = "9.3" ] ||
    [ "$PGVER" = "9.5" ]
 then
-  build
+  build || exit 1
 else
   echo "Build support only for 9.3 to 9.5. Quitting!"
   exit 1
