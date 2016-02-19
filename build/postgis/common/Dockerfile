@@ -46,12 +46,15 @@ RUN ( \
 
 # pgtune
 RUN ( \
+  PGVER_SHORT=`echo ${PGVER} | tr -d .`; \
   echo "max_connections = 100"; \
   echo "shared_buffers = 4GB"; \
   echo "effective_cache_size = 12GB"; \
   echo "work_mem = 20971kB"; \
   echo "maintenance_work_mem = 2GB"; \
-  echo "checkpoint_segments = 128"; \
+  if test ${PGVER_SHORT} -lt 95; then \
+    echo "checkpoint_segments = 128"; \
+  fi; \
   echo "checkpoint_completion_target = 0.9"; \
   echo "wal_buffers = 16MB"; \
   echo "default_statistics_target = 500"; \
@@ -68,17 +71,26 @@ RUN apt-get install -y fish htop
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
-ADD update_postgis.sh /update_postgis.sh
-RUN chmod 0755 /update_postgis.sh
-
 ADD restore_databases.sh /restore_databases.sh
 RUN chmod 0755 /restore_databases.sh
 
 # ADD default_env.txt /systemapic/configs/env  # added by build_config.sh in /docks/config/... @strk: YES, we need a deafult 
 # RUN chmod 0600 /systemapic/configs/env
 
+ADD update_extensions.sh /update_extensions.sh
+RUN chmod 0755 /update_extensions.sh
+
+RUN apt-get update && apt-get -y install \
+  make \
+  postgresql-server-dev-${PGVER}
+ADD systemapic-postgresql/ /systemapic-postgresql
+RUN cd /systemapic-postgresql && make install && cd -;
+
+
 ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}
 
 ENV PGUSER postgres
 ENV PGDATABASE template1
+ENV PGHOST localhost
+

@@ -15,7 +15,7 @@ function clone_repo() {
     --reference ../../modules/wu \
     git@github.com:systemapic/wu.git wu ||
     abort "Failed to clone systemapic/wu.git... Quitting!"
-	cd wu && git checkout version/$VERSION
+	cd wu && git checkout $BRANCH
 
 	# clone systemapic.js (aka public)
 	rm -rf public
@@ -30,7 +30,9 @@ function clone_repo() {
 
 
 # clone from tagged version
-VERSION="1.3.8" # todo: read from $ARGS
+VERSION="1.4.0" # todo: read from $ARGS
+BRANCH=version/$VERSION
+# BRANCH=master # use master
 clone_repo
 
 # docker doesn't allow ADDing paths above Dockerfile dirname

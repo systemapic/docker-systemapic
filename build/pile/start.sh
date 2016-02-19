@@ -5,16 +5,6 @@ function abort() {
 	exit 1;
 }
 
-function prod_mode() {
-	echo 'Pile | PostGIS Tile Server | Production mode'
-	forever src/pile.js production >> log/pile.log
-}
-
-function dev_mode() {
-	echo 'Pile Debug mode'
-	nodemon -i node_modules/ src/pile.js
-}
-
 # set code dir (local dev code, or prod code from git)
 # ---
 # Both prod- and dev code-bases are available in the container. Prod-code is cloned from git on build, 
@@ -51,8 +41,4 @@ fi
 mkdir -p $REPO_DIR/log
 
 # start server
-if $SYSTEMAPIC_PRODMODE; then
-	prod_mode
-else
-	dev_mode
-fi
+./start-server.sh

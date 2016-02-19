@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t systemapic/gis .
+docker build -t systemapic/gis:latest .
