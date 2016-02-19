@@ -118,6 +118,7 @@ SELECT datallowconn FROM pg_catalog.pg_database WHERE datname = '${DBNAME}' \
 if test x"$allows" = "x"; then
   echo "WARNING: Creating missing \"${DBNAME}\" database";
   sudo -u postgres createdb -O "${USERNAME}" "${DBNAME}"
+  allows=t # just-created database will allow connection
 fi
 
 # Ensure DBNAME is loaded with needed extensions,
