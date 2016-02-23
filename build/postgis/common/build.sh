@@ -2,11 +2,7 @@
 
 function build() {
   
-  if test -d systemapic-postgresql; then
-    ( cd systemapic-postgresql; git pull; ) || return 1
-  else
-    git clone ../../../modules/systemapic-postgresql || return 1
-  fi
+  rsync -r ../../../modules/systemapic-postgresql .
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="systemapic/postgis"
