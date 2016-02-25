@@ -60,14 +60,7 @@ apt-get install -y libboost-dev \
     ttf-dejavu-extra \
     python-nose \
     libgdal1-dev \
-    libsqlite3-dev \
-    libmapnik \
-    libmapnik-dev \
-    mapnik-utils \
-    mapnik-input-plugin-gdal \
-    mapnik-input-plugin-ogr \
-    mapnik-input-plugin-postgis \
-    mapnik-input-plugin-sqlite 
+    libsqlite3-dev
 
 cd /tmp/ || die
 wget http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-0.9.37.tar.bz2 || die
