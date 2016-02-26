@@ -12,9 +12,15 @@ BASEDIR=`dirname ${SRCDIR}`
 mkdir -p ${BASEDIR} || die
 
 cd ${BASEDIR}
-VER=3.0.9
-wget -q https://github.com/mapnik/mapnik/archive/v${VER}.tar.gz -O - |
-  tar xzf - || die
-mv mapnik-${VER} mapnik || die
-#git clone https://github.com/mapnik/mapnik ${SRCDIR} || die
-#cd mapnik && git submodule update --init
+
+# Temporary hack for https://github.com/mapnik/mapnik/pull/3325
+REPO=https://github.com/strk/mapnik
+BRANCH=preunion_rasters
+
+REFERENCE=
+if test -n "$SYSTEMAPIC_SRC_MAPNIK"; then
+  REFERENCE="--reference $SYSTEMAPIC_SRC_MAPNIK"
+fi
+
+git clone ${REFERENCE} --depth=1 -b ${BRANCH} ${REPO}
+cd mapnik && git submodule update --init || die
