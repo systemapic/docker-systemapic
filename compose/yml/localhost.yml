@@ -101,5 +101,9 @@ postgis:
   extends:
     file: common.yml
     service: postgis
+  # For debugging, it's convenient
+  # to access postgis from host
+  ports:
+    - 15432:5432
   volumes_from:
     - postgresql_store_localhost
