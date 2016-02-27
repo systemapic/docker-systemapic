@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# test latest docker version, TODO!
+DOCKER_VERSION=${docker --version}
+
 # DIRS="deps/ubuntu deps/gis nginx mongo redis/kue redis/layers redis/stats postgis backup/postgis/backup pile wu"
 DIRS="deps/ubuntu deps/gis nginx mongo postgis pile wu"
 
@@ -49,7 +52,7 @@ for dir in $DIRS; do
     echo "Skipping $dir (in skip list)"
     continue
   fi
-  echo "Building $dir from $PWD"
+  echo "Building $dir from $PWD/$dir"
   cd $dir && ./build.sh && cd - || {
     echo "Build failed in $dir";
     exit 1;
