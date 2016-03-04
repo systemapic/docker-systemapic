@@ -15,7 +15,7 @@ cd ${BASEDIR}
 
 # Fixes https://github.com/mapnik/mapnik/issues/2375
 REPO=https://github.com/strk/mapnik
-BRANCH=pgraster-resample
+BRANCH=systemapic
 
 REFERENCE=
 if test -n "$SYSTEMAPIC_SRC_MAPNIK"; then
