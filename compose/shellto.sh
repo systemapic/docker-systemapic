@@ -12,5 +12,6 @@ NAME=$1
 test -z "$SYSTEMAPIC_DOMAIN" &&
   abort "Usage: $0 <domain> (or set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=localhost)"
 
-FULLNAME=${SYSTEMAPIC_DOMAIN}_${NAME}_1
+PREFIX=`echo ${SYSTEMAPIC_DOMAIN} | sed 's/\..*//'`
+FULLNAME=${PREFIX}_${NAME}_1
 docker exec -ti ${FULLNAME} bash
