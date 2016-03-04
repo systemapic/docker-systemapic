@@ -13,9 +13,9 @@ mkdir -p ${BASEDIR} || die
 
 cd ${BASEDIR}
 
-# Temporary hack for https://github.com/mapnik/mapnik/pull/3325
+# Fixes https://github.com/mapnik/mapnik/issues/2375
 REPO=https://github.com/strk/mapnik
-BRANCH=preunion_rasters
+BRANCH=pgraster-resample
 
 REFERENCE=
 if test -n "$SYSTEMAPIC_SRC_MAPNIK"; then
@@ -23,4 +23,5 @@ if test -n "$SYSTEMAPIC_SRC_MAPNIK"; then
 fi
 
 git clone ${REFERENCE} --depth=1 -b ${BRANCH} ${REPO}
-cd mapnik && git submodule update --init || die
+cd mapnik || die
+git submodule update --init || die

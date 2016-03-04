@@ -10,6 +10,6 @@ SRCDIR=$1
 
 cd "${SRCDIR}" || die
 ./configure BOOST_INCLUDES=/opt/boost/include BOOST_LIBS=/opt/boost/lib || die
-make -j7 || die
+make JOBS=8 || die
 sudo make install || die
 
