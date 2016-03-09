@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM systemapic/ubuntu
 
 MAINTAINER Knut Ole Sjøli <@kosjoli>
 
