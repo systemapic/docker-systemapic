@@ -16,7 +16,7 @@ RUN mkdir -p /systemapic/prod
 ADD pile/ /systemapic/prod
 
 # Install node_modules
-RUN cp /tmp/node_modules /systemapic/prod/pile/ -r
+RUN mkdir -p /systemapic/prod/pile && cp /tmp/node_modules /systemapic/prod/pile -r
 
 # add start script
 ADD start.sh /start.sh
