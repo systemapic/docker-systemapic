@@ -34,6 +34,7 @@ pile:
     - postgis
   environment:
     SYSTEMAPIC_PRODMODE: 'false'
+  working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_dev_common
 

@@ -48,23 +48,6 @@ RUN sh /tmp/install-gdal.sh
 ADD ./test-gdal.sh /tmp/
 RUN sh /tmp/test-gdal.sh
 
-# Install Mapnik dependencies
-ADD ./install-mapnik-dependencies.sh /tmp/
-RUN sh /tmp/install-mapnik-dependencies.sh
-
-RUN apt-get install -y git 
-
-# Download Mapnik
-ADD ./download-mapnik.sh /tmp/
-RUN sh /tmp/download-mapnik.sh /tmp/mapnik
-
-# Install Mapnik
-ADD ./install-mapnik.sh /tmp/
-RUN sh /tmp/install-mapnik.sh /tmp/mapnik
-
-# Remove mapnik sources
-RUN rm -rf /tmp/mapnik
-
 # Install Graphics Magick
 ADD ./install-graphicsmagick.sh /tmp/install-graphicsmagick.sh
 RUN sh /tmp/install-graphicsmagick.sh
@@ -77,7 +60,25 @@ RUN sh /tmp/install-phantomjs.sh
 RUN npm install grunt-cli -g
 RUN npm install nodemon -g
 RUN npm install forever -g
-RUN apt-get update && apt-get install -y nmap pigz zip mlocate redis-tools fish
+RUN apt-get update && apt-get install -y nmap pigz zip mlocate redis-tools fish git
+
+# Install Mapnik dependencies
+ADD ./install-mapnik-dependencies.sh /tmp/
+RUN sh /tmp/install-mapnik-dependencies.sh
+
+# Download Mapnik
+ADD ./download-mapnik.sh /tmp/
+RUN sh /tmp/download-mapnik.sh /tmp/mapnik
+
+# Install Mapnik
+ADD ./install-mapnik.sh /tmp/
+RUN sh /tmp/install-mapnik.sh /tmp/mapnik
+
+# Remove mapnik sources
+# RUN rm -rf /tmp/mapnik
+
+
+
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

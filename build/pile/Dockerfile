@@ -18,6 +18,9 @@ ADD pile/ /systemapic/prod
 # Install node_modules
 RUN mkdir -p /systemapic/prod/pile && cp /tmp/node_modules /systemapic/prod/pile -r
 
+# Install mochajs
+RUN npm install mocha -g
+
 # add start script
 ADD start.sh /start.sh
 RUN chmod +x /start.sh
