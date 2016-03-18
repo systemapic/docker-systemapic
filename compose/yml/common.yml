@@ -35,6 +35,6 @@ mongo:
 
 postgis:
   # image: systemapic/postgis:latest
-  image: systemapic/postgis:log
+  image: systemapic/postgis:latest
   volumes:
     - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
