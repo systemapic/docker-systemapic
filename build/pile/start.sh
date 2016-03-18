@@ -10,7 +10,7 @@ function abort() {
 # Both prod- and dev code-bases are available in the container. Prod-code is cloned from git on build, 
 # while dev-code is mounted from localhost /docks/modules/wu. $SYSTEMAPIC_PRODMODE env on localhost 
 # decides which code-base is in use (in effect here and in compose yml's)
-if test "$SYSTEMAPIC_PRODMODE" = "true"; then
+if $SYSTEMAPIC_PRODMODE; then
 	REPO_DIR=/systemapic/prod
 else
 	REPO_DIR=/systemapic/dev
@@ -39,6 +39,9 @@ fi
 
 # ensure log folder
 mkdir -p $REPO_DIR/log
+
+ls -l
+echo $REPO_DIR
 
 # start server
 ./start-server.sh

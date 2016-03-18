@@ -15,9 +15,15 @@ RUN apt-get install -y \
     openjdk-7-jdk \
     mysql-client \
     mysql-server \
-    unzip
-
-RUN apt-get install -y curl
+    unzip \
+    nmap \
+    pigz \
+    zip \
+    mlocate \
+    redis-tools \ 
+    fish \
+    git \
+    curl
 
 # Install NodeJS 10.40
 ADD ./install-nodejs1040.sh /tmp/
@@ -56,12 +62,6 @@ RUN sh /tmp/install-graphicsmagick.sh
 ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
 RUN sh /tmp/install-phantomjs.sh
 
-# Install extras
-RUN npm install grunt-cli -g
-RUN npm install nodemon -g
-RUN npm install forever -g
-RUN apt-get update && apt-get install -y nmap pigz zip mlocate redis-tools fish git
-
 # Install Mapnik dependencies
 ADD ./install-mapnik-dependencies.sh /tmp/
 RUN sh /tmp/install-mapnik-dependencies.sh
@@ -75,10 +75,13 @@ ADD ./install-mapnik.sh /tmp/
 RUN sh /tmp/install-mapnik.sh /tmp/mapnik
 
 # Remove mapnik sources
-# RUN rm -rf /tmp/mapnik
+RUN rm -rf /tmp/mapnik
 
-
-
+# Install extras
+RUN npm install grunt-cli -g
+RUN npm install nodemon -g
+RUN npm install forever -g
+RUN npm install mocha -g
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

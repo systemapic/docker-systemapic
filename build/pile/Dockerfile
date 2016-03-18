@@ -16,10 +16,12 @@ RUN mkdir -p /systemapic/prod
 ADD pile/ /systemapic/prod
 
 # Install node_modules
-RUN mkdir -p /systemapic/prod/pile && cp /tmp/node_modules /systemapic/prod/pile -r
+RUN cp /tmp/node_modules /systemapic/prod/pile/ -r
 
 # Install mochajs
 RUN npm install mocha -g
+RUN npm install nodemon -g
+RUN npm install topojson -g
 
 # add start script
 ADD start.sh /start.sh
