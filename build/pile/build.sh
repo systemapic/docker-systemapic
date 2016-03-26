@@ -8,11 +8,12 @@ function abort() {
 function clone_repo() {
         echo "Pulling latest repository... Branch is $BRANCH"
         # clone pile
-        git clone \
-            --reference ../../modules/pile \
-            git@github.com:systemapic/pile.git pile ||
-            abort "Failed to clone systemapic/pile.git... Quitting!"
-        cd pile && git checkout $BRANCH
+        # git clone \
+        #     --reference ../../modules/pile \
+        #     git@github.com:systemapic/pile.git pile ||
+        #     abort "Failed to clone systemapic/pile.git... Quitting!"
+        # cd pile && git checkout $BRANCH
+        git clone git@github.com:systemapic/pile.git
 }
 
 BD=`dirname $0`

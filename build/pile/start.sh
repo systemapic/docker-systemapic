@@ -35,6 +35,10 @@ cp $SYSTEMAPIC_CONFIG_DIR/pile-config.js $CONFIG_DIR/pile-config.js
 if [ ! -d "$NODE_MODULES_DIR" ]; then
   echo "Installing node modules..."
   npm install || abort "Failed to install node modules. Quitting!"
+
+  # install mapnik from source
+  rm node_modules/mapnik -r
+  npm install --build-from-source mapnik
 fi
 
 # ensure log folder

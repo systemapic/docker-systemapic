@@ -2,7 +2,6 @@
 # Pile.js: PostGIS Tile Server
 #
 
-# Ubuntu 14.04 Trusty Tahyr
 FROM systemapic/gis:latest
 
 # Copy package.json
