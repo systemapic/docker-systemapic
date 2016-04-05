@@ -4,17 +4,22 @@
   "description": "Systemapic Cloud Server",
   "scripts": {
     "test": "cd scripts && ./test.sh",
-    "start" : "cd compose && ./restart.sh",
-    "pull" : "cd scripts && ./update_all_repos.sh"
+    "start": "cd compose && ./restart.sh",
+    "pull": "cd scripts && ./update_all_repos.sh"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/systemapic/docker-systemapic.git"
   },
-  "contributors" : ["knutole@systemapic.com", "jorgen@systemapic.com", "strk@keybit.net", "icygler@hwdtech.ru"],
+  "contributors": [
+    "knutole@systemapic.com",
+    "jorgen@systemapic.com",
+    "strk@keybit.net",
+    "icygler@hwdtech.ru"
+  ],
   "license": "GPLv2",
   "bugs": {
     "url": "https://github.com/systemapic/docker-systemapic/issues"
   },
-  "homepage": "https://github.com/systemapic/docker-systemapic"
+  "homepage": "https://github.com/systemapic/docker-systemapic",
 }
