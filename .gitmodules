@@ -10,3 +10,6 @@
 [submodule "modules/systemapic-postgresql"]
 	path = modules/systemapic-postgresql
 	url = git@github.com:systemapic/systemapic-postgresql.git
+[submodule "modules/api-scripts"]
+	path = modules/api-scripts
+	url = git@github.com:systemapic/api-scripts.git
