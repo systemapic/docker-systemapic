@@ -14,6 +14,7 @@ pile:
   environment:
     SYSTEMAPIC_DOMAIN: ${SYSTEMAPIC_DOMAIN}
     SYSTEMAPIC_PRODMODE: 'true'
+  mem_limit: 10000000000
   volumes:
     - ../../config/${SYSTEMAPIC_DOMAIN}:/systemapic/config
     - ../../modules/pile:/systemapic/dev
