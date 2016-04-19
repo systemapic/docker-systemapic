@@ -14,9 +14,11 @@ cd ${BASEDIR}
 
 # repo/branch 
 # REPO=https://github.com/systemapic/mapnik
-REPO=https://github.com/knutole/mapnik
-BRANCH=systemapic
-# BRANCH=master  
+# REPO=https://github.com/knutole/mapnik
+REPO=https://github.com/mapnik/mapnik
+# BRANCH=systemapic
+
+BRANCH=master  
 
 # reference local copy if available
 REFERENCE=
