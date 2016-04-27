@@ -76,10 +76,10 @@ sudo ldconfig || die
 
 rm /tmp/harfbuzz-* -r || die
 
-# install libboost 1.60
-cd /tmp/
-wget http://downloads.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.gz
-tar xzf boost_1_60_0.tar.gz
-cd boost_1_60_0/
-./bootstrap.sh --prefix=/opt/boost
-./b2 install -j8 --prefix=/opt/boost
+# # install libboost 1.60
+# cd /tmp/
+# wget http://downloads.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.gz
+# tar xzf boost_1_60_0.tar.gz
+# cd boost_1_60_0/
+# ./bootstrap.sh --prefix=/opt/boost
+# ./b2 install -j8 --prefix=/opt/boost
