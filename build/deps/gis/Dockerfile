@@ -82,7 +82,7 @@ RUN npm install grunt-cli -g
 RUN npm install nodemon -g
 RUN npm install forever -g
 RUN npm install mocha -g
-RUN apt-get update -y && apt-get install -y protobuf-compiler libprotobuf-dev
+RUN apt-get install -y protobuf-compiler libprotobuf-dev
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

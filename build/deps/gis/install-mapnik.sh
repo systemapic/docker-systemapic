@@ -10,5 +10,5 @@ cd "${SRCDIR}" || exit 1
 
 # workaround for Makefile bug, see https://github.com/mapnik/mapnik/issues/3385
 python scons/scons.py configure BOOST_INCLUDES=/opt/boost/include BOOST_LIBS=/opt/boost/lib
-python scons/scons.py
-python scons/scons.py install
+python scons/scons.py -j7
+python scons/scons.py -j7 install
