@@ -61,7 +61,8 @@ redislayers:
     file: common.yml
     service: redis
   volumes_from:
-    - redis_store_dev
+    # - redis_store_dev
+    - store_dev_redis_layers
   command: "redis-server /systemapic/config/redis.layers.conf"
 
 redisstats:
@@ -104,4 +105,5 @@ postgis:
     file: common.yml
     service: postgis
   volumes_from:
-    - postgis_store_dev
+    # - postgis_store_dev
+    - store_dev_postgis_debug_1

@@ -45,37 +45,22 @@ RUN ( \
 ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
 
 # pgtune
-# RUN ( \
-#   PGVER_SHORT=`echo ${PGVER} | tr -d .`; \
-#   echo "max_connections = 100"; \
-#   echo "shared_buffers = 4GB"; \
-#   echo "effective_cache_size = 12GB"; \
-#   echo "work_mem = 20971kB"; \
-#   echo "maintenance_work_mem = 2GB"; \
-#   if test ${PGVER_SHORT} -lt 95; then \
-#     echo "checkpoint_segments = 128"; \
-#   fi; \
-#   echo "checkpoint_completion_target = 0.9"; \
-#   echo "wal_buffers = 16MB"; \
-#   echo "default_statistics_target = 500"; \
-# ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
-
-
-# pgtune
 RUN ( \
   PGVER_SHORT=`echo ${PGVER} | tr -d .`; \
-  echo "max_connections = 500"; \
-  echo "shared_buffers = 5GB"; \
-  echo "effective_cache_size = 15GB"; \
-  echo "work_mem = 10485kB"; \
-  echo "maintenance_work_mem = 1280MB"; \
+  echo "max_connections = 100"; \
+  echo "shared_buffers = 4GB"; \
+  echo "effective_cache_size = 12GB"; \
+  echo "work_mem = 20971kB"; \
+  echo "maintenance_work_mem = 2GB"; \
   if test ${PGVER_SHORT} -lt 95; then \
-    echo "checkpoint_segments = 32"; \
+    echo "checkpoint_segments = 128"; \
   fi; \
-  echo "checkpoint_completion_target = 0.7"; \
+  echo "checkpoint_completion_target = 0.9"; \
   echo "wal_buffers = 16MB"; \
-  echo "default_statistics_target = 100"; \
+  echo "default_statistics_target = 500"; \
 ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
+
+
 # TODO: stop relying on service start/stop to fix /var/run/postgresql
 RUN service postgresql start && service postgresql stop
 
