@@ -2,6 +2,7 @@ FROM systemapic/ubuntu
 
 MAINTAINER Knut Ole Sjøli <@kosjoli>
 
+
 # Ensure the package repository is up to date
 RUN apt-get update -y
 
@@ -12,9 +13,9 @@ RUN apt-get install -y \
     build-essential \
     wget \
     subversion \
-    openjdk-7-jdk \
-    mysql-client \
-    mysql-server \
+    # openjdk-7-jdk \
+    # mysql-client \
+    # mysql-server \
     unzip \
     nmap \
     pigz \
@@ -23,7 +24,9 @@ RUN apt-get install -y \
     redis-tools \ 
     fish \
     git \
-    curl
+    curl \
+    protobuf-compiler \
+    libprotobuf-dev
 
 # Install NodeJS 10.40
 ADD ./install-nodejs1040.sh /tmp/
@@ -82,7 +85,7 @@ RUN npm install grunt-cli -g
 RUN npm install nodemon -g
 RUN npm install forever -g
 RUN npm install mocha -g
-RUN apt-get install -y protobuf-compiler libprotobuf-dev
+# RUN apt-get install -y protobuf-compiler libprotobuf-dev
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -7,10 +7,11 @@
 FROM systemapic/gis:latest
 
 # Install GDAL globally
+#RUN apt-get update -y 
 RUN npm install node-pre-gyp -g
 RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
 RUN npm install mocha -g
-RUN apt-get update -y && apt-get install -y sysstat
+RUN apt-get install -y sysstat
 
 # Copy package.json
 ADD wu/package.json /tmp/package.json
