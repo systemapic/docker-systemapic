@@ -4,7 +4,7 @@ MAINTAINER Knut Ole Sjøli <@kosjoli>
 
 
 # Ensure the package repository is up to date
-RUN apt-get update -y
+RUN apt-get update --fix-missing -y
 
 # Install basic dependencies
 RUN apt-get install -y \
@@ -13,9 +13,9 @@ RUN apt-get install -y \
     build-essential \
     wget \
     subversion \
-    # openjdk-7-jdk \
-    # mysql-client \
-    # mysql-server \
+    openjdk-7-jdk \
+    mysql-client \
+    mysql-server \
     unzip \
     nmap \
     pigz \
