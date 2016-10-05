@@ -16,7 +16,8 @@ wu:
     SYSTEMAPIC_PRODMODE: 'false'
   working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
-    - data_store_dev_common
+    # - data_store_dev_common
+    - store_dev_data
 
 ################################
 # pile: Systemapic Tile Server #
@@ -36,7 +37,8 @@ pile:
     SYSTEMAPIC_PRODMODE: 'false'
   working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
-    - data_store_dev_common
+    # - data_store_dev_common
+    - store_dev_data
   
 
 ########################################
@@ -62,7 +64,8 @@ redislayers:
     service: redis
   volumes_from:
     # - redis_store_dev
-    - store_dev_redis_layers
+    # - store_dev_redis_layers
+    - store_dev_layers
   command: "redis-server /systemapic/config/redis.layers.conf"
 
 redisstats:
@@ -70,7 +73,8 @@ redisstats:
     file: common.yml
     service: redis
   volumes_from:
-    - redis_stats_store_dev
+    # - redis_stats_store_dev
+    - store_dev_stats
   command: "redis-server /systemapic/config/redis.stats.conf"
 
 redistokens:
@@ -78,7 +82,8 @@ redistokens:
     file: common.yml
     service: redis
   volumes_from:
-    - store_dev_redis_tokens
+    # - store_dev_redis_tokens
+    - store_dev_tokens
   command: "redis-server /systemapic/config/redis.tokens.conf"
 
 redistemp:
@@ -95,7 +100,8 @@ mongo:
     file: common.yml
     service: mongo
   volumes_from:
-    - mongo_store_dev
+    # - mongo_store_dev
+    - store_dev_mongo
 
 #################################
 # postgis: Storage for geo-data #
@@ -106,4 +112,5 @@ postgis:
     service: postgis
   volumes_from:
     # - postgis_store_dev
-    - store_dev_postgis_debug_1
+    # - store_dev_postgis_debug_1
+    - store_dev_postgis
