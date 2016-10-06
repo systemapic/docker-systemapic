@@ -43,5 +43,5 @@ docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
 
 if [ "$SHOW_LOGS" = "yes" ]; then
   echo -e "\e[93mOpening logs...\e[39m"
-  docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs
+  docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs -f
 fi
