@@ -36,6 +36,12 @@ ENV TERM xterm
 # Set path for global node_modules
 ENV NODE_PATH /usr/local/lib/node_modules
 
+# upgrade ubuntu
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
+
 # Expose port
 EXPOSE 3001
 
