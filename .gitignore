@@ -2,6 +2,5 @@ saved_images/*
 *.key
 *.pem
 npm-debug.log
-build/postgis/common/systemapic-postgresql/
 scripts/*logs*txt
 scripts/logs/
