@@ -4,3 +4,4 @@ saved_images/*
 npm-debug.log
 scripts/*logs*txt
 scripts/logs/
+*.ignore.*
