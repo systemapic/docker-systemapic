@@ -1,6 +1,6 @@
 
 // read config
-var configFile = cat('/systemapic/config/mongo.json');
+var configFile = cat('/mapic/config/mongo.json');
 
 // parse config
 var config = JSON.parse(configFile);

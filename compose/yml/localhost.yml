@@ -1,10 +1,10 @@
 ######################### 
-# wu: Systemapic Server #
+# engine: Mapic Server  #
 #########################
-wu:
+engine:
   extends:
     file: common.yml
-    service: wu
+    service: engine
   links:
     - mongo
     - redislayers
@@ -14,19 +14,19 @@ wu:
     - postgis
   environment:
     SYSTEMAPIC_PRODMODE: 'false'
-  working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
+  # working_dir: /mapic/modules/engine # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_localhost
 
 ################################
-# pile: Systemapic Tile Server #
+# mile: Mapic Tile Server      #
 ################################
-pile: 
+mile: 
   extends:
     file: common.yml
-    service: pile
+    service: mile
   links: 
-    - wu # todo: remove? (or use directly instead of API as doing currently)
+    - engine # todo: remove? (or use directly instead of API as doing currently)
     - redislayers
     - redisstats
     - redistokens
@@ -34,12 +34,13 @@ pile:
     - postgis
   environment:
     SYSTEMAPIC_PRODMODE: 'false'
+  # working_dir: /mapic/modules/mile # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_localhost
 
-########################################
-# nginx: Reverse-proxy for wu and pile #
-########################################
+##########################################
+# nginx: Reverse-proxy for engine & mile #
+##########################################
 nginx:
   extends:
     file: common.yml
@@ -48,8 +49,8 @@ nginx:
     - 443:443
     - 8080:80
   links: 
-    - pile
-    - wu
+    - mile
+    - engine
 
 ###################################
 # redis: Simple key-value storage #
@@ -60,7 +61,7 @@ redislayers:
     service: redis
   volumes_from:
     - redis_store_localhost
-  command: "redis-server /systemapic/config/redis.layers.conf"
+  command: "redis-server /mapic/config/redis.layers.conf"
 
 redisstats:
   extends:
@@ -68,7 +69,7 @@ redisstats:
     service: redis
   volumes_from:
     - redis_stats_store_localhost
-  command: "redis-server /systemapic/config/redis.stats.conf"
+  command: "redis-server /mapic/config/redis.stats.conf"
 
 redistokens:
   extends:
@@ -76,13 +77,13 @@ redistokens:
     service: redis
   volumes_from:
     - redis_tokens_store_localhost
-  command: "redis-server /systemapic/config/redis.tokens.conf"
+  command: "redis-server /mapic/config/redis.tokens.conf"
 
 redistemp:
   extends:
     file: common.yml
     service: redis
-  command: "redis-server /systemapic/config/redis.temp.conf"
+  command: "redis-server /mapic/config/redis.temp.conf"
 
 ####################################
 # mongo: Storage for server models #

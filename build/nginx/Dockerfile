@@ -1,10 +1,7 @@
 # Ubuntu 14.04 Trusty Tahyr
 FROM ubuntu:trusty
 
-MAINTAINER Knut Ole Sjøli <knutole@systemapic.com>
-
-# Ensure the package repository is up to date
-# RUN apt-get update -y
+MAINTAINER Knut Ole Sjøli <knutole@mapic.io>
 
 # Install basic dependencies
 RUN apt-get update -y && apt-get install -y \
@@ -25,15 +22,17 @@ RUN apt-get update -y && apt-get install -y \
     nmon \
     bmon
 
+
+
+# Install OpenSSL
+ADD ./install-openssl.sh /tmp/
+RUN sh /tmp/install-openssl.sh
+
 # Install NginX
 ADD ./install-nginx.sh /tmp/
 RUN sh /tmp/install-nginx.sh
 
 # Copy latest config files
-# ADD ./nginx.conf /etc/nginx/
-# ADD ./dhparams.pem /etc/nginx/
-# ADD ./ssl_certificate.pem /etc/nginx/ssl/ssl_certificate.pem
-# ADD ./ssl_certificate.key /etc/nginx/ssl/ssl_certificate.key
 ADD ./502.html /etc/nginx/error/
 
 # forward request and error logs to docker log collector
@@ -50,7 +49,7 @@ EXPOSE 443
 ENV TERM xterm
 
 # Start nginx
-# WORKDIR /etc/nginx
-WORKDIR /systemapic/config
-# CMD ["nginx", "-c", "/etc/nginx/nginx.conf"]
-CMD ["nginx", "-c", "/systemapic/config/nginx.conf"]
+WORKDIR /mapic/config
+
+# default cmd
+CMD ["nginx", "-c", "/mapic/config/nginx.conf"]

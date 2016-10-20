@@ -14,8 +14,8 @@ COMPOSENAME=${ARR[0]}
 
 # remove stale containers
 docker rm "$COMPOSENAME"_nginx_1
-docker rm "$COMPOSENAME"_pile_1
-docker rm "$COMPOSENAME"_wu_1
+docker rm "$COMPOSENAME"_mile_1
+docker rm "$COMPOSENAME"_engine_1
 docker rm "$COMPOSENAME"_redislayers_1
 docker rm "$COMPOSENAME"_redisstats_1
 docker rm "$COMPOSENAME"_redistemp_1

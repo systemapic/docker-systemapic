@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # build
-docker build -t systemapic/mongo:latest .
+docker build -t mapic/mongo:latest .

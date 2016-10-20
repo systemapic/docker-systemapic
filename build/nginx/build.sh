@@ -23,7 +23,7 @@ fi
 
 # build
 echo 'Building image'
-docker build -t systemapic/nginx:latest . || exit 1
+docker build -t mapic/nginx:latest . || exit 1
 
 # clean up
 # rm nginx.conf

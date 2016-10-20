@@ -8,7 +8,7 @@
 # 2: restart mongo with auth config
 
 # config path (never changes)
-CONFIGFILE=/systemapic/config/mongod.conf
+CONFIGFILE=/mapic/config/mongod.conf
 
 function abort() {
 	echo $1
@@ -35,14 +35,14 @@ init_mongo () {
 	sleep 3 # todo: check if down instead
 
 	# mark inited
-	touch /data/db/systemapic.inited
+	touch /data/db/mapic.inited
 }
 
 # ensure log dir
 touch /etc/mongod.log
 
 # if script has been updated, or never inited, run init_mongo
-if [[ /init_mongo.js -nt /data/db/systemapic.inited ]]; then
+if [[ /init_mongo.js -nt /data/db/mapic.inited ]]; then
 	init_mongo || abort "Failed to initialize MongoDB. Quitting!"
 fi
 

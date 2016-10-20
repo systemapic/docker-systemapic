@@ -2,10 +2,11 @@
 
 function build() {
   
-  rsync -r ../../../modules/systemapic-postgresql .
+  # rsync -r ../../../modules/systemapic-postgresql .
+  git clone git@github.com:systemapic/systemapic-postgresql.git
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
-  NAME="systemapic/postgis"
+  NAME="mapic/postgis"
   TAG="${PGVER_SHORT}-21"
   FULLNAME="${NAME}:${TAG}"
   LATESTNAME="${NAME}:latest"

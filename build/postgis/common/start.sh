@@ -15,7 +15,7 @@ POSTGRES="${BINDIR}/postgres"
 INITDB="${BINDIR}/initdb"
 
 echo "Starting PostGIS"
-source /systemapic/config/env.sh || exit 1
+source /mapic/config/env.sh || exit 1
 
 USERNAME="${SYSTEMAPIC_PGSQL_USERNAME}"
 PASS="${SYSTEMAPIC_PGSQL_PASSWORD}"
