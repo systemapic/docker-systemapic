@@ -10,3 +10,6 @@
 [submodule "config"]
     path = config
     url = git@github.com:mapic/default-config.git
+[submodule "modules/mapic.js"]
+	path = modules/mapic.js
+	url = git@github.com:mapic/mapic.js.git
