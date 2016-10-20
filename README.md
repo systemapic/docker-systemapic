@@ -1,10 +1,18 @@
-# docker-systemapic
+# Dockerized Mapic Engine
 
-[Systemapic](https://systemapic.com) Cloud Server
+[Mapic](http://mapic.io) Cloud Server
+
+## Installation
+Clone repository and run install:
+```bash
+git clone git@github.com:mapic/dockerized.git
+cd dockerized
+./install.sh
+```
 
 ## Usage
 
-All current run-files are contained in `/compose/`. 
+
 
 #### Set environment
 
@@ -25,7 +33,7 @@ Do `compose/restart.sh` to start all containers.
 ## Install
 
 All builds files are contained in
-[https://github.com/systemapic/docker-systemapic/tree/master/build](`build/`)
+[https://github.com/mapic/dockerized/tree/master/build](`build/`)
 folder. 
 
 Run `build/build_all.sh` to build all required Docker images.
