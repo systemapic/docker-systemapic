@@ -10,3 +10,6 @@
 [submodule "modules/sdk"]
 	path = modules/sdk
 	url = git@github.com:mapic/sdk.git
+[submodule "modules/engine/public"]
+    path = modules/engine/public
+    url = git@github.com:mapic/mapic.js.git
