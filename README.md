@@ -1,6 +1,6 @@
 # Dockerized Mapic Engine
 
-Mapic Docker Images available @ [Docker Hub](https://hub.docker.com/u/mapic/dashboard/)
+Mapic Docker Images @ [Docker Hub](https://hub.docker.com/u/mapic/dashboard/)
 
 ## Installation
 Clone repository and run install:
