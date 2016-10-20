@@ -14,6 +14,7 @@ cd dockerized
 
 
 
+
 #### Set environment
 
 Set `SYSTEMAPIC_DOMAIN` environment variable on your localhost
