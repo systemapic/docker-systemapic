@@ -7,11 +7,14 @@ Clone repository and run install:
 ```bash
 git clone git@github.com:mapic/dockerized.git
 cd dockerized
-./install.sh
+./install-to-localhost.sh
 ```
 
 ## Usage
 
+1. Install (see above).
+2. `cd dockerized/compose/` and run `./restart.sh`. 
+3. Open your browser @ https://localhost.
 
 
 
@@ -27,30 +30,9 @@ Set to `true` for running latest git repository code,
 with prod-flags set in servers. 
 
 
-#### Start Systemapic Cloud Server
-
-Do `compose/restart.sh` to start all containers. 
-
-## Install
-
-All builds files are contained in
-[https://github.com/mapic/dockerized/tree/master/build](`build/`)
-folder. 
-
-Run `build/build_all.sh` to build all required Docker images.
-
 ## Depends
 
 Minimum required `Docker` version: 1.9.0 (due to `--build-arg`)  
 Recommended `Docker Compose` version: 1.5.2  
 
-All necessary code is included in `/modules/` as submodules of this repo.  
- - systemapic/wu  
-   - systemapic/systemapic.js (as submodule to wu)  
- - systemapic/pile  
-
-To init submodules (and update them to the expected version), do:
-`git submodule update --init --recursive`
-
-To fetch lastest master of all submodules, do:  
-`git submodule foreach --recursive git pull origin master`  
+All relevant code is included in `/modules/` as submodules of this repo.  
