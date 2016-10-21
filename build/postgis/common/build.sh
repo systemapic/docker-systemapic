@@ -7,7 +7,8 @@ function build() {
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="mapic/postgis"
-  TAG="${PGVER_SHORT}-21"
+  # TAG="${PGVER_SHORT}-21"
+  TAG="${PGVER_SHORT}-22"
   FULLNAME="${NAME}:${TAG}"
   LATESTNAME="${NAME}:latest"
   echo "Building $PGVER $FULLNAME"
@@ -16,9 +17,12 @@ function build() {
   echo "Image ${FULLNAME} built"
 
   if test "$LATEST" = "yes"; then
-    docker tag -f ${FULLNAME} ${LATESTNAME}
+    docker tag ${FULLNAME} ${LATESTNAME}
     echo "Image tagged as ${LATESTNAME}"
   fi
+
+  # cleanup
+  rm -rf systemapic-postgresql
 }
 
 PGVER=

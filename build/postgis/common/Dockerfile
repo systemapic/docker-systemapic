@@ -10,9 +10,10 @@ RUN test -n "${PGVER}" || ( \
 ) >&2
 
 # TODO: find a way to report version at build time
-#RUN echo PGVER is ${PGVER}
+RUN echo PGVER is ${PGVER}
 
 MAINTAINER Sandro Santilli <strk@keybit.net>
+
 
 RUN apt-get update && apt-get -y install wget
 RUN wget --quiet --no-check-certificate -O - \
@@ -24,7 +25,8 @@ RUN update-locale LANG=en_US.UTF-8
 RUN apt-get -y update && apt-get install -y \
   postgresql-contrib-${PGVER} \
   postgresql-${PGVER} \
-  postgresql-${PGVER}-postgis-2.1
+  postgresql-${PGVER}-postgis-2.2
+  # postgresql-${PGVER}-postgis-2.1
 # We do not install recommends because they could bring in
 # non-wanted PostgreSQL versions.
 # See https://github.com/systemapic/docker-systemapic/issues/13
