@@ -3,8 +3,7 @@
 # test latest docker version, TODO!
 DOCKER_VERSION=${docker --version}
 
-# DIRS="deps/ubuntu deps/gis nginx mongo redis/kue redis/layers redis/stats postgis backup/postgis/backup pile wu"
-DIRS="deps/ubuntu deps/gis nginx mongo postgis pile wu"
+DIRS="deps/ubuntu deps/gis nginx mongo postgis mile engine"
 
 test -n "$1" && SYSTEMAPIC_DOMAIN="$1"
 
