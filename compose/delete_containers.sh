@@ -6,10 +6,10 @@ function abort() {
 }
 
 # check domain ENV is set
-[ -z "$SYSTEMAPIC_DOMAIN" ] && abort "Delete failed! Need to set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=dev.systemapic.com"
+[ -z "$MAPIC_DOMAIN" ] && abort "Delete failed! Need to set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=dev.systemapic.com"
 
 # get name
-ARR=(${SYSTEMAPIC_DOMAIN//./ })
+ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
 # remove stale containers

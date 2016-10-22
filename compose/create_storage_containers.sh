@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DC=docker-compose.yml
-test -n "$SYSTEMAPIC_DOMAIN" && DC=`dirname $0`/yml/$SYSTEMAPIC_DOMAIN.yml
+test -n "$MAPIC_DOMAIN" && DC=`dirname $0`/yml/$MAPIC_DOMAIN.yml
 test -n "$1" && DC="$1"
 
 

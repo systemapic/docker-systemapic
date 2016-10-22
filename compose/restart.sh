@@ -12,34 +12,35 @@ test "$1" = "--no-logs" && {
   shift
 }
 
-test -n "$1" && SYSTEMAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
+test -n "$1" && MAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
-# check SYSTEMAPIC_DOMAIN is set
-test -z "$SYSTEMAPIC_DOMAIN" &&
-  abort "Usage: $0 <domain> (or set SYSTEMAPIC_DOMAIN ENV variable, eg. export SYSTEMAPIC_DOMAIN=localhost)"
-export SYSTEMAPIC_DOMAIN
+# check MAPIC_DOMAIN is set
+test -z "$MAPIC_DOMAIN" &&
+  abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
+export MAPIC_DOMAIN
 
 echo "--------------------------------------------------------------------"
-echo "Restarting services for domain $SYSTEMAPIC_DOMAIN"
+echo "Restarting services @ $MAPIC_DOMAIN"
 echo "--------------------------------------------------------------------"
 
 BASEDIR=`dirname $0`
 cd $BASEDIR
 
 # get file and name (eg. dev.systemapic.com.yml and dev)
-COMPOSEFILE="yml/$SYSTEMAPIC_DOMAIN".yml
-ARR=(${SYSTEMAPIC_DOMAIN//./ })
+COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
+ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
 # kill, delete, start fresh, get logs
+echo -e "# Stopping containers..."
 ./stop_containers.sh
-echo -e "\e[93mDeleting containers...\e[39m"
+echo -e "# Deleting containers..."
 ./delete_containers.sh
-echo -e "\e[93mStarting containers...\e[39m"
+echo -e "# Restarting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
         ${BASEDIR}/create_storage_containers.sh
-        ${BASEDIR}/yml/${SYSTEMAPIC_DOMAIN}.yml"
+        ${BASEDIR}/yml/${MAPIC_DOMAIN}.yml"
 
 if [ "$SHOW_LOGS" = "yes" ]; then
   echo -e "\e[93mOpening logs...\e[39m"
