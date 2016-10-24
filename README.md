@@ -3,6 +3,7 @@
 
 Mapic is an open source mapping library and geoserver. Learn more @ http://mapic.io.
 
+For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
 ## What's in the box
 Mapic consists of:   
@@ -11,7 +12,6 @@ Mapic consists of:
 3. [Mapic Client library](https://github.com/mapic/mapic.js)    
 4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
 
-For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
 Mapic is built on Docker. Docker Images are available on the [Docker Hub](https://hub.docker.com/u/mapic/dashboard/).
 
