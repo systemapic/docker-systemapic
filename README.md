@@ -25,7 +25,7 @@ cd mapic
 ```
 
 #### Install to custom domain
-Run normal install above, then see https://github.com/mapic/config-domain.example.com for instructions on changing configs for custom domain.
+Run normal install above, then see [mapic/config-domain.example.com](https://github.com/mapic/config-domain.example.com) for instructions on changing configs for custom domain.
 
 
 ## Usage
