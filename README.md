@@ -16,7 +16,7 @@ Run normal install above, then see https://github.com/mapic/config-domain.exampl
 #### Set environment
 Set `MAPIC_DOMAIN` environment variable on your localhost
 (eg. `dev.mapic.io`, without `https://`).
-This is a required ENV variable.
+This is a required [ENV variable](https://www.schrodinger.com/kb/1842).
 
 Default value is `MAPIC_DOMAIN=localhost`.
 
