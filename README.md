@@ -1,16 +1,14 @@
 # Mapic
 
-Mapic consists of several parts: 
-1. Mapic Engine
-2. Mapic Tileserver
-3. Mapic Client library
-4. Mapic SDK (for interacting with API)
+Mapic consists of several parts:   
+1. [Mapic Engine](https://github.com/mapic/engine)  
+2. [Mapic Tileserver](https://github.com/mapic/mile)    
+3. [Mapic Client library](https://github.com/mapic/mapic.js)    
+4. [Mapic SDK (for interacting with API programatically)](https://github.com/mapic/sdk)  
 
 For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
-Mapic is built on Docker, and is highly flexible and scalable. 
-
-Mapic Docker Images @ [Docker Hub](https://hub.docker.com/u/mapic/dashboard/)
+Mapic is built on Docker, and is highly flexible and scalable. Mapic's Docker Images are available on the [Docker Hub](https://hub.docker.com/u/mapic/dashboard/)
 
 
 ## Install
@@ -23,13 +21,6 @@ cd mapic
 
 #### Install to custom domain
 Run normal install above, then see https://github.com/mapic/config-domain.example.com for instructions on changing configs for custom domain.
-
-#### Set environment
-Set `MAPIC_DOMAIN` environment variable on your localhost
-(eg. `dev.mapic.io`, without `https://`).
-This is a required [ENV variable](https://www.schrodinger.com/kb/1842).
-
-Default value is `MAPIC_DOMAIN=localhost`.
 
 
 ## Usage
