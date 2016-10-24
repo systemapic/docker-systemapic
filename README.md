@@ -1,14 +1,14 @@
 # Mapic
 
-Mapic consists of several parts:   
+Mapic consists of:   
 1. [Mapic Engine](https://github.com/mapic/engine)  
 2. [Mapic Tileserver](https://github.com/mapic/mile)    
 3. [Mapic Client library](https://github.com/mapic/mapic.js)    
-4. [Mapic SDK (for interacting with API programatically)](https://github.com/mapic/sdk)  
+4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programatically)
 
 For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
-Mapic is built on Docker, and is highly flexible and scalable. Mapic's Docker Images are available on the [Docker Hub](https://hub.docker.com/u/mapic/dashboard/)
+Mapic is built on Docker. Docker Images are available on the [Docker Hub](https://hub.docker.com/u/mapic/dashboard/).
 
 
 ## Install
