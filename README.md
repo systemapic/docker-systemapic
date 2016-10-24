@@ -1,11 +1,13 @@
 ![Mapic Logo](https://cloud.githubusercontent.com/assets/2197944/19607635/5c434458-97cb-11e6-941b-e74e83b385ba.png)
 # Mapic
 
+Mapic is an open source mapping library and geoserver. Learn more @ http://mapic.io.
+
 Mapic consists of:   
 1. [Mapic Engine](https://github.com/mapic/engine)  
 2. [Mapic Tileserver](https://github.com/mapic/mile)    
 3. [Mapic Client library](https://github.com/mapic/mapic.js)    
-4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programatically)
+4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
 
 For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
