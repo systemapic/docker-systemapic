@@ -19,3 +19,13 @@ cd $DIR/modules/engine
 git submodule init
 git submodule update --recursive --remote
 
+# init mapic.js submodules
+cd $DIR/modules/mapic.js
+git submodule init
+git submodule update --recursive --remote
+
+# init sdk submodules
+cd $DIR/modules/sdk
+git submodule init
+git submodule update --recursive --remote
+
