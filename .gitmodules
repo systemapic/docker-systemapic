@@ -9,7 +9,7 @@
 	url = git@github.com:mapic/sdk.git
 [submodule "config"]
     path = config
-    url = git@github.com:mapic/default-config.git
+    url = git@github.com:mapic/config-localhost.git
 [submodule "modules/mapic.js"]
 	path = modules/mapic.js
 	url = git@github.com:mapic/mapic.js.git
