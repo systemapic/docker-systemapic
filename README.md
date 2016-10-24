@@ -3,6 +3,8 @@
 
 Mapic is an open source mapping library and geoserver. Learn more @ http://mapic.io.
 
+
+## What's in the box
 Mapic consists of:   
 1. [Mapic Engine](https://github.com/mapic/engine)  
 2. [Mapic Tileserver](https://github.com/mapic/mile)    
