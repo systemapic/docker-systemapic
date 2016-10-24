@@ -1,7 +1,7 @@
 {
-  "name": "systemapic",
-  "version": "1.3.8",
-  "description": "Systemapic Cloud Server",
+  "name": "mapic/mapic",
+  "version": "2.0.1",
+  "description": "Mapic Platform",
   "scripts": {
     "test": "cd scripts && ./test.sh",
     "start": "cd compose && ./restart.sh",
@@ -9,17 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/systemapic/docker-systemapic.git"
+    "url": "https://github.com/mapic/mapic.git"
   },
   "contributors": [
-    "knutole@systemapic.com",
+    "knutole@mapic.io",
     "jorgen@systemapic.com",
     "strk@keybit.net",
-    "icygler@hwdtech.ru"
+    "icygler@hwdtech.ru",
+    "mgdfot@gmail.com"
   ],
-  "license": "GPLv2",
+  "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/systemapic/docker-systemapic/issues"
+    "url": "https://github.com/mapic/mapic/issues"
   },
-  "homepage": "https://github.com/systemapic/docker-systemapic",
+  "homepage": "https://github.com/mapic/mapic",
 }
