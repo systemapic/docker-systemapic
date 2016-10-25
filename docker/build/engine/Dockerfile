@@ -1,7 +1,5 @@
 ##
-# knutole/dev-wu-server
-#
-# This creates an image for the wu.js server
+# mapic/engine
 #
 
 FROM mapic/gis:latest
@@ -10,27 +8,11 @@ FROM mapic/gis:latest
 RUN npm install node-pre-gyp -g
 RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
 RUN npm install mocha -g
-
-# # Copy package.json
-# ADD wu/package.json /tmp/package.json
-# WORKDIR /tmp
-# RUN export MAKEFLAGS="-j 7"
-# RUN npm install
-
-# # Copy latest wu
-# RUN mkdir -p /systemapic/prod
-# ADD wu/ /systemapic/prod
-
-# Install node_modules
-# RUN mv /tmp/node_modules /systemapic/prod/node_modules
+RUN npm install npm-check-updates -g 
 
 # upgrade ubuntu
 ADD ./upgrade-dist.sh /tmp/upgrade-dist.sh
 RUN sh /tmp/upgrade-dist.sh
-
-# Add start script
-ADD start.sh /start.sh
-RUN chmod +x /start.sh
 
 # Set terminal env
 ENV TERM xterm
@@ -42,4 +24,4 @@ ENV NODE_PATH /usr/local/lib/node_modules
 EXPOSE 3001
 
 # Define default command.
-CMD /start.sh
+CMD ./start-server.sh
