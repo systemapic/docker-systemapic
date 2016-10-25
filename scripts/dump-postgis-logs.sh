@@ -1,9 +1,9 @@
 #!/bin/bash
 
-MAINLOG=sytemapic-logs-`date +"%Y%m%d%H%M%S"`.txt
+MAINLOG=mapic-postgis-logs-`date +"%Y%m%d%H%M%S"`.txt
 
 # get docker logs
-docker ps -q | while read -r container_id ; do
+docker ps -q -f "name=postgis" | while read -r container_id ; do
 
 	# get keys
 	LOGPATH=$(docker inspect $container_id | jq .[0].LogPath)

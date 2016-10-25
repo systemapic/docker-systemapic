@@ -1,10 +1,9 @@
 #!/bin/bash
 
-mkdir -p logs/
-MAINLOG=logs/systemapic-pile-logs-`date +"%Y%m%d%H%M%S"`.txt
+MAINLOG=mapic-engine-logs-`date +"%Y%m%d%H%M%S"`.txt
 
 # get docker logs
-docker ps -q -f "name=pile" | while read -r container_id ; do
+docker ps -q -f "name=wu" | while read -r container_id ; do
 
 	# get keys
 	LOGPATH=$(docker inspect $container_id | jq .[0].LogPath)
