@@ -39,7 +39,7 @@ echo -e "# Flushing containers..."
 echo -e "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
-        ${BASEDIR}/create_storage_containers.sh
+        ${BASEDIR}/create-storage-containers.sh
         ${BASEDIR}/yml/${MAPIC_DOMAIN}.yml"
 
 if [ "$SHOW_LOGS" = "yes" ]; then
