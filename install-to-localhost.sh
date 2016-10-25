@@ -3,6 +3,10 @@
 # get working dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+echo $DIR
+
+echo "Pulling Submodules --------------------------------->"
+
 # init dockerize submodules
 cd $DIR
 git submodule init
@@ -29,3 +33,7 @@ cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
+echo "All Code Downloaded --------------------------------->"
+
+echo "Adding SelfSigned SSL---------------------->"
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
