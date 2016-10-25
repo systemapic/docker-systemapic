@@ -37,3 +37,5 @@ echo "All Code Downloaded --------------------------------->"
 
 echo "Adding SelfSigned SSL---------------------->"
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
+
+node update-configs.js
