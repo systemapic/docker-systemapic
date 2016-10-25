@@ -11,6 +11,20 @@ var REDIS_TEMP_CONF_PATH = __dirname + "/config/localhost/redis.temp.conf";
 
 var passString = crypto.randomBytes(64).toString('hex');
 
+var updateRedisConfig = function (filePath) {
+    var lines = fs.readFileSync(filePath).toString().split("\n");
+    for(var i in lines) {
+        var lineText = lines[i];
+        if(lineText.indexOf('requirepass') > -1){
+            lines[i] = "requirepass " + passString;
+            break;
+        }
+    }
+
+    lines = lines.join('\n');
+    fs.writeFileSync(filePath, lines, 'utf-8');  
+};
+
 
 console.log("Updating mongo.json File----------------------------->");
 
@@ -47,4 +61,20 @@ var engineJsonStr = 'module.exports = ' + JSON.stringify(engineConfig, null, 2);
 var content = fs.readFileSync(ENGINE_CONFIG_PATH);
 content = content.toString('utf8');
 fs.writeFileSync(ENGINE_CONFIG_PATH , engineJsonStr, 'utf-8');
+
+
+console.log("Updating redis.layers.conf File----------------------------->");
+updateRedisConfig(REDIS_LAYERS_CONF_PATH);
+
+
+console.log("Updating redis.stats.conf File----------------------------->");
+updateRedisConfig(REDIS_STATS_CONF_PATH);
+
+
+console.log("Updating redis.tokens.conf File----------------------------->");
+updateRedisConfig(REDIS_TOKENS_CONF_PATH);
+
+
+console.log("Updating redis.temp.conf File----------------------------->");
+updateRedisConfig(REDIS_TEMP_CONF_PATH);
 
