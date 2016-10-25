@@ -38,7 +38,7 @@ Run normal install above, then see [mapic/config-domain.example.com](https://git
 
 
 ## Depends
-Docker: `>= 1.9.0`
+Docker: `>= 1.9.0`  
 Docker Compose: `>= 1.5.2`
 
 
