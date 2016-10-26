@@ -2,8 +2,7 @@
 
 function build() {
   
-  # rsync -r ../../../modules/systemapic-postgresql .
-  git clone git@github.com:systemapic/systemapic-postgresql.git
+  git clone git://github.com:mapic/mapic-postgresql.git
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="mapic/postgis"
@@ -22,7 +21,7 @@ function build() {
   fi
 
   # cleanup
-  rm -rf systemapic-postgresql
+  rm -rf mapic-postgresql
 }
 
 PGVER=
