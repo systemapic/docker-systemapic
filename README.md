@@ -21,7 +21,7 @@ Mapic is built on Docker. Docker Images for Mapic are available on the [Docker H
 
 2. Clone repository and run install:
 ```bash
-git clone git@github.com:mapic/mapic.git
+git clone git://github.com/mapic/mapic.git
 cd mapic
 ./install-to-localhost.sh
 ```
