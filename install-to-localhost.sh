@@ -28,4 +28,3 @@ git submodule update --recursive --remote
 cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
-
