@@ -3,12 +3,10 @@
 # default compose file
 DC=docker-compose.yml
 
-# ensure domain env set (default: localhost)
-if [ -z "$MAPIC_DOMAIN" ]; then
-    MAPIC_DOMAIN=localhost
-fi
+
 export MAPIC_DOMAIN
 
+echo "DOMAIN -> $MAPIC_DOMAIN"
 
 # check for compose file
 DC=`dirname $0`/yml/$MAPIC_DOMAIN.yml
@@ -29,49 +27,58 @@ dcreate() {
     echo "" > /dev/null 2>&1
   else
     echo "Creating ${name}..."
-    docker create -v "${path}" --name "${name}" systemapic/ubuntu
+    docker create -v "${path}" --name "${name}" mapic/ubuntu
   fi
 }
 
-grep -A1 volumes_from "${DC}" |
-  grep -v -- -- |
-  grep -v volumes_from |
-  grep -v "\s*#" | 
-  sed 's/.*- *\([^ ]*\).*/\1/' |
-  sort -u |
-while read C; do
-  # postgis backup
-  if echo "$C" | grep -q '^postgis_backup'; then
-    POSTGIS_BACKUP=$C
-    dcreate $POSTGIS_BACKUP /backup/postgis || exit 1
-  # data store
-  elif echo "$C" | grep -q '^data_store'; then
-    DATASTORE=$C
-    dcreate $DATASTORE /data || exit 1
-  # mongo
-  elif echo "$C" | grep -q '^mongo_store'; then
-    MONGO=$C
-    dcreate $MONGO /data/db || exit 1
-  # redis stats
-  elif echo "$C" | grep -q '^redis_stats'; then
-    REDISSTATS=$C
-    dcreate $REDISSTATS /data || exit 1
-  # redis tokens
-  elif echo "$C" | grep -q 'redis_tokens'; then
-    REDISTOKENS=$C
-    dcreate $REDISTOKENS /data || exit 1
-  # redis layers
-  elif echo "$C" | grep -q '^redis'; then
-    REDISLAYERS=$C
-    dcreate $REDISLAYERS /data || exit 1
-  # postgis
-  elif echo "$C" | grep -q '^post'; then
-    POSTGIS=$C
-    dcreate $POSTGIS /var/lib/postgresql || exit 1
-  else
-    echo "Don't know how to build referenced data container '$C'" >&2
-  fi
-done
+docker create -v /data --name store_ngu_data mapic/ubuntu
+docker create -v /data/db --name store_ngu_mongo mapic/ubuntu
+docker create -v /data --name store_ngu_redis_stats mapic/ubuntu
+docker create -v /data --name store_ngu_redis_layers mapic/ubuntu
+docker create -v /data --name store_ngu_redis_tokens mapic/ubuntu
+docker create -v /var/lib/postgresql --name store_ngu_postgis mapic/ubuntu
+
+
+# grep -A1 volumes_from "${DC}" |
+#   grep -v -- -- |
+#   grep -v volumes_from |
+#   grep -v "\s*#" | 
+#   sed 's/.*- *\([^ ]*\).*/\1/' |
+#   sort -u |
+# while read C; do
+#   # postgis backup
+#   echo "C: $C"
+#   if echo "$C" | grep -q '^postgis_backup'; then
+#     POSTGIS_BACKUP=$C
+#     dcreate $POSTGIS_BACKUP /backup/postgis || exit 1
+#   # data store
+#   elif echo "$C" | grep -q 'data'; then
+#     DATASTORE=$C
+#     dcreate $DATASTORE /data || exit 1
+#   # mongo
+#   elif echo "$C" | grep -q 'mongo'; then
+#     MONGO=$C
+#     dcreate $MONGO /data/db || exit 1
+#   # redis stats
+#   elif echo "$C" | grep -q 'redis_stats'; then
+#     REDISSTATS=$C
+#     dcreate $REDISSTATS /data || exit 1
+#   # redis tokens
+#   elif echo "$C" | grep -q 'redis_tokens'; then
+#     REDISTOKENS=$C
+#     dcreate $REDISTOKENS /data || exit 1
+#   # redis layers
+#   elif echo "$C" | grep -q 'redis_layers'; then
+#     REDISLAYERS=$C
+#     dcreate $REDISLAYERS /data || exit 1
+#   # postgis
+#   elif echo "$C" | grep -q 'postgis'; then
+#     POSTGIS=$C
+#     dcreate $POSTGIS /var/lib/postgresql || exit 1
+#   else
+#     echo "Don't know how to build referenced data container '$C'" >&2
+#   fi
+# done
 
 exit 0
 

@@ -18,11 +18,15 @@ test -n "$1" && MAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 # test -z "$MAPIC_DOMAIN" &&
 #   abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
 
+echo "DOMAIN: $MAPIC_DOMAIN"
+
 if [ -z "$MAPIC_DOMAIN" ]; then
     MAPIC_DOMAIN=localhost
 fi
 
 export MAPIC_DOMAIN
+
+echo "DOMAIN2: $MAPIC_DOMAIN"
 
 echo "--------------------------------------------------------------------"
 echo "Starting services @ $MAPIC_DOMAIN"
