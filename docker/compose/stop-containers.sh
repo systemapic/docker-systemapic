@@ -5,8 +5,11 @@ function abort() {
 	exit 1;
 }
 
-# check domain ENV is set
-[ -z "$MAPIC_DOMAIN" ] && abort "Stopping containers failed! Need to set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=dev.systemapic.com"
+# ensure domain env set (default: localhost)
+if [ -z "$MAPIC_DOMAIN" ]; then
+    MAPIC_DOMAIN=localhost
+fi
+export MAPIC_DOMAIN
 
 # get file and name (eg. dev.systemapic.com.yml and dev)
 COMPOSEFILE="yml/$MAPIC_DOMAIN".yml

@@ -15,8 +15,13 @@ test "$1" = "--no-logs" && {
 test -n "$1" && MAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
 # check MAPIC_DOMAIN is set
-test -z "$MAPIC_DOMAIN" &&
-  abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
+# test -z "$MAPIC_DOMAIN" &&
+#   abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
+
+if [ -z "$MAPIC_DOMAIN" ]; then
+    MAPIC_DOMAIN=localhost
+fi
+
 export MAPIC_DOMAIN
 
 echo "--------------------------------------------------------------------"
