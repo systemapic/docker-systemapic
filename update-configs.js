@@ -26,7 +26,7 @@ var updateRedisConfig = function (filePath) {
 };
 
 
-console.log("Updating mongo.json File----------------------------->");
+console.log("Updating mongo.json File...");
 
 var content = fs.readFileSync(MONGO_JSON_PATH);// Read Synchrously
 
@@ -35,7 +35,7 @@ data.password = passString;
 fs.writeFileSync(MONGO_JSON_PATH, JSON.stringify(data, null, 2) , 'utf-8');
 
 
-console.log("Updating mile-config.js File----------------------------->");
+console.log("Updating mile-config.js File...");
 
 var mileConfig = require(MILE_CONFIG_PATH);
 
@@ -47,7 +47,7 @@ var mileJsonStr = 'module.exports = ' + JSON.stringify(mileConfig, null, 2);
 fs.writeFileSync(MILE_CONFIG_PATH, mileJsonStr , 'utf-8');
 
 
-console.log("Updating engine-config.js File----------------------------->");
+console.log("Updating engine-config.js File...");
 
 var engineConfig = require(ENGINE_CONFIG_PATH);
 
@@ -63,18 +63,18 @@ content = content.toString('utf8');
 fs.writeFileSync(ENGINE_CONFIG_PATH , engineJsonStr, 'utf-8');
 
 
-console.log("Updating redis.layers.conf File----------------------------->");
+console.log("Updating redis.layers.conf File...");
 updateRedisConfig(REDIS_LAYERS_CONF_PATH);
 
 
-console.log("Updating redis.stats.conf File----------------------------->");
+console.log("Updating redis.stats.conf File...");
 updateRedisConfig(REDIS_STATS_CONF_PATH);
 
 
-console.log("Updating redis.tokens.conf File----------------------------->");
+console.log("Updating redis.tokens.conf File...");
 updateRedisConfig(REDIS_TOKENS_CONF_PATH);
 
 
-console.log("Updating redis.temp.conf File----------------------------->");
+console.log("Updating redis.temp.conf File...");
 updateRedisConfig(REDIS_TEMP_CONF_PATH);
 
