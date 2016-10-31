@@ -17,11 +17,11 @@ Mapic is built on Docker. Docker Images for Mapic are available on the [Docker H
 
 ## Install
 
-1. Install [Docker](https://docs.docker.com/engine/installation/) & [Docker Compose](https://docs.docker.com/compose/install/).
+1. Install [Docker](https://docs.docker.com/engine/installation/) & [Docker Compose](https://docs.docker.com/compose/install/) on Linux, OSX or Windows.
 
 2. Clone repository and run install:
 ```bash
-git clone git@github.com:mapic/mapic.git
+git clone git://github.com/mapic/mapic.git
 cd mapic
 ./install-to-localhost.sh
 ```
@@ -38,7 +38,7 @@ Run normal install above, then see [mapic/config-domain.example.com](https://git
 
 
 ## Depends
-Docker: `>= 1.9.0`
+Docker: `>= 1.9.0`  
 Docker Compose: `>= 1.5.2`
 
 

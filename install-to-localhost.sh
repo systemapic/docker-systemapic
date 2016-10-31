@@ -33,6 +33,7 @@ cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
+
 echo "All Code Downloaded --------------------------------->"
 
 echo "Adding SelfSigned SSL---------------------->"
@@ -50,3 +51,4 @@ cd $DIR/docker/compose/
 echo "Starting Server --------------------------------->"
 
 ./restart.sh
+

@@ -44,6 +44,7 @@ RUN ( \
   : echo "log_statement = all"; \
   echo "log_min_error_statement = ERROR"; \
   echo "log_line_prefix = '%t %a [%p-%l] %q%u@%d '"; \
+  echo "ssl = false"; \
 ) >> /etc/postgresql/${PGVER}/main/postgresql.conf
 
 # pgtune
@@ -86,8 +87,8 @@ RUN chmod 0755 /update_extensions.sh
 RUN apt-get update && apt-get -y install \
   make \
   postgresql-server-dev-${PGVER}
-ADD systemapic-postgresql/ /systemapic-postgresql
-RUN cd /systemapic-postgresql && make install && cd -;
+ADD mapic-postgresql/ /mapic-postgresql
+RUN cd /mapic-postgresql && make install && cd -;
 
 
 ENV PGVER ${PGVER}

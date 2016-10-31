@@ -15,9 +15,18 @@ test "$1" = "--no-logs" && {
 test -n "$1" && MAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
 # check MAPIC_DOMAIN is set
-test -z "$MAPIC_DOMAIN" &&
-  abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
+# test -z "$MAPIC_DOMAIN" &&
+#   abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
+
+echo "DOMAIN: $MAPIC_DOMAIN"
+
+if [ -z "$MAPIC_DOMAIN" ]; then
+    MAPIC_DOMAIN=localhost
+fi
+
 export MAPIC_DOMAIN
+
+echo "DOMAIN2: $MAPIC_DOMAIN"
 
 echo "--------------------------------------------------------------------"
 echo "Starting services @ $MAPIC_DOMAIN"
@@ -39,7 +48,7 @@ echo -e "# Flushing containers..."
 echo -e "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
-        ${BASEDIR}/create_storage_containers.sh
+        ${BASEDIR}/create-storage-containers.sh
         ${BASEDIR}/yml/${MAPIC_DOMAIN}.yml"
 
 if [ "$SHOW_LOGS" = "yes" ]; then

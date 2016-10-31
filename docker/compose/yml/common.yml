@@ -3,7 +3,7 @@ engine:
   image: mapic/engine:latest 
   environment:
     MAPIC_DOMAIN: ${MAPIC_DOMAIN}
-    MAPIC_PRODMODE: 'true'
+    # MAPIC_PRODMODE: 'true'
   working_dir: /mapic/modules/engine 
   volumes:
     - ../../../config/${MAPIC_DOMAIN}:/mapic/config
@@ -13,7 +13,7 @@ mile:
   image: mapic/mile:latest
   environment:
     MAPIC_DOMAIN: ${MAPIC_DOMAIN}
-    MAPIC_PRODMODE: 'true'
+    # MAPIC_PRODMODE: 'true'
   working_dir: /mapic/modules/mile 
   volumes:
     - ../../../config/${MAPIC_DOMAIN}:/mapic/config

@@ -1,0 +1,88 @@
+engine:
+  extends:
+    file: common.yml
+    service: engine
+  links:
+    - mongo
+    - redislayers
+    - redisstats
+    - redistemp
+    - redistokens
+    - postgis
+  environment:
+    MAPIC_PRODMODE: 'false'
+  volumes_from:
+    - store_ngu_data
+
+mile: 
+  extends:
+    file: common.yml
+    service: mile
+  links: 
+    - engine 
+    - redislayers
+    - redisstats
+    - redistokens
+    - redistemp
+    - postgis
+  environment:
+    MAPIC_PRODMODE: 'false'
+  volumes_from:
+    - store_ngu_data
+  
+nginx:
+  extends:
+    file: common.yml
+    service: nginx
+  ports:
+    - 443:443
+    - 80:80
+  links: 
+    - mile
+    - engine
+
+redislayers:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    - store_ngu_redis_layers
+  command: "redis-server /mapic/config/redis.layers.conf"
+
+redisstats:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    # - redis_stats_store_dev
+    - store_ngu_redis_stats
+  command: "redis-server /mapic/config/redis.stats.conf"
+
+redistokens:
+  extends:
+    file: common.yml
+    service: redis
+  volumes_from:
+    # - store_dev_redis_tokens
+    - store_ngu_redis_tokens
+  command: "redis-server /mapic/config/redis.tokens.conf"
+
+redistemp:
+  extends:
+    file: common.yml
+    service: redis
+  command: "redis-server /mapic/config/redis.temp.conf"
+
+mongo: 
+  extends:
+    file: common.yml
+    service: mongo
+  volumes_from:
+    - store_ngu_mongo
+
+postgis:
+  extends:
+    file: common.yml
+    service: postgis
+  volumes_from:
+    - store_ngu_postgis
