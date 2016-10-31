@@ -36,6 +36,14 @@ Run normal install above, then see [mapic/config-domain.example.com](https://git
 3. Open your browser @ https://localhost.
 4. Stop server with `./stop-mapic.sh`.
 
+### Create User
+While you are running the server in one Terminal , open another terminal and do as follows (read instructions)-
+
+```
+docker exec -it localhost_engine_1 fish
+cd scripts
+node create_user.js
+```
 
 ## Depends
 Docker: `>= 1.9.0`  
