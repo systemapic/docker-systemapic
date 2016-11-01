@@ -13,7 +13,7 @@ Mapic consists of:
 4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
 
 
-Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/dashboard/).
+Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/).
 
 ## Install
 
