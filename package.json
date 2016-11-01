@@ -25,6 +25,7 @@
   "homepage": "https://github.com/mapic/mapic",
   "devDependencies": {
     "async": "^2.1.2",
+    "aws-sdk": "^2.6.12",
     "lodash": "^4.16.6",
     "yamljs": "^0.2.8"
   }
