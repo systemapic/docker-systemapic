@@ -9,7 +9,7 @@ For a techincal overview, please see [Mapic Technical Overview](https://github.c
 
 Install dependencies: [Docker](https://docs.docker.com/engine/installation/), [Docker Compose](https://docs.docker.com/compose/install/) and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on Linux, OSX or Windows.
 
-#### Install to `localhost`
+#### Install to localhost
 Clone repository and run install:
 ```bash
 git clone git://github.com/mapic/mapic.git
