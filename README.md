@@ -40,7 +40,7 @@ Run normal install above, then see [mapic/config-domain.example.com](https://git
 ### Create User
 While you are running the server in one terminal , open another terminal and do as follows (read instructions).
 
-```
+```bash
 docker exec -it localhost_engine_1 node scripts/create_user.js
 ```
 
