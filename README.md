@@ -3,6 +3,21 @@
 
 Mapic is an open source mapping library and geoserver. Learn more @ http://mapic.io.
 
+<<<<<<< HEAD
+For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
+
+## What's in the box
+Mapic consists of:   
+1. [Mapic Engine](https://github.com/mapic/engine)  
+2. [Mapic Tileserver](https://github.com/mapic/mile)    
+3. [Mapic Client library](https://github.com/mapic/mapic.js)    
+4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
+
+
+Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/).
+
+=======
+>>>>>>> master
 ## Install
 
 Install dependencies: [Docker](https://docs.docker.com/engine/installation/), [Docker Compose](https://docs.docker.com/compose/install/) and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on Linux, OSX or Windows.
@@ -25,6 +40,14 @@ Run normal install above, then see [mapic/config-domain.example.com](https://git
 3. Open your browser @ https://localhost.
 4. Stop server with `./stop-mapic.sh`.
 
+### Create User
+While you are running the server in one Terminal , open another terminal and do as follows (read instructions)-
+
+```
+docker exec -it localhost_engine_1 fish
+cd scripts
+node create_user.js
+```
 
 ## Libraries
 Mapic consists of:   
@@ -46,6 +69,9 @@ Mapic is built entirely open source. We believe in a collaborative environment f
 
 Mapic is licenced under the [GPLv3 licence](https://github.com/mapic/mapic/blob/master/LICENCE.md)
 
+<<<<<<< HEAD
+Mapic is licenced under the [GPLv3 licence](https://github.com/mapic/mapic/blob/master/LICENCE.md)
+=======
 ## Project contributors
 - [Jørgen Evil Ekvoll](https://github.com/jorgenevil)
 - [Magdalini Fotiadou](https://github.com/mft74)
@@ -53,3 +79,4 @@ Mapic is licenced under the [GPLv3 licence](https://github.com/mapic/mapic/blob/
 - [Knut Ole Sjøli](https://github.com/knutole)
 - [Shahjada Talukdar](https://github.com/destromas1)
 - [Igor Ziegler](https://github.com/igorziegler)
+>>>>>>> master
