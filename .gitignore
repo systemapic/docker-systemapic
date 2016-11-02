@@ -5,3 +5,4 @@ npm-debug.log
 scripts/*logs*txt
 scripts/logs/
 *.ignore.*
+node_modules/
