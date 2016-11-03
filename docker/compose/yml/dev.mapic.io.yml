@@ -10,7 +10,7 @@ engine:
     - redistokens
     - postgis
   environment:
-    SYSTEMAPIC_PRODMODE: 'false'
+    MAPIC_PRODMODE: 'false'
   volumes_from:
     - store_dev_data
 
@@ -26,7 +26,7 @@ mile:
     - redistemp
     - postgis
   environment:
-    SYSTEMAPIC_PRODMODE: 'false'
+    MAPIC_PRODMODE: 'false'
   volumes_from:
     - store_dev_data
   
