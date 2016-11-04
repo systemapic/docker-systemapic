@@ -1,5 +1,5 @@
 FROM mongo:latest
-MAINTAINER <knutole@systemapic.com>
+MAINTAINER <knutole@mapic.io>
 
 # start script
 ADD start.sh /start.sh
