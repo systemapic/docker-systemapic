@@ -55,9 +55,9 @@ Mapic is built on Docker. Docker Images for Mapic are available on the [Docker H
 For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
 ## Depends
-Docker: `>= 1.9.0`  
-Docker Compose: `>= 1.5.2`  
-Git
+[Docker](https://docs.docker.com/engine/installation/): `>= 1.9.0`  
+[Docker Compose](https://docs.docker.com/compose/install/): `>= 1.5.2`  
+[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
 ## Licence
 Mapic is built entirely open source. We believe in a collaborative environment for creating strong solutions for an industry that is constantly moving. The Mapic platform is open for anyone to use and contribute to, which makes it an ideal platform for government organisations and NGO's, as well as for-profit businesses.
