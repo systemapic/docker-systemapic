@@ -33,22 +33,24 @@ cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
-
-echo "All Code Downloaded->"
+cd $DIR
 
 echo "Adding SelfSigned SSL..."
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
 
 export MAPIC_DOMAIN=localhost
 
+# update config
 node update-configs.js
 
 echo "Starting Container..."
 
 cd $DIR/docker/compose/
-./create-storage-containers.sh
+node create-storage-containers.js
 
 echo "Starting Server..."
 
-./restart.sh
+cd $DIR
+
+./restart-mapic.sh
 
