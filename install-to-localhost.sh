@@ -51,7 +51,7 @@ cd $DIR/docker/compose/
 node create-storage-containers.js
 
 echo "Starting server..."
-
-cd $DIR
-./restart-mapic.sh
+sh start-containers.sh
+# cd $DIR
+# ./restart-mapic.sh
 

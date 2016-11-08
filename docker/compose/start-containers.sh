@@ -14,19 +14,11 @@ test "$1" = "--no-logs" && {
 
 test -n "$1" && MAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
-# check MAPIC_DOMAIN is set
-# test -z "$MAPIC_DOMAIN" &&
-#   abort "Usage: $0 <domain> (or set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=localhost)"
-
-echo "DOMAIN: $MAPIC_DOMAIN"
-
 if [ -z "$MAPIC_DOMAIN" ]; then
     MAPIC_DOMAIN=localhost
 fi
 
 export MAPIC_DOMAIN
-
-echo "DOMAIN2: $MAPIC_DOMAIN"
 
 echo "--------------------------------------------------------------------"
 echo "Starting services @ $MAPIC_DOMAIN"
@@ -40,7 +32,8 @@ COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
 ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
-# kill, delete, start fresh, get logs
+# create, kill, delete, start fresh, get logs
+node create-storage-containers.js
 echo -e "# Stopping containers..."
 ./stop-containers.sh
 echo -e "# Flushing containers..."
@@ -48,9 +41,8 @@ echo -e "# Flushing containers..."
 echo -e "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
-        ${BASEDIR}/create-storage-containers.sh
-        ${BASEDIR}/yml/${MAPIC_DOMAIN}.yml"
-
+        node ${BASEDIR}/create-storage-containers.js"
+        
 if [ "$SHOW_LOGS" = "yes" ]; then
   echo -e "\e[93mOpening logs...\e[39m"
   docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs -f

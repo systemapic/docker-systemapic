@@ -55,7 +55,7 @@ async.eachSeries(commands, function (item, callback) {
     })
 
 }, function (err, result) {
-    console.log('All containers created for ' + MAPIC_DOMAIN);
+    console.log('# Storage containers validated @ ' + MAPIC_DOMAIN);
 });
 
 

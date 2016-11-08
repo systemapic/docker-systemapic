@@ -1,9 +1,11 @@
 #!/bin/bash
-MAPIC_BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo $MAPIC_BASEDIR
-cd docker/compose
 
+# get basedir
+MAPIC_BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Basedir: $MAPIC_BASEDIR"
+
+# set env
 export MAPIC_DOMAIN
 
-node create-storage-containers.js
+cd $MAPIC_BASEDIR/docker/compose
 ./restart.sh
