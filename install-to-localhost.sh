@@ -33,7 +33,7 @@ cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
-cd $DIR
+
 
 echo "Creating self-signed SSL certficate..."
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
@@ -42,6 +42,7 @@ export MAPIC_DOMAIN=localhost
 
 # update config
 echo "Updating configuration..."
+cd $DIR/scripts
 node update-configs.js
 
 echo "Creating containers..."
