@@ -33,11 +33,11 @@ Run normal install above, then see [mapic/config-domain.example.com](https://git
 
 ## Usage
 1. Install (see above).
-2. Run `./start-mapic.sh`. (First run might take a few minutes due to installation of dependencies.)
+2. Run `./restart-mapic.sh`. (First run might take a few minutes due to installation of dependencies.)
 3. Open your browser @ https://localhost.
 4. Stop server with `./stop-mapic.sh`.
 
-### Create User
+#### Create User
 While you are running the server in one terminal , open another terminal and do as follows (read instructions).
 
 ```bash
