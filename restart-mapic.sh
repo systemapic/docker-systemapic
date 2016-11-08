@@ -5,5 +5,5 @@ cd docker/compose
 
 export MAPIC_DOMAIN
 
-./create-storage-containers.sh
+node create-storage-containers.js
 ./restart.sh
