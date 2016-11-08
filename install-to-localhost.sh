@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo $DIR
 
-echo "Pulling Submodules..."
+echo "Downloading code..."
 
 # init dockerize submodules
 cd $DIR
@@ -35,22 +35,22 @@ git submodule update --recursive --remote
 
 cd $DIR
 
-echo "Adding SelfSigned SSL..."
+echo "Creating self-signed SSL certficate..."
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
 
 export MAPIC_DOMAIN=localhost
 
 # update config
+echo "Updating configuration..."
 node update-configs.js
 
-echo "Starting Container..."
+echo "Creating containers..."
 
 cd $DIR/docker/compose/
 node create-storage-containers.js
 
-echo "Starting Server..."
+echo "Starting server..."
 
 cd $DIR
-
 ./restart-mapic.sh
 
