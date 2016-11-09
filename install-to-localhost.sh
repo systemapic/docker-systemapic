@@ -85,8 +85,7 @@ cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
 
 print_log "# Running tests..."
-print_log "Sleeping 5 seconds!"
-sleep 20
+sleep 10
 cd $DIR/scripts
 ./run-localhost-tests.sh
 
