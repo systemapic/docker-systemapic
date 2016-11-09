@@ -70,7 +70,7 @@ git submodule init
 git submodule update --recursive --remote
 
 
-print_log("# Creating SSL certficate...")
+print_log "# Creating SSL certficate..."
 docker run --rm -it --name openssl \
   -v $DIR/config/localhost:/certs \
   wallies/openssl \
@@ -79,14 +79,14 @@ docker run --rm -it --name openssl \
 export MAPIC_DOMAIN=localhost
 
 # update config
-print_log("# Updating configuration...")
+print_log "# Updating configuration..."
 cd $DIR/scripts
 node update-configs.js
 
-print_log("# Creating storage containers...")
+print_log "# Creating storage containers..."
 cd $DIR/docker/compose/
 sh create-storage-containers.sh
 
-print_log("# Starting Mapic server...")
+print_log "# Starting Mapic server..."
 sh start-containers.sh
 
