@@ -88,5 +88,14 @@ cd $DIR/docker/compose/
 ./create-storage-containers.sh
 
 print_log "# Starting Mapic server..."
-./start-containers.sh
+./start-containers.sh --no-logs
+
+print_log "# Running tests..."
+cd $DIR/scripts
+./run-localhost.tests.sh
+
+print_log "# Opening logs..."
+cd $DIR/docker/compose/
+./show-logs.sh
+
 
