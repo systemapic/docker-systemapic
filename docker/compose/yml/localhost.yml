@@ -14,7 +14,6 @@ engine:
     - postgis
   environment:
     MAPIC_PRODMODE: 'false'
-  # working_dir: /mapic/modules/engine # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_localhost
 
@@ -34,7 +33,6 @@ mile:
     - postgis
   environment:
     MAPIC_PRODMODE: 'false'
-  # working_dir: /mapic/modules/mile # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
     - data_store_localhost
 

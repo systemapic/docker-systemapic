@@ -4,6 +4,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 clear
+echo ""
+echo ""
 echo "                      ----------------------------------------                            "          
 echo "                   +ssyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyso:                         "          
 echo "                  syyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy/   //-                  "          
@@ -87,6 +89,13 @@ print_log "# Creating storage containers..."
 cd $DIR/docker/compose/
 ./create-storage-containers.sh
 
+
+# install node modules
+cd $DIR
+docker run -v config/${MAPIC_DOMAIN}:/mapic/config -v modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install
+docker run -v config/${MAPIC_DOMAIN}:/mapic/config -v modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install
+
+# start server
 print_log "# Starting Mapic server..."
 ./start-containers.sh --no-logs
 
