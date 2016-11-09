@@ -5,8 +5,8 @@ MAINTAINER <knutole@mapic.io>
 ADD start.sh /start.sh
 RUN chmod +x /start.sh
 ADD init_mongo.js /init_mongo.js
-ADD initialize.sh /initialize.sh
-RUN chmod +x /initialize.sh
+ADD init.sh /init.sh
+RUN chmod +x /init.sh
 
 # start
 CMD /start.sh

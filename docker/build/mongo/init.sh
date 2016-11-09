@@ -16,7 +16,7 @@ function abort() {
 }
 
 init_mongo () {
-    echo "Running MongDB start script!";
+    echo "Running MongDB init script!";
 
     # start without AUTH
     mongod -f $CONFIGFILE &
