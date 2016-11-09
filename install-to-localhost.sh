@@ -72,16 +72,15 @@ print_log "# Creating storage containers..."
 cd $DIR/docker/compose/
 ./create-storage-containers.sh
 
+# init mongo
+print_log "# Initializing Mongo database"
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_store_localhost -it bash initialize.sh
 
 # install node modules
 print_log "# Installing Node modules..."
 cd $DIR
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install
-
-# init mongo
-print_log "# Initializing Mongo database"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_store_localhost -it bash initialize.sh
 
 # start server
 print_log "# Starting Mapic server..."
