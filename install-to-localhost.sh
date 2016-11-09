@@ -35,7 +35,6 @@ echo "# Current working directory: $DIR"
 echo ""
 echo "# Downloading code..."
 echo ""
-exit
 
 # init mapic/mapic submodule
 cd $DIR 
