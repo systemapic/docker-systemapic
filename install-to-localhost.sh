@@ -5,59 +5,67 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 clear
 echo ""
-echo "=============================="
-echo "====== Welcome to Mapic ======"
-echo "=============================="
+echo "====================================================="
+echo "====== Welcome to Mapic localhost installation ======"
+echo "====================================================="
 echo ""
 echo "Installing to localhost:"
 echo "------------------------"
-echo "Current working directory: $DIR"
-echo "Downloading code..."
+echo ""
+echo "# Current working directory: $DIR"
+echo "# Downloading code..."
 
-# init dockerize submodules
-cd $DIR
+# init mapic/mapic submodule
+cd $DIR 
 git submodule init
 git submodule update --recursive --remote
 git submodule foreach --recursive git checkout master
 
-# init mile submodules
+# init mapic/mile submodule
 cd $DIR/modules/mile
 git submodule init
 git submodule update --recursive --remote
 
-# init engine submodules
+# init mapic/engine submodule
 cd $DIR/modules/engine
 git submodule init
 git submodule update --recursive --remote
 
-# init mapic.js submodules
+# init mapic/mapic.js submodule
 cd $DIR/modules/mapic.js
 git submodule init
 git submodule update --recursive --remote
 
-# init sdk submodules
+# init mapic/sdk submodule
 cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
 
 
-echo "Creating SSL certficate..."
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
+echo "# Creating SSL certficate..."
+# todo: put into container which has openssl!
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
+
+docker run --rm -it --name openssl \
+  -v $DIR/config/loclahost:/certs \
+  wallies/openssl \
+  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /certs/ssl_certificate.key -out /certs/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
+
 
 export MAPIC_DOMAIN=localhost
 
 # update config
-echo "Updating configuration..."
+echo "# Updating configuration..."
 cd $DIR/scripts
 node update-configs.js
 
-echo "Creating containers..."
+echo "# Creating storage containers..."
 
 cd $DIR/docker/compose/
 node create-storage-containers.js
 
-echo "Starting server..."
+echo "# Starting Mapic server..."
 sh start-containers.sh
 # cd $DIR
 # ./restart-mapic.sh
