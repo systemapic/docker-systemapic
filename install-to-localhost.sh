@@ -7,8 +7,11 @@ clear
 echo "=========================================================================================="
 echo "======================== Welcome to Mapic localhost installation ========================="
 echo "=========================================================================================="
-echo ""
-echo "(Grab a coffee, this might take a while! No interaction necessary. Estimated installation time is 30 minutes.)"
+echo "===                                                                                    ==="
+echo "===   (Grab a coffee, this might take a while! No interaction necessary.               ==="
+echo "===                 Estimated installation time is 30 minutes.)                        ==="
+echo "===                                                                                    ==="
+echo "=========================================================================================="
 echo ""
 echo "Installing to localhost:"
 echo "------------------------"
@@ -82,7 +85,8 @@ cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
 
 print_log "# Running tests..."
-sleep 5
+print_log "Sleeping 5 seconds!"
+sleep 20
 cd $DIR/scripts
 ./run-localhost-tests.sh
 
