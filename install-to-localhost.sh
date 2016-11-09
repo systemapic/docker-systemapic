@@ -97,6 +97,7 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/m
 
 # start server
 print_log "# Starting Mapic server..."
+cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
 
 print_log "# Running tests..."
