@@ -3,27 +3,7 @@
 # get working dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-clear
-echo ""
-echo ""
-echo "                      ----------------------------------------                            "          
-echo "                   +ssyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyso:                         "          
-echo "                  syyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy/   //-                  "          
-echo "                 -yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyys   ++-                  "          
-echo "                 -yyysooysooosyyoooosyyyysooooooyyyyyoossoooosyyys                        "          
-echo "                 -yyyo  :     /-     +yyyo       oyyy  -      /sys  +os+    :oo++++:      "          
-echo "                 -yyyo   oss:  :sss-  yyyysssso-  yyy   +sss+  /ys   :yo   /yo            "          
-echo "                 -yyyo  oyyy+  syyy+  syyo:       yyy  -yyyyy   ys   :yo   yy-            "          
-echo "                 -yyyo  oyyyo  syyy+  syo  :ooo:  yyy  -yyyys  -ys   :yo   yy-            "          
-echo "                 -yyyo  oyyyo  syyy+  sy+  +sss:  yyy  -ssso-  oys   :yo   /yo-           "          
-echo "                 -yyyo  syyyo  syyy+  syy/        yyy        :oyys   -s+    -+oo+++/      "          
-echo "                 -yyyyssyyyyyssyyyysssyyyyysooosssyyy  -ooosyyyyys                        "          
-echo "                 -yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy  -yyyyyyyyys                        "          
-echo "                  syyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy: /yyyyyyyyy/                        "          
-echo "                   /ssssssssssssssssssssssssssssssssssssssssssso-                         "          
-echo "                                                                                          "                
-echo ""
-echo ""    
+clear  
 echo "=========================================================================================="
 echo "======================== Welcome to Mapic localhost installation ========================="
 echo "=========================================================================================="
@@ -102,6 +82,7 @@ cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
 
 print_log "# Running tests..."
+sleep 5
 cd $DIR/scripts
 ./run-localhost-tests.sh
 
