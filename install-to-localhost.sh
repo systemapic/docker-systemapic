@@ -85,8 +85,8 @@ node update-configs.js
 
 print_log "# Creating storage containers..."
 cd $DIR/docker/compose/
-sh create-storage-containers.sh
+./create-storage-containers.sh
 
 print_log "# Starting Mapic server..."
-sh start-containers.sh
+./start-containers.sh
 
