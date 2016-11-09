@@ -3,8 +3,15 @@
 # get working dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo $DIR
-
+clear
+echo ""
+echo "=============================="
+echo "====== Welcome to Mapic ======"
+echo "=============================="
+echo ""
+echo "Installing to localhost:"
+echo "------------------------"
+echo "Current working directory: $DIR"
 echo "Downloading code..."
 
 # init dockerize submodules
@@ -35,8 +42,8 @@ git submodule update --recursive --remote
 
 
 
-echo "Creating self-signed SSL certficate..."
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
+echo "Creating SSL certficate..."
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem
 
 export MAPIC_DOMAIN=localhost
 
