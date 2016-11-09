@@ -29,7 +29,7 @@ cd $BASEDIR
 
 # get file and name (eg. dev.mapic.io.yml and dev)
 COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
-ARR=(${MAPIC_DOMAIN//./ })
+ARR=${MAPIC_DOMAIN//./ }
 COMPOSENAME=${ARR[0]} 
 
 # kill, delete, start fresh, get logs
