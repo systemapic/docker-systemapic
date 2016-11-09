@@ -92,7 +92,7 @@ print_log "# Starting Mapic server..."
 
 print_log "# Running tests..."
 cd $DIR/scripts
-./run-localhost.tests.sh
+./run-localhost-tests.sh
 
 print_log "# Opening logs..."
 cd $DIR/docker/compose/
