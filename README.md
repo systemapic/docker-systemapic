@@ -27,6 +27,12 @@ cd mapic
 ./install-to-localhost.sh
 ```
 
+The first user is automatically created, with the following credentials with which you can log into the portal:
+```
+username: localhost@mapic.io
+password: localhost-password
+```
+
 #### Install to custom domain
 Run normal install above, then see [mapic/config-domain.example.com](https://github.com/mapic/config-domain.example.com) for instructions on changing configs for custom domain.
 
@@ -44,7 +50,7 @@ While you are running the server in one terminal , open another terminal and do 
 # create user
 docker exec -it localhost_engine_1 node scripts/create_user.js user@domain.com username firstName lastName [optional password]
 
-# make user super
+# make superadmin
 docker exec -it localhost_engine_1 node scripts/make_super.js user@domain.com
 ```
 
