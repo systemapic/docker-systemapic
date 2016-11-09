@@ -2,7 +2,7 @@
 
 function build() {
   
-  git clone git://github.com:mapic/mapic-postgresql.git
+  git clone https://github.com/mapic/mapic-postgresql.git
 
   PGVER_SHORT=`echo ${PGVER} | tr -d .`
   NAME="mapic/postgis"
