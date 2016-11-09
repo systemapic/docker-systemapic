@@ -27,7 +27,7 @@ echo "--------------------------------------------------------------------"
 BASEDIR=`dirname $0`
 cd $BASEDIR
 
-# get file and name (eg. dev.systemapic.com.yml and dev)
+# get file and name (eg. dev.mapic.io.yml and dev)
 COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
 ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
@@ -40,7 +40,7 @@ sh delete-containers.sh
 echo "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
-        node ${BASEDIR}/create-storage-containers.js"
+        sh ${BASEDIR}/create-storage-containers.sh"
         
 if [ "$SHOW_LOGS" = "yes" ]; then
   echo "Opening logs..."
