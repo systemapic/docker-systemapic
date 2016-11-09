@@ -13,7 +13,7 @@ echo "Installing to localhost:"
 echo "------------------------"
 echo ""
 echo "# Current working directory: $DIR"
-echo "# Downloading code..."
+echo "# Downloading code...\n"
 
 # init mapic/mapic submodule
 cd $DIR 
@@ -44,14 +44,10 @@ git submodule update --recursive --remote
 
 
 echo "# Creating SSL certficate..."
-# todo: put into container which has openssl!
-# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $DIR/config/localhost/ssl_certificate.key -out $DIR/config/localhost/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
-
 docker run --rm -it --name openssl \
   -v $DIR/config/loclahost:/certs \
   wallies/openssl \
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /certs/ssl_certificate.key -out /certs/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
-
 
 export MAPIC_DOMAIN=localhost
 
@@ -61,9 +57,8 @@ cd $DIR/scripts
 node update-configs.js
 
 echo "# Creating storage containers..."
-
 cd $DIR/docker/compose/
-node create-storage-containers.js
+sh create-storage-containers.sh
 
 echo "# Starting Mapic server..."
 sh start-containers.sh
