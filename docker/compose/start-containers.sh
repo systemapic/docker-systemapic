@@ -34,13 +34,13 @@ COMPOSENAME=${ARR[0]}
 
 # kill, delete, start fresh, get logs
 echo "# Stopping containers..."
-sh stop-containers.sh
+./stop-containers.sh
 echo "# Flushing containers..."
-sh delete-containers.sh
+./delete-containers.sh
 echo "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
-        sh ${BASEDIR}/create-storage-containers.sh"
+        bash ${BASEDIR}/create-storage-containers.sh"
         
 if [ "$SHOW_LOGS" = "yes" ]; then
   echo "Opening logs..."
