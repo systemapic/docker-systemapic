@@ -33,16 +33,16 @@ ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
 # kill, delete, start fresh, get logs
-echo -e "# Stopping containers..."
+echo "# Stopping containers..."
 sh stop-containers.sh
-echo -e "# Flushing containers..."
+echo "# Flushing containers..."
 sh delete-containers.sh
-echo -e "# Starting containers..."
+echo "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
         node ${BASEDIR}/create-storage-containers.js"
         
 if [ "$SHOW_LOGS" = "yes" ]; then
-  echo -e "\e[93mOpening logs...\e[39m"
+  echo "Opening logs..."
   docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs -f
 fi

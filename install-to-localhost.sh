@@ -36,6 +36,13 @@ echo ""
 echo "# Downloading code..."
 echo ""
 
+print_log () {
+    echo ""
+    echo "$1"
+    echo "___________________________"
+    echo ""
+}
+
 # init mapic/mapic submodule
 cd $DIR 
 git submodule init
@@ -63,7 +70,7 @@ git submodule init
 git submodule update --recursive --remote
 
 
-echo "# Creating SSL certficate..."
+print_log("# Creating SSL certficate...")
 docker run --rm -it --name openssl \
   -v $DIR/config/localhost:/certs \
   wallies/openssl \
@@ -72,16 +79,14 @@ docker run --rm -it --name openssl \
 export MAPIC_DOMAIN=localhost
 
 # update config
-echo "# Updating configuration..."
+print_log("# Updating configuration...")
 cd $DIR/scripts
 node update-configs.js
 
-echo "# Creating storage containers..."
+print_log("# Creating storage containers...")
 cd $DIR/docker/compose/
 sh create-storage-containers.sh
 
-echo "# Starting Mapic server..."
+print_log("# Starting Mapic server...")
 sh start-containers.sh
-# cd $DIR
-# ./restart-mapic.sh
 
