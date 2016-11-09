@@ -74,7 +74,7 @@ cd $DIR/docker/compose/
 
 # init mongo
 print_log "# Initializing Mongo database"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_store_localhost -it bash /initialize.sh
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_store_localhost -it mapic/mongo:latest /init.sh
 
 # install node modules
 print_log "# Installing Node modules..."
