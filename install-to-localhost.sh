@@ -91,6 +91,7 @@ cd $DIR/docker/compose/
 
 
 # install node modules
+print_log "# Installing Node modules..."
 cd $DIR
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install
