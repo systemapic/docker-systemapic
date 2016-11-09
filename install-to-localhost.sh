@@ -5,6 +5,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 clear
 echo ""
+echo " __    __     ______     ______   __     ______    "
+echo "/\ '-./  \   /\  __ \   /\  == \ /\ \   /\  ___\   "
+echo "\ \ \-./\ \  \ \  __ \  \ \  _-/ \ \ \  \ \ \____  "
+echo " \ \_\ \ \_\  \ \_\ \_\  \ \_\    \ \_\  \ \_____\ "
+echo "  \/_/  \/_/   \/_/\/_/   \/_/     \/_/   \/_____/ "
+echo "                                                   "
+echo ""
 echo "====================================================="
 echo "====== Welcome to Mapic localhost installation ======"
 echo "====================================================="
@@ -42,10 +49,9 @@ git submodule init
 git submodule update --recursive --remote
 
 
-
 echo "# Creating SSL certficate..."
 docker run --rm -it --name openssl \
-  -v $DIR/config/loclahost:/certs \
+  -v $DIR/config/localhost:/certs \
   wallies/openssl \
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /certs/ssl_certificate.key -out /certs/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
 
