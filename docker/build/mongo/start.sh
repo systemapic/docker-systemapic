@@ -46,5 +46,5 @@ if [[ /init_mongo.js -nt /data/db/mapic.inited ]]; then
 	init_mongo || abort "Failed to initialize MongoDB. Quitting!"
 fi
 
-echo "Starting MongoDB with AUTH";
+# echo "Starting MongoDB with AUTH";
 mongod -f $CONFIGFILE --auth || abort "Failed to start MongodB. Quitting!"
