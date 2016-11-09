@@ -32,12 +32,11 @@ COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
 ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
 
-# create, kill, delete, start fresh, get logs
-node create-storage-containers.js
+# kill, delete, start fresh, get logs
 echo -e "# Stopping containers..."
-./stop-containers.sh
+sh stop-containers.sh
 echo -e "# Flushing containers..."
-./delete-containers.sh
+sh delete-containers.sh
 echo -e "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:
