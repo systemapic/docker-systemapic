@@ -13,15 +13,12 @@ echo "===                 Estimated installation time is 30 minutes.)           
 echo "===                                                                                    ==="
 echo "=========================================================================================="
 echo ""
-echo "Installing to localhost:"
-echo "------------------------"
-echo ""
-echo "# Current working directory: $DIR"
-echo ""
-echo "# Downloading code..."
-echo ""
+print_log "Installing to localhost..."
+print_log "# Current working directory: $DIR"
+print_log "# Downloading code..."
 
 print_log () {
+    echo "____________________________"
     echo "|" 
     echo "| $1"
     echo "|___________________________"
@@ -76,7 +73,7 @@ cd $DIR/docker/compose/
 
 # init mongo
 print_log "# Initializing Mongo database"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_store_localhost -it mapic/mongo:latest /init.sh
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mongo_store_localhost -it mapic/mongo:latest /init.sh
 
 # install node modules
 print_log "# Installing Node modules..."
