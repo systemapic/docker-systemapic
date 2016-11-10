@@ -1,5 +1,14 @@
 #!/bin/bash
 
+print_log () {
+    echo ""
+    echo "..............................."
+    echo ":                             :" 
+    echo ": $1"
+    echo ":.............................:"
+    echo ""
+}
+
 # get working dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -17,13 +26,6 @@ print_log "Installing to localhost..."
 print_log "# Current working directory: $DIR"
 print_log "# Downloading code..."
 
-print_log () {
-    echo "____________________________"
-    echo "|" 
-    echo "| $1"
-    echo "|___________________________"
-    echo ""
-}
 
 # set env
 export MAPIC_DOMAIN=localhost
