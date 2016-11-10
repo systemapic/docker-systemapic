@@ -2,10 +2,10 @@
 
 print_log () {
     echo ""
-    echo "..............................."
-    echo ":                             :" 
-    echo ": $1"
-    echo ":.............................:"
+    echo ":::::::::::::::::::::::::::::::::"
+    echo "::                             ::" 
+    echo ":: $1"
+    echo ":::::::::::::::::::::::::::::::::"
     echo ""
 }
 
@@ -80,9 +80,9 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 # install node modules
 print_log "# Installing Node modules..."
 cd $DIR
-print_log "...for Mile"
+print_log "...for Mapic Tile Server"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel verbose
-print_log "...for Engine"
+print_log "...for Mapic Engine"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel verbose
 
 # start server
