@@ -80,9 +80,9 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_sto
 print_log "# Installing Node modules..."
 cd $DIR
 print_log "Mile..."
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel verbose
 print_log "Engine..."
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel verbose
 
 # start server
 print_log "# Starting Mapic server..."
