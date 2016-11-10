@@ -22,11 +22,14 @@ echo "# Downloading code..."
 echo ""
 
 print_log () {
-    echo ""
-    echo "$1"
-    echo "___________________________"
+    echo "|" 
+    echo "| $1"
+    echo "|___________________________"
     echo ""
 }
+
+# set env
+export MAPIC_DOMAIN=localhost
 
 # init mapic/mapic submodule
 cd $DIR 
@@ -54,20 +57,19 @@ cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
-
+# create self-signed SSL certs
 print_log "# Creating SSL certficate..."
 docker run --rm -it --name openssl \
-  -v $DIR/config/localhost:/certs \
-  wallies/openssl \
-  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /certs/ssl_certificate.key -out /certs/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
-
-export MAPIC_DOMAIN=localhost
+    -v $DIR/config/localhost:/certs \
+    wallies/openssl \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /certs/ssl_certificate.key -out /certs/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
 
 # update config
 print_log "# Updating configuration..."
 cd $DIR/scripts
 node update-configs.js
 
+# create storage containers
 print_log "# Creating storage containers..."
 cd $DIR/docker/compose/
 ./create-storage-containers.sh
@@ -79,9 +81,9 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mongo_sto
 # install node modules
 print_log "# Installing Node modules..."
 cd $DIR
-print_log "Mile..."
+print_log "...for Mile"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel verbose
-print_log "Engine..."
+print_log "...for Engine"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel verbose
 
 # start server
@@ -89,11 +91,13 @@ print_log "# Starting Mapic server..."
 cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
 
+# run tests
 print_log "# Running tests..."
 sleep 10
 cd $DIR/scripts
 ./run-localhost-tests.sh
 
+# show logs
 print_log "# Opening logs..."
 cd $DIR/docker/compose/
 ./show-logs.sh
