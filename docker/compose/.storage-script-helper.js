@@ -56,6 +56,7 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
             name,
             'mapic/ubuntu'
         ].join(' ');
+        console.log(docker_command);
         commands.push(docker_command);
     });
 

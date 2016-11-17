@@ -14,8 +14,9 @@ engine:
     - postgis
   environment:
     MAPIC_PRODMODE: 'false'
+  # working_dir: /mapic/modules/engine # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
-    - mapic_data_store_localhost
+    - data_store_localhost
 
 ################################
 # mile: Mapic Tile Server      #
@@ -33,8 +34,9 @@ mile:
     - postgis
   environment:
     MAPIC_PRODMODE: 'false'
+  # working_dir: /mapic/modules/mile # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
   volumes_from:
-    - mapic_data_store_localhost
+    - data_store_localhost
 
 ##########################################
 # nginx: Reverse-proxy for engine & mile #
@@ -58,7 +60,7 @@ redislayers:
     file: common.yml
     service: redis
   volumes_from:
-    - mapic_layers_store_localhost
+    - redis_layers_store_localhost
   command: "redis-server /mapic/config/redis.layers.conf"
 
 redisstats:
@@ -66,7 +68,7 @@ redisstats:
     file: common.yml
     service: redis
   volumes_from:
-    - mapic_stats_store_localhost
+    - redis_stats_store_localhost
   command: "redis-server /mapic/config/redis.stats.conf"
 
 redistokens:
@@ -74,7 +76,7 @@ redistokens:
     file: common.yml
     service: redis
   volumes_from:
-    - mapic_tokens_store_localhost
+    - redis_tokens_store_localhost
   command: "redis-server /mapic/config/redis.tokens.conf"
 
 redistemp:
@@ -91,7 +93,7 @@ mongo:
     file: common.yml
     service: mongo
   volumes_from:
-    - mapic_mongo_store_localhost
+    - mongo_store_localhost
 
 #################################
 # postgis: Storage for geo-data #
@@ -101,4 +103,4 @@ postgis:
     file: common.yml
     service: postgis
   volumes_from:
-    - mapic_postgis_store_localhost
+    - postgis_store_localhost
