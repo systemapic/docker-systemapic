@@ -61,7 +61,7 @@ Mapic consists of:
 3. [Mapic Client library](https://github.com/mapic/mapic.js)    
 4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
 
-Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/dashboard/).
+Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/).
 For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
 ## Depends
