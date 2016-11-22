@@ -1,10 +1,7 @@
-######################### 
-# wu: Systemapic Server #
-#########################
-wu:
+engine:
   extends:
     file: common.yml
-    service: wu
+    service: engine
   links:
     - mongo
     - redislayers
@@ -13,33 +10,26 @@ wu:
     - redistokens
     - postgis
   environment:
-    SYSTEMAPIC_PRODMODE: 'false'
-  working_dir: /systemapic/dev # double switch for prodmode; todo: move into start.sh script somehow, and keep only bool
+    MAPIC_PRODMODE: 'false'
   volumes_from:
     - data_store_globesar
 
-################################
-# pile: Systemapic Tile Server #
-################################
-pile: 
+mile: 
   extends:
     file: common.yml
-    service: pile
+    service: mile
   links: 
-    - wu # todo: remove? (or use directly instead of API as doing currently)
+    - engine 
     - redislayers
     - redisstats
     - redistokens
     - redistemp
     - postgis
   environment:
-    SYSTEMAPIC_PRODMODE: 'false'
+    MAPIC_PRODMODE: 'false'
   volumes_from:
     - data_store_globesar
-
-########################################
-# nginx: Reverse-proxy for wu and pile #
-########################################
+  
 nginx:
   extends:
     file: common.yml
@@ -48,19 +38,16 @@ nginx:
     - 443:443
     - 80:80
   links: 
-    - pile
-    - wu
+    - mile
+    - engine
 
-###################################
-# redis: Simple key-value storage #
-###################################
 redislayers:
   extends:
     file: common.yml
     service: redis
   volumes_from:
     - redis_store_globesar
-  command: "redis-server /systemapic/config/redis.layers.conf"
+  command: "redis-server /mapic/config/redis.layers.conf"
 
 redisstats:
   extends:
@@ -68,7 +55,7 @@ redisstats:
     service: redis
   volumes_from:
     - redis_stats_store_globesar
-  command: "redis-server /systemapic/config/redis.stats.conf"
+  command: "redis-server /mapic/config/redis.stats.conf"
 
 redistokens:
   extends:
@@ -76,17 +63,14 @@ redistokens:
     service: redis
   volumes_from:
     - store_globesar_redis_tokens
-  command: "redis-server /systemapic/config/redis.tokens.conf"
+  command: "redis-server /mapic/config/redis.tokens.conf"
 
 redistemp:
   extends:
     file: common.yml
     service: redis
-  command: "redis-server /systemapic/config/redis.temp.conf"
+  command: "redis-server /mapic/config/redis.temp.conf"
 
-####################################
-# mongo: Storage for server models #
-####################################
 mongo: 
   extends:
     file: common.yml
@@ -94,13 +78,13 @@ mongo:
   volumes_from:
     - mongo_store_globesar
 
-#################################
-# postgis: Storage for geo-data #
-#################################
 postgis:
   extends:
     file: common.yml
     service: postgis
+  image: systemapic/postgis:latest
   volumes_from:
     - postgis_store_globesar
+  volumes:
+    - ../../../config/${MAPIC_DOMAIN}:/systemapic/config
 
