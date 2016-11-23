@@ -72,7 +72,7 @@ For a techincal overview, please see [Mapic Technical Overview](https://github.c
 ## Licence
 Mapic is built entirely open source. We believe in a collaborative environment for creating strong solutions for an industry that is constantly moving. The Mapic platform is open for anyone to use and contribute to, which makes it an ideal platform for government organisations and NGO's, as well as for-profit businesses.
 
-Mapic is licenced under the [GPLv3 licence](https://github.com/mapic/mapic/blob/master/LICENCE.md)
+Mapic is licenced under the [AGPL licence](https://github.com/mapic/mapic/blob/master/LICENCE.md)
 
 ## Project contributors
 - [Jørgen Evil Ekvoll](https://github.com/jorgenevil)
