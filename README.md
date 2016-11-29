@@ -1,7 +1,7 @@
 ![Mapic Logo](https://cloud.githubusercontent.com/assets/2197944/19607635/5c434458-97cb-11e6-941b-e74e83b385ba.png)
 # Mapic
 
-Mapic is an open source mapping library and geoserver. Learn more @ http://mapic.io.
+Mapic is an Open Source Web Map Engine. Learn more @ https://mapic.io.
 
 For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
@@ -72,7 +72,7 @@ For a techincal overview, please see [Mapic Technical Overview](https://github.c
 ## Licence
 Mapic is built entirely open source. We believe in a collaborative environment for creating strong solutions for an industry that is constantly moving. The Mapic platform is open for anyone to use and contribute to, which makes it an ideal platform for government organisations and NGO's, as well as for-profit businesses.
 
-Mapic is licenced under the [AGPL licence](https://github.com/mapic/mapic/blob/master/LICENCE.md)
+Mapic is licenced under the [AGPL licence](https://github.com/mapic/mapic/blob/master/LICENCE).
 
 ## Project contributors
 - [Jørgen Evil Ekvoll](https://github.com/jorgenevil)
