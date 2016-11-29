@@ -8,9 +8,12 @@ For a techincal overview, please see [Mapic Technical Overview](https://github.c
 
 ## Install
 
-Install dependencies: [Docker](https://docs.docker.com/engine/installation/), [Docker Compose](https://docs.docker.com/compose/install/) and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on Linux, OSX or Windows.
+### Install dependencies: 
+- [Docker](https://docs.docker.com/engine/installation/)
+- [Docker Compose](https://docs.docker.com/compose/install/) 
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on Linux, OSX or Windows.
 
-#### Install to localhost
+### Install to localhost
 Clone repository and run install:
 ```bash
 git clone git://github.com/mapic/mapic.git
@@ -24,7 +27,7 @@ username: localhost@mapic.io
 password: localhost-password
 ```
 
-#### Install to custom domain
+### Install to custom domain
 Run normal install above, then see [mapic/config-domain.example.com](https://github.com/mapic/config-domain.example.com) for instructions on changing configs for custom domain.
 
 
