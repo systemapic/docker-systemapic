@@ -13,6 +13,9 @@ print_log () {
 # get working dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# get flags
+FLAG=$1
+
 clear  
 echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
@@ -104,9 +107,14 @@ sleep 30
 cd $DIR/scripts
 ./run-localhost-tests.sh
 
+if [ $FLAG = "travis" ]; then
+   exit
+fi
+
 # show logs
 print_log "# Opening logs..."
 cd $DIR/docker/compose/
 ./show-logs.sh
+
 
 
