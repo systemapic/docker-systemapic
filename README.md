@@ -71,6 +71,7 @@ Mapic is licenced under the [AGPL licence](https://github.com/mapic/mapic/blob/m
 ## Project contributors
 - [Jørgen Evil Ekvoll](https://github.com/jorgenevil)
 - [Magdalini Fotiadou](https://github.com/mft74)
+- [Terrence Lam](https://github.com/skyuplam)
 - [Sandro Santilli](https://github.com/strk)
 - [Knut Ole Sjøli](https://github.com/knutole)
 - [Shahjada Talukdar](https://github.com/destromas1)
