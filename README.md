@@ -3,8 +3,9 @@
 
 Mapic is an Open Source Web Map Engine. Learn more @ https://mapic.io.
 
-For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
+For a technical overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
+[![Build Status](https://travis-ci.org/mapic/mapic.png)](https://travis-ci.org/mapic/mapic)
 
 ## Install
 
