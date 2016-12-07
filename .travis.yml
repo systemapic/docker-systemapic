@@ -3,19 +3,26 @@ language: node_js
 services:
   - docker
 
+sudo: required
+
 node_js:
   - 6
   - 5
   - 4
+
 notifications:
   email: false
+
 branches:
   only:
     - master
+
 before_install:
   - ./install-to-localhost.sh
+
 script:
   - ./run-localhost-tests.sh
+
 cache:
   directories:
     - node_modules
