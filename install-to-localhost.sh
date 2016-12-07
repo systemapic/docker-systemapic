@@ -10,6 +10,10 @@ print_log () {
     echo ""
 }
 
+abort () {
+    exit $1
+}
+
 # get working dir
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -105,7 +109,7 @@ cd $DIR/docker/compose/
 print_log "# Running tests..."
 sleep 30
 cd $DIR/scripts
-./run-localhost-tests.sh
+./run-localhost-tests.sh || abort
 
 if [ $FLAG = "travis" ]; then
    exit
