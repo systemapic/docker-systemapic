@@ -89,9 +89,9 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 print_log "# Installing Node modules..."
 cd $DIR
 print_log "...for Mapic Tile Server"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel verbose
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel silent
 print_log "...for Mapic Engine"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel verbose
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel silent
 
 # start server
 print_log "# Starting Mapic server..."
