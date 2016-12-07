@@ -8,4 +8,4 @@ sh createcontainers.tmp.sh 2> /dev/null
 
 # cleanup
 echo "Storage containers created!"
-rm createcontainers.tmp.sh
+rm -f createcontainers.tmp.sh

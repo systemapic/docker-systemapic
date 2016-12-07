@@ -64,7 +64,7 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
     fs.writeFileSync('createcontainers.tmp.sh', bash_script, 'utf-8');
 
     // cleanup: remove node modules
-    var child = exec('rm -r node_modules', function (err, stdout, stderr) {
+    var child = exec('rm -rf node_modules', function (err, stdout, stderr) {
         process.exit(err);
     });
 });
