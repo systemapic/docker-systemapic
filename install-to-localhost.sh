@@ -100,7 +100,7 @@ cd $DIR/docker/compose/
 
 # run tests
 print_log "# Running tests..."
-sleep 10
+sleep 30
 cd $DIR/scripts
 ./run-localhost-tests.sh
 
