@@ -20,9 +20,6 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
     var MAPIC_DOMAIN = process.env.MAPIC_DOMAIN || 'localhost';
     var yml_file = YAML.load('yml/' + MAPIC_DOMAIN + '.yml');
 
-    // store 
-    var parsed = {};
-
     // settings
     var paths = {
         engine      : '/data',
@@ -35,13 +32,14 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
     }
 
     // parse
+    var parsed = {};
     _.each(yml_file, function (value, key) {
         if (value.volumes_from) {
             parsed[key] = value.volumes_from[0];
         }
     });
 
-    // create commands
+    // define commands
     var commands = [];
     _.each(parsed, function (name, service) {
         var docker_command = [
@@ -56,10 +54,17 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
         commands.push(docker_command);
     });
 
+    // concat
     var bash_script = '#!/bin/bash \n';
     commands.forEach(function (c) {
         bash_script += c + '\n';
     });
 
+    // write bash script to file
     fs.writeFileSync('createcontainers.tmp.sh', bash_script, 'utf-8');
+
+    // cleanup: remove node modules
+    var child = exec('rm -r node_modules', function (err, stdout, stderr) {
+        process.exit(err);
+    });
 });

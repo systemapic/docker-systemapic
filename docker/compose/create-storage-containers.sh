@@ -8,5 +8,4 @@ sh createcontainers.tmp.sh
 
 # cleanup
 echo "Storage containers created!"
-rm -r node_modules
 rm createcontainers.tmp.sh
