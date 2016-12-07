@@ -9,5 +9,5 @@ sh createcontainers.tmp.sh
 
 # clenup
 echo "Storage containers created!"
-rm -r node_modules
-rm createcontainers.tmp.sh
+rm -fr node_modules
+rm -f createcontainers.tmp.sh
