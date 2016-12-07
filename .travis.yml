@@ -15,11 +15,8 @@ branches:
   only:
     - master
 
-before_install:
-  - ./install-to-localhost.sh
-
 script:
-  - ./run-localhost-tests.sh
+  - ./install-to-localhost.sh
 
 cache:
   directories:
