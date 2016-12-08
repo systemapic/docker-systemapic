@@ -16,7 +16,7 @@ branches:
     - master
 
 script:
-  - ./install-to-localhost.sh
+  - ./ci.sh
 
 cache:
   directories:
