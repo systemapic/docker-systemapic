@@ -36,7 +36,7 @@ COMPOSENAME=${ARR[0]}
 echo "# Stopping containers..."
 ./stop-containers.sh
 echo "# Flushing containers..."
-./delete-containers.sh
+./delete-containers.sh &> /dev/null
 echo "# Starting containers..."
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME up -d ||
   abort "If missing containers, try running:

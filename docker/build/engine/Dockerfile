@@ -9,6 +9,7 @@ RUN npm install node-pre-gyp -g
 RUN npm install gdal -g --build-from-source --shared_gdal --unsafe-perm
 RUN npm install mocha -g
 RUN npm install npm-check-updates -g 
+RUN npm install karma -g 
 
 # upgrade ubuntu
 ADD ./upgrade-dist.sh /tmp/upgrade-dist.sh
