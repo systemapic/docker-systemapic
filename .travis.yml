@@ -22,7 +22,7 @@ branches:
     - master
 
 script:
-  - ./install-to-localhost.sh
+  - ./install-to-localhost.sh travis
 
 cache:
   directories:
