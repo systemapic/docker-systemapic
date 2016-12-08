@@ -37,14 +37,15 @@ Install to localhost first, following instructions above; then see [mapic/config
 4. Stop server with `./stop-mapic.sh`.
 
 #### Create User
-While you are running the server in one terminal, open another terminal and do:
+The first user is created automatically, with the credentials listed above.  
+
+To create another superuser, do:
 
 ```bash
-# create user
-docker exec -it localhost_engine_1 node scripts/create_user.js user@domain.com username firstName lastName [password]
+# create super user
+cd scripts
+./create-super-user.sh 
 
-# make superadmin
-docker exec -it localhost_engine_1 node scripts/make_super.js user@domain.com
 ```
 
 ## Libraries
