@@ -108,15 +108,17 @@ print_log "# Starting Mapic server..."
 cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
 
+
+# run travis tests separately
+if [[ $FLAG = "travis" ]]; then
+    exit
+fi
+
 # run tests
 print_log "# Running tests..."
 sleep 30
 cd $DIR/scripts
 ./run-localhost-tests.sh || abort
-
-if [[ $FLAG = "travis" ]]; then
-   exit
-fi
 
 # show logs
 print_log "# Opening logs..."

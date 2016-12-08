@@ -16,8 +16,12 @@ branches:
   only:
     - master
 
-script:
+install:
   - ./install-to-localhost.sh travis
+
+script:
+  - cd scripts
+  - ./run-all-tests.sh
 
 cache:
   directories:
