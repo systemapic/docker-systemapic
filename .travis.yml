@@ -6,7 +6,7 @@ services:
 sudo: required
 
 node_js:
-  - 4
+  - 6
 
 notifications:
   email: false

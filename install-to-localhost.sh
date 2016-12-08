@@ -3,9 +3,9 @@
 print_log () {
     echo ""
     echo ":::::::::::::::::::::::::::::::::"
-    echo "::                             ::" 
+    echo "::                             ::"
     echo ":: $1"
-    echo "::                             ::" 
+    echo "::                             ::"
     echo ":::::::::::::::::::::::::::::::::"
     echo ""
 }
@@ -20,7 +20,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # get flags
 FLAG=$1
 
-clear  
+clear
 echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 echo "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 echo "::::::::::::::::::::::::                                         :::::::::::::::::::::::::"
@@ -46,7 +46,7 @@ print_log "# Downloading code..."
 export MAPIC_DOMAIN=localhost
 
 # init mapic/mapic submodule
-cd $DIR 
+cd $DIR
 git submodule init
 git submodule update --recursive --remote
 git submodule foreach --recursive git checkout master
@@ -96,9 +96,9 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 print_log "# Installing Node modules..."
 cd $DIR
 print_log "...for Mapic Tile Server"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel silent
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install
 print_log "...for Mapic Engine"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel silent
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install
 
 # start server
 print_log "# Starting Mapic server..."
@@ -119,6 +119,3 @@ fi
 print_log "# Opening logs..."
 cd $DIR/docker/compose/
 ./show-logs.sh
-
-
-
