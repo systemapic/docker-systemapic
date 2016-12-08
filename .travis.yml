@@ -16,7 +16,7 @@ branches:
     - master
 
 script:
-  - ./ci.sh
+  - ./install-to-localhost.sh travis
 
 cache:
   directories:

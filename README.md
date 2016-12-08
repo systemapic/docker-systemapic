@@ -3,8 +3,9 @@
 
 Mapic is an Open Source Web Map Engine. Learn more @ https://mapic.io.
 
-For a techincal overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
+For a technical overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
+[![Build Status](https://travis-ci.org/mapic/mapic.png)](https://travis-ci.org/mapic/mapic)
 
 ## Install
 
@@ -71,6 +72,7 @@ Mapic is licenced under the [AGPL licence](https://github.com/mapic/mapic/blob/m
 ## Project contributors
 - [Jørgen Evil Ekvoll](https://github.com/jorgenevil)
 - [Magdalini Fotiadou](https://github.com/mft74)
+- [Terrence Lam](https://github.com/skyuplam)
 - [Sandro Santilli](https://github.com/strk)
 - [Knut Ole Sjøli](https://github.com/knutole)
 - [Shahjada Talukdar](https://github.com/destromas1)
