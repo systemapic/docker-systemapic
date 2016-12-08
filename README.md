@@ -5,6 +5,14 @@ Mapic is an Open Source Web Map Engine.
 
 Learn more @ https://mapic.io. For a technical overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
+
+## Usage
+1. Install (see below).
+2. Start server with `./restart-mapic.sh`.
+3. Open your browser @ https://localhost.
+4. Stop server with `./stop-mapic.sh`.
+
+
 ## Install
 
 ### Install dependencies: 
@@ -20,7 +28,7 @@ cd mapic
 ./install-to-localhost.sh
 ```
 ### Create User
-The first user is created automatically. You can log in to https://localhost with these default credentials:  
+The first user is created automatically. You can log in to [https://localhost](https://localhost) with these default credentials:  
 
 ```
 username: localhost@mapic.io
@@ -39,13 +47,14 @@ cd scripts
 ### Install to custom domain
 Install to localhost first, following instructions above; then see [mapic/config-domain.example.com](https://github.com/mapic/config-domain.example.com) for instructions on changing configs for custom domain.
 
+If installing on a publicly available domain, it's important to flush the default `localhost@mapic.io` superuser account first, for obvious reasons. Simply run this script, and the user is removed:
 
-## Usage
-1. Install (see above).
-2. Start server with `./restart-mapic.sh`.
-3. Open your browser @ https://localhost.
-4. Stop server with `./stop-mapic.sh`.
+```bash
+# flush localhost user
+cd scripts
+./flush-localhost-user.sh
 
+```
 
 ## Libraries
 Mapic consists of:   
