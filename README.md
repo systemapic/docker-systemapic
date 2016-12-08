@@ -19,11 +19,21 @@ git clone git://github.com/mapic/mapic.git
 cd mapic
 ./install-to-localhost.sh
 ```
+### Create User
+The first user is created automatically. You can log in to https://localhost with these default credentials:  
 
-The first user is automatically created, with the following credentials with which you can log into the portal @ https://localhost:
 ```
 username: localhost@mapic.io
 password: localhost-password
+```
+
+To create another superuser, do:
+
+```bash
+# create super user
+cd scripts
+./create-super-user.sh 
+
 ```
 
 ### Install to custom domain
@@ -36,17 +46,6 @@ Install to localhost first, following instructions above; then see [mapic/config
 3. Open your browser @ https://localhost.
 4. Stop server with `./stop-mapic.sh`.
 
-#### Create User
-The first user is created automatically, with the credentials listed above.  
-
-To create another superuser, do:
-
-```bash
-# create super user
-cd scripts
-./create-super-user.sh 
-
-```
 
 ## Libraries
 Mapic consists of:   
