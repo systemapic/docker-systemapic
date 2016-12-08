@@ -114,7 +114,7 @@ sleep 30
 cd $DIR/scripts
 ./run-localhost-tests.sh || abort
 
-if [ $FLAG = "travis" ]; then
+if [[ $FLAG = "travis" ]]; then
    exit
 fi
 
