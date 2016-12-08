@@ -10,6 +10,8 @@ node_js:
 
 notifications:
   email: false
+  slack: mapic-io:NKaii0z3tRkeDyXaDbRauRFp
+
 
 branches:
   only:
