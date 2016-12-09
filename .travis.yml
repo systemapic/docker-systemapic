@@ -18,6 +18,7 @@ branches:
 
 install:
   - ./install-to-localhost.sh travis
+  - sleep 30
 
 script:
   - cd scripts
