@@ -4,4 +4,9 @@ function abort() {
     exit 1;
 }
 
-docker exec -it localhost_mile_1 npm test || abort
+# set domain
+if [ -z "$MAPIC_DOMAIN" ]; then
+    MAPIC_DOMAIN=localhost
+fi
+
+docker exec -it ${MAPIC_DOMAIN}_mile_1 npm test || abort

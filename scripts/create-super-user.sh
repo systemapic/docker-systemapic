@@ -30,4 +30,4 @@ test -z "$4" &&
 docker exec -it ${MAPIC_DOMAIN}_engine_1 node scripts/create_user.js $1 $2 $3 $4 $5 || abort "Failed to create user."
 
 # make superadmin
-docker exec -it localhost_engine_1 node scripts/make_super.js $1 || abort "Failed to make superadmin."
+docker exec -it ${MAPIC_DOMAIN}_engine_1 node scripts/make_super.js $1 || abort "Failed to make superadmin."
