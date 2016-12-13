@@ -31,6 +31,8 @@ cd $BASEDIR
 COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
 ARR=(${MAPIC_DOMAIN//./ })
 COMPOSENAME=${ARR[0]} 
+COMPOSENAME=${MAPIC_DOMAIN//./}
+# COMPOSENAME=${echo $MAPIC_DOMAIN | sed -e 's/\.//g'}
 
 # kill, delete, start fresh, get logs
 echo "# Stopping containers..."
