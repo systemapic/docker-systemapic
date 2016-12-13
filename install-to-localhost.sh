@@ -72,6 +72,10 @@ cd $DIR/modules/sdk
 git submodule init
 git submodule update --recursive --remote
 
+# install modules in mapic/mapic (for scripts, etc)
+cd $DIR
+npm install
+
 # create self-signed SSL certs
 print_log "# Creating SSL certficate..."
 docker run --rm -it --name openssl \
