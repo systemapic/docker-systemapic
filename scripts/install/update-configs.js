@@ -1,7 +1,7 @@
 var fs = require("fs");
 var crypto = require("crypto");
 
-var CONFIG_FOLDER           = "../config/localhost/";
+var CONFIG_FOLDER           = "../../config/localhost/";
 var MONGO_JSON_PATH         = CONFIG_FOLDER + "mongo.json";
 var MILE_CONFIG_PATH        = CONFIG_FOLDER + "mile.config.js";
 var ENGINE_CONFIG_PATH      = CONFIG_FOLDER + "engine.config.js";
