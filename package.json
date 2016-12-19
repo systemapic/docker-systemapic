@@ -1,6 +1,6 @@
 {
   "name": "mapic",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Mapic Web Map Engine",
   "scripts": {
     "test": "cd scripts && ./test.sh",
