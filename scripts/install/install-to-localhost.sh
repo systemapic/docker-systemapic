@@ -81,11 +81,16 @@ print_log "# Creating SSL certficate..."
 docker run --rm -it --name openssl \
     -v $DIR/config/localhost:/certs \
     wallies/openssl \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /certs/ssl_certificate.key -out /certs/ssl_certificate.pem -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
+    openssl req -x509 -nodes \
+        -days 365 \
+        -newkey rsa:2048 \
+        -keyout /certs/ssl_certificate.key \
+        -out /certs/ssl_certificate.pem \
+        -subj "/C=NO/ST=Oslo/L=Oslo/O=Mapic/OU=IT Department/CN=localhost"
 
 # update config
 print_log "# Updating configuration..."
-cd $DIR/scripts
+cd $DIR/scripts/install
 node update-configs.js
 
 # create storage containers
@@ -97,6 +102,25 @@ cd $DIR/docker/compose/
 print_log "# Initializing Mongo database"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mongo_store_localhost -it mapic/mongo:latest /init.sh
 
+
+# travis installation continues here:
+# -----------------------------------
+# if [[ $FLAG = "travis" ]]; then
+#     cd $DIR/scripts/install
+#     ./travis-install.sh
+#     exit
+# fi
+
+if [ -z "$travis_repo" ]; then
+    echo "travis_repo exists $travis_repo"
+    cd $DIR/scripts/install
+    ./travis-install.sh
+    exit
+fi
+
+
+## normal localhost install continues here:
+## ----------------------------------------
 # install node modules
 print_log "# Installing Node modules..."
 cd $DIR
@@ -107,17 +131,10 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/m
 print_log "...for Mapic.js"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mapic.js -it mapic/engine:latest npm install --loglevel silent
 
-
 # start server
 print_log "# Starting Mapic server..."
 cd $DIR/docker/compose/
 ./start-containers.sh --no-logs
-
-
-# run travis tests separately
-if [[ $FLAG = "travis" ]]; then
-    exit
-fi
 
 # run tests
 print_log "# Running tests..."
