@@ -111,7 +111,10 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 #     exit
 # fi
 
+echo "TRAVIS REPO ENV in install-to-loaclhost: $travis_repo"
 if [ -z "$travis_repo" ]; then
+    echo "travis_repo does NOT exist $travis_repo"   
+else 
     echo "travis_repo exists $travis_repo"
     cd $DIR/scripts/install
     ./travis-install.sh
