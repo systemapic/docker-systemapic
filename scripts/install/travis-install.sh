@@ -8,6 +8,7 @@ echo "travis-install DIR: $DIR"
 # move repo to mapic/modules
 REPO=$travis_repo
 
+echo "REPO: $REPO"
 
 
 
