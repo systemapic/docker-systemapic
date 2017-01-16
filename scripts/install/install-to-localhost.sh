@@ -19,26 +19,9 @@ FLAG=$1
 
 clear
         
-echo "             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,                                             "     
-echo "          ,;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                           "     
-echo "         ,;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;       :;;;;;                             "     
-echo "         ,;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                          "     
-echo "         ,;;;;;;;i;,   :iii;,      ,;ii;;ii:       :iii;;;;;;;;;;;,          ,;ii;;;;;;;;;i,   :iii;,       ,;ii;;;;;;;;                              ,::;:::,,   "     
-echo "         ,;;;;;;;i;                                    :i;;;;;;i:     ,,,,        ,i;;;;;;;                      :i;;;;;     :;:;;;;;,          ;;;;;;;:,  ,,:;;  "     
-echo "         ,;;;;;;;i;       i;;;;;;i,      ;i;;;;;;i      :i;;;;;;;;;;;;;;;ii;i;     ,i;;;;;;      ,i;;;;;;;;i,      ii;;;        ,;;;;,       ,;;;;;               "     
-echo "         ,;;;;;;;i;     ,;;;;;;;;i;     ,i;;;;;;;i:     ,i;;;;;;i;,                ,;;;;;;;     ,i;;;;;;;;;;i,     ,;;;;        ,;;;;,       ;;;;;                "     
-echo "         ,;;;;;;;i;     ,;;;;;;;;i;     ,i;;;;;;;i:     ,i;;;i:      :iii;;;ii     ,;;;;;;;      i;;;;;;;;;;i      :i;;;        ,;;;;,       ;;;;;                "     
-echo "         ,;;;;;;;i;     ,;;;;;;;;i;     ,i;;;;;;;i:     ,i;;i;      i;;;;;;;;;     ,;;;;;;;      i;;;;;;;;ii      ,i;;;;        ,;;;;,       :;;;;;               "     
-echo "         ,;;;;;;;i;     ,;;;;;;;;i;     ,i;;;;;;;i:     ,i;;;i;        ,,,,        ,;;;;;;;         ,,          :i;;;;;;        ,;;;;,         ,;;;;;;;:,   ,,;;, "     
-echo "         ,;;;;;;;i;,    :i;;;;;;;i;,    ;i;;;;;;;i;     ;i;;;;;;ii;:,          ,::;;;;;;;;;              ,:;ii;;;;;;;;;;         ,,,,                 ,::;;:::,   "     
-echo "         ,;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;      i;;;;;;;;;;;;;;;;;;;;;;                                          "     
-echo "         ,;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;      i;;;;;;;;;;;;;;;;;;;;;;                                          "     
-echo "          ,;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;i;      i;;;;;;;;;;;;;;;;;;;;;                                           "     
-echo "             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:                                             "     
-echo "                   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,                                                    "     
-                                                                                                                                                                       
+                                                                                                                                                                  
 
-print_log "Installing to localhost..."
+print_log "Installing Mapic to localhost..."
 print_log "# Current working directory: $DIR"
 print_log "# Downloading code..."
 
@@ -103,35 +86,39 @@ print_log "# Initializing Mongo database"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mongo_store_localhost -it mapic/mongo:latest /init.sh
 
 
-# travis installation continues here:
-# -----------------------------------
-# if [[ $FLAG = "travis" ]]; then
-#     cd $DIR/scripts/install
-#     ./travis-install.sh
-#     exit
-# fi
 
-echo "TRAVIS REPO ENV in install-to-loaclhost: $travis_repo"
-if [ -z "$travis_repo" ]; then
-    echo "travis_repo does NOT exist $travis_repo"   
-else 
-    echo "travis_repo exists $travis_repo"
-    cd $DIR/scripts/install
-    ./travis-install.sh
+
+# exit if travis
+# -------------------------------
+if [ -v "$travis_repo" ]; then
     exit
 fi
+
+###
+## travis
+###
+#
+# for mapic/mapic, do install-to-localhost.sh script
+# for mapic/engine, mapic/mile, mapic/mapic.js, do standalone travis-install.sh script, w/o localhost script
+# that way, both localhost-install is tested, while full control of checkouts of other code
+# 
+
+
+
 
 
 ## normal localhost install continues here:
 ## ----------------------------------------
 # install node modules
-print_log "# Installing Node modules..."
+print_log "# Installing Node modules"
+# todo: move this to respective start-server scripts
+# todo: use yarn so dont have to build node_modules every time
 cd $DIR
-print_log "...for Mapic Tile Server"
+print_log "Mapic Tile Server"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel silent
-print_log "...for Mapic Engine"
+print_log "Mapic Engine"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel silent
-print_log "...for Mapic.js"
+print_log "Mapic.js"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mapic.js -it mapic/engine:latest npm install --loglevel silent
 
 # start server
@@ -142,7 +129,7 @@ cd $DIR/docker/compose/
 # run tests
 print_log "# Running tests..."
 sleep 30
-cd $DIR/scripts
+cd $DIR/scripts/test
 ./run-localhost-tests.sh || abort
 
 # show logs

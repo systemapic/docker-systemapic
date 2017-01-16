@@ -8,9 +8,23 @@ echo "travis-install DIR: $DIR"
 # move repo to mapic/modules
 REPO=$travis_repo
 
-echo "REPO: $REPO"
+echo "travis_repo $travis_repo"
 
 
+# mapic/mapic
+if [[ $travis_repo = "mapic/mapic" ]]; then
+    cd $DIR/scripts/install
+    ./travis-install.sh
+    exit
+fi
+
+# mapic/engine
+if [[ $travis_repo = "mapic/engine" ]]; then
+    
+    cd $DIR/scripts/install
+    ./travis-install.sh
+    exit
+fi
 
 
 

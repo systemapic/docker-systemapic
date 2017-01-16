@@ -17,7 +17,7 @@ branches:
     - master
 
 install:
-  - ./install-to-localhost.sh travis
+  - ./install-to-localhost.sh
   - sleep 30
 
 script:
