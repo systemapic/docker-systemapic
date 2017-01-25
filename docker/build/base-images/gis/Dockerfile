@@ -1,4 +1,4 @@
-FROM systemapic/ubuntu
+FROM mapic/ubuntu
 
 MAINTAINER Knut Ole Sjøli <@kosjoli>
 
@@ -28,17 +28,17 @@ RUN apt-get install -y \
     protobuf-compiler \
     libprotobuf-dev
 
-# Install NodeJS 10.40
-ADD ./install-nodejs1040.sh /tmp/
-RUN sh /tmp/install-nodejs1040.sh
+# Install NodeJS
+ADD ./install-nodejs.sh /tmp/
+RUN sh /tmp/install-nodejs.sh
 
-# Install Postgresql
-ADD ./install-postgres.sh /tmp/
-RUN sh /tmp/install-postgres.sh
+# # Install Postgresql
+# ADD ./install-postgres.sh /tmp/
+# RUN sh /tmp/install-postgres.sh
 
-# Install Postgis
-ADD ./install-postgis.sh /tmp/
-RUN sh /tmp/install-postgis.sh
+# # Install Postgis
+# ADD ./install-postgis.sh /tmp/
+# RUN sh /tmp/install-postgis.sh
 
 # Get the GDAL source
 ADD ./gdal-checkout.txt /tmp/gdal-checkout.txt
@@ -53,9 +53,9 @@ RUN sh /tmp/install-gdal-deps.sh
 ADD ./install-gdal.sh /tmp/
 RUN sh /tmp/install-gdal.sh
 
-# Run GDAL tests
-ADD ./test-gdal.sh /tmp/
-RUN sh /tmp/test-gdal.sh
+# # Run GDAL tests
+# ADD ./test-gdal.sh /tmp/
+# RUN sh /tmp/test-gdal.sh
 
 # Install Graphics Magick
 ADD ./install-graphicsmagick.sh /tmp/install-graphicsmagick.sh
@@ -85,7 +85,13 @@ RUN npm install grunt-cli -g
 RUN npm install nodemon -g
 RUN npm install forever -g
 RUN npm install mocha -g
-# RUN apt-get install -y protobuf-compiler libprotobuf-dev
+
+# Install yarn
+RUN apt-get install apt-transport-https
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update 
+RUN apt-get install yarn -y
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

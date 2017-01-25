@@ -90,9 +90,11 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 
 
 # exit if travis
+
+echo "TRAVIS ENV travis_repo=$travis_repo"
+
 # -------------------------------
 if [ -v "$travis_repo" ]; then
-    echo "TRAVIS ENV travis_repo=$travis_repo"
     exit
 fi
 
@@ -112,16 +114,16 @@ fi
 ## normal localhost install continues here:
 ## ----------------------------------------
 # install node modules
-print_log "# Installing Node modules"
+# print_log "# Installing Node modules"
 # todo: move this to respective start-server scripts
 # todo: use yarn so dont have to build node_modules every time
 cd $DIR
-print_log "Mapic Tile Server"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel silent
-print_log "Mapic Engine"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel silent
-print_log "Mapic.js"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mapic.js -it mapic/engine:latest npm install --loglevel silent
+print_log "Installing Mapic Tile Server"
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest yarn install 
+print_log "Installing Mapic Engine"
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest yarn install 
+print_log "Installing Mapic.js"
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mapic.js -it mapic/engine:latest yarn install 
 
 # start server
 print_log "# Starting Mapic server..."

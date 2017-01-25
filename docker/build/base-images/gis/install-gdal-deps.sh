@@ -12,8 +12,8 @@ die() {
 }
 
 # Start the required services
-service postgresql start || die
-service mysql start || die
+# service postgresql start || die
+# service mysql start || die
 
 # Change to the source directory.
 cd /tmp/gdal || die
@@ -29,13 +29,13 @@ pip install pyflakes || die
 pyflakes autotest
 pyflakes gdal/swig/python/scripts
 pyflakes gdal/swig/python/samples
-sudo -u postgres psql -c "drop database if exists autotest" -U postgres || die
-sudo -u postgres psql -c "create database autotest" -U postgres || die
-sudo -u postgres psql -c "create extension postgis" -d autotest -U postgres || die
-mysql -e "drop database if exists autotest;" || die
-mysql -e "create database autotest;" || die
-mysql -e "GRANT ALL ON autotest.* TO 'root'@'localhost';" -u root || die
-mysql -e "GRANT ALL ON autotest.* TO 'travis'@'localhost';" -u root || die
+# sudo -u postgres psql -c "drop database if exists autotest" -U postgres || die
+# sudo -u postgres psql -c "create database autotest" -U postgres || die
+# sudo -u postgres psql -c "create extension postgis" -d autotest -U postgres || die
+# mysql -e "drop database if exists autotest;" || die
+# mysql -e "create database autotest;" || die
+# mysql -e "GRANT ALL ON autotest.* TO 'root'@'localhost';" -u root || die
+# mysql -e "GRANT ALL ON autotest.* TO 'travis'@'localhost';" -u root || die
 wget --no-verbose http://s3.amazonaws.com/etc-data.koordinates.com/gdal-travisci/FileGDB_API_1_2-64.tar.gz || die
 wget --no-verbose http://s3.amazonaws.com/etc-data.koordinates.com/gdal-travisci/MrSID_DSDK-8.5.0.3422-linux.x86-64.gcc44.tar.gz || die
 wget --no-verbose http://s3.amazonaws.com/etc-data.koordinates.com/gdal-travisci/install-libecwj2-ubuntu12.04-64bit.tar.gz || die
@@ -68,5 +68,5 @@ cd ../.. || die
 ldconfig || die
 
 # Stop previously started services.
-service mysql stop
-service postgresql stop
+# service mysql stop
+# service postgresql stop
