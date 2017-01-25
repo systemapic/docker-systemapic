@@ -21,7 +21,7 @@ install:
   - sleep 30
 
 script:
-  - cd scripts
+  - cd scripts/test
   - ./run-all-tests.sh
 
 cache:
