@@ -92,6 +92,7 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 # exit if travis
 # -------------------------------
 if [ -v "$travis_repo" ]; then
+    echo "TRAVIS ENV travis_repo=$travis_repo"
     exit
 fi
 
