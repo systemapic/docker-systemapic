@@ -57,7 +57,8 @@ git submodule update --recursive --remote
 
 # install modules in mapic/mapic (for scripts, etc)
 cd $DIR
-npm install
+# npm install
+yarn install
 
 # create self-signed SSL certs
 print_log "# Creating SSL certficate..."
