@@ -39,7 +39,7 @@ To create another superuser, do:
 
 ```bash
 # create super user
-cd scripts
+cd scripts/api
 ./create-super-user.sh 
 
 ```
@@ -51,7 +51,7 @@ If installing on a publicly available domain, it's important to flush the defaul
 
 ```bash
 # flush localhost user
-cd scripts
+cd scripts/api
 ./flush-localhost-user.sh
 
 ```
@@ -59,8 +59,8 @@ cd scripts
 ## Libraries
 Mapic consists of:   
 1. [Mapic Engine](https://github.com/mapic/engine)  
-2. [Mapic Tileserver](https://github.com/mapic/mile)    
-3. [Mapic Client library](https://github.com/mapic/mapic.js)    
+2. [Mapic Mile Tileserver](https://github.com/mapic/mile)    
+3. [Mapic Javascript Client library](https://github.com/mapic/mapic.js)    
 4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
 
 Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/).
