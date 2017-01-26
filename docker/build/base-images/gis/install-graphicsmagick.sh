@@ -1,8 +1,16 @@
 #!/bin/bash
+
+MAJOR=1.3
+MINOR=23
+VERSION=$MAJOR.$MINOR
+
+export PATH
+
 cd /opt/
-wget --no-verbose http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/GraphicsMagick-1.3.21.tar.gz
-tar xf GraphicsMagick-1.3.21.tar.gz
-cd GraphicsMagick-1.3.21/
+wget --no-verbose http://78.108.103.11/MIRROR/ftp/GraphicsMagick/$MAJOR/GraphicsMagick-$VERSION.tar.gz
+tar xf GraphicsMagick-$VERSION.tar.gz
+cd GraphicsMagick-$VERSION/
 ./configure
 make -j 7
 make install
+

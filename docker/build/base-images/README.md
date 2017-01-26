@@ -1,20 +1,9 @@
 ## Base images
 
-These are the images all other images are based on, `systemapic/gis` and `systemapic/ubnutu`.
-
-### `gis` 
-Contains:
- - Mapnik
- - GDAL
- - NodeJS
- - PhantomJS
- - PostGIS/Postgresql
- - GraphichMagick
-
-Used as base image for `systemapic/wu` and `systemapic/pile`.
+These are the images all other images are based on, `mapic/gis` and `mapic/ubuntu`.
 
 
-### `ubuntu`
+### `mapic/ubuntu`
 Based on offical `ubuntu:trusty` with some extra tools:
  - fish 
  - wget 
@@ -26,3 +15,13 @@ Based on offical `ubuntu:trusty` with some extra tools:
  - nmap 
  - pigz 
  - build-essential
+ - NodeJS 7.4
+
+### `mapic/gis` 
+Based on offical `mapic/ubuntu` with some extra tools:
+ - Mapnik
+ - GDAL
+ - PhantomJS
+ - GraphichMagick
+
+Used as base image for `mapic/engine` and `mapic/mile`.

@@ -1,107 +1,52 @@
-FROM mapic/ubuntu
+##
+# mapic/gis:latest
+#
 
+# base image
+FROM mapic/ubuntu:latest
+
+# maintainer
 MAINTAINER Knut Ole Sjøli <@kosjoli>
 
+# install java
+RUN add-apt-repository ppa:openjdk-r/ppa
+RUN apt-get update -y
+RUN apt-get install -y openjdk-8-jdk 
 
-# Ensure the package repository is up to date
-RUN apt-get update --fix-missing -y
+# install mysql
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client
 
-# Install basic dependencies
-RUN apt-get install -y \
-    software-properties-common \
-    python-software-properties \
-    build-essential \
-    wget \
-    subversion \
-    openjdk-7-jdk \
-    mysql-client \
-    mysql-server \
-    unzip \
-    nmap \
-    pigz \
-    zip \
-    mlocate \
-    redis-tools \ 
-    fish \
-    git \
-    curl \
-    protobuf-compiler \
-    libprotobuf-dev
+# install gdal
+ADD gdal /usr/local/src/gdal-docker/
+RUN make -C /usr/local/src/gdal-docker install clean 
+RUN yarn global add gdal --build-from-source --shared_gdal --unsafe-perm
+RUN gdalinfo --version && gdalinfo --formats && ogrinfo --formats
 
-# Install NodeJS
-ADD ./install-nodejs.sh /tmp/
-RUN sh /tmp/install-nodejs.sh
-
-# # Install Postgresql
-# ADD ./install-postgres.sh /tmp/
-# RUN sh /tmp/install-postgres.sh
-
-# # Install Postgis
-# ADD ./install-postgis.sh /tmp/
-# RUN sh /tmp/install-postgis.sh
-
-# Get the GDAL source
-ADD ./gdal-checkout.txt /tmp/gdal-checkout.txt
-ADD ./get-gdal.sh /tmp/
-RUN sh /tmp/get-gdal.sh
-
-# Install the GDAL source dependencies
-ADD ./install-gdal-deps.sh /tmp/
-RUN sh /tmp/install-gdal-deps.sh
-
-# Install GDAL itself
-ADD ./install-gdal.sh /tmp/
-RUN sh /tmp/install-gdal.sh
-
-# # Run GDAL tests
-# ADD ./test-gdal.sh /tmp/
-# RUN sh /tmp/test-gdal.sh
-
-# Install Graphics Magick
+# install graphics magick
 ADD ./install-graphicsmagick.sh /tmp/install-graphicsmagick.sh
 RUN sh /tmp/install-graphicsmagick.sh
 
-# Install PhantomJS
+# install phantom-js
 ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
 RUN sh /tmp/install-phantomjs.sh
 
-# Install Mapnik dependencies
+# install mapnik deps
 ADD ./install-mapnik-dependencies.sh /tmp/
 RUN sh /tmp/install-mapnik-dependencies.sh
 
-# Download Mapnik
+# download mapnik
 ADD ./download-mapnik.sh /tmp/
 RUN sh /tmp/download-mapnik.sh /tmp/mapnik
 
-# Install Mapnik
+# install mapnik
 ADD ./install-mapnik.sh /tmp/
 RUN sh /tmp/install-mapnik.sh /tmp/mapnik
 
-# Remove mapnik sources
+# remove mapnik tmp
 RUN rm -rf /tmp/mapnik
 
-# Install extras
-RUN npm install grunt-cli -g
-RUN npm install nodemon -g
-RUN npm install forever -g
-RUN npm install mocha -g
-
-# Install yarn
-RUN apt-get install apt-transport-https
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update 
-RUN apt-get install yarn -y
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Externally accessible data is by default put in /data
+# workdir
 WORKDIR /data
+
+# volume
 VOLUME ["/data"]
-
-# Execute the gdal utilities as root
-USER root
-
-# Output version and capabilities by default.
-CMD gdalinfo --version && gdalinfo --formats && ogrinfo --formats

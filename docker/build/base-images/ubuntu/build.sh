@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t systemapic/ubuntu .
+docker build -t mapic/ubuntu:latest .
