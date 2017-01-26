@@ -3,20 +3,20 @@
 # test latest docker version, TODO!
 DOCKER_VERSION=${docker --version}
 
-DIRS="deps/ubuntu deps/gis nginx mongo postgis mile engine"
+DIRS="base-images/ubuntu base-images/gis nginx mongo postgis mile engine"
 
-test -n "$1" && SYSTEMAPIC_DOMAIN="$1"
+test -n "$1" && MAPIC_DOMAIN="$1"
 
-if test -z "$SYSTEMAPIC_DOMAIN"; then
-  DEFAULT_SYSTEMAPIC_DOMAIN=localhost
-  echo "No SYSTEMAPIC_DOMAIN env variable set and no parameter given,"
-  echo -n "enter target domain here [${DEFAULT_SYSTEMAPIC_DOMAIN}]: "
-  read SYSTEMAPIC_DOMAIN
-  if test -z "$SYSTEMAPIC_DOMAIN"; then
-    SYSTEMAPIC_DOMAIN=${DEFAULT_SYSTEMAPIC_DOMAIN}
+if test -z "$MAPIC_DOMAIN"; then
+  DEFAULT_MAPIC_DOMAIN=localhost
+  echo "No MAPIC_DOMAIN env variable set and no parameter given,"
+  echo -n "enter target domain here [${DEFAULT_MAPIC_DOMAIN}]: "
+  read MAPIC_DOMAIN
+  if test -z "$MAPIC_DOMAIN"; then
+    MAPIC_DOMAIN=${DEFAULT_MAPIC_DOMAIN}
   fi
 fi
-export SYSTEMAPIC_DOMAIN
+export MAPIC_DOMAIN
 
 SKIP=
 ONLY=
@@ -33,7 +33,7 @@ if test -n "$1"; then
 fi
 
 echo "--------------------------------------------------------------"
-echo "Building all dockers for target domain ${SYSTEMAPIC_DOMAIN}"
+echo "Building all dockers for target domain ${MAPIC_DOMAIN}"
 echo "--------------------------------------------------------------"
 
 cd `dirname $0`
