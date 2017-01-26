@@ -1,38 +1,45 @@
+##
+# mapic/nginx:latest
+#
+
+# base image
+FROM mapic/ubuntu:latest
+
 # Ubuntu 14.04 Trusty Tahyr
-FROM ubuntu:trusty
+# FROM ubuntu:trusty
 
 MAINTAINER Knut Ole Sjøli <knutole@mapic.io>
 
-# Install basic dependencies
-RUN apt-get update -y && apt-get install -y \
-    software-properties-common \
-    python-software-properties \
-    build-essential \
-    wget \
-    subversion \
-    unzip \
-    htop \
-    fish \
-    tar \
-    libgcrypt11-dev \
-    zlib1g-dev \
-    nmap \
-    fish \
-    htop \
-    nmon \
-    bmon
+# # Install basic dependencies
+# RUN apt-get update -y && apt-get install -y \
+#     software-properties-common \
+#     python-software-properties \
+#     build-essential \
+#     wget \
+#     subversion \
+#     unzip \
+#     htop \
+#     fish \
+#     tar \
+#     libgcrypt11-dev \
+#     zlib1g-dev \
+#     nmap \
+#     fish \
+#     htop \
+#     nmon \
+#     bmon
 
 
 
-# Install OpenSSL
+# install openssl
 ADD ./install-openssl.sh /tmp/
 RUN sh /tmp/install-openssl.sh
 
-# Install NginX
+# install nginx
 ADD ./install-nginx.sh /tmp/
 RUN sh /tmp/install-nginx.sh
 
-# Copy latest config files
+# copy latest config files
 ADD ./502.html /etc/nginx/error/
 
 # forward request and error logs to docker log collector
@@ -48,8 +55,8 @@ EXPOSE 443
 # enable terminal
 ENV TERM xterm
 
-# Start nginx
+# workdir
 WORKDIR /mapic/config
 
-# default cmd
+# entrypoint
 CMD ["nginx", "-c", "/mapic/config/nginx.conf"]
