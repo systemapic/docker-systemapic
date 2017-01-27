@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # NodeJS version
-NODE_VERSION=7.4.0
+NODE_VERSION=6.9.4
 
 # install
 gpg --keyserver pool.sks-keyservers.net --recv-keys 7937DFD2AB06298B2293C3187D33FF9D0246406D 114F43EE0176B71C7BC219DD50A3051F888C628D
