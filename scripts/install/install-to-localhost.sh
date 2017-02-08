@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# helper fn
 print_log () {
     echo ""
     echo "$1"
@@ -7,6 +8,7 @@ print_log () {
     echo ""
 }
 
+# helper fn
 abort () {
     exit $1
 }
@@ -17,14 +19,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # get flags
 FLAG=$1
 
+# clear 
 clear
-        
                                                                                                                                                                   
-
+# print
 print_log "Installing Mapic to localhost..."
 print_log "# Current working directory: $DIR"
 print_log "# Downloading code..."
-
 
 # set env
 export MAPIC_DOMAIN=localhost
@@ -58,7 +59,6 @@ git submodule update --recursive --remote
 # install modules in mapic/mapic (for scripts, etc)
 cd $DIR
 npm install
-# yarn install
 
 # create self-signed SSL certs
 print_log "# Creating SSL certficate..."
@@ -89,15 +89,6 @@ docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config --volumes-from mapic_mon
 
 
 
-# exit if travis
-
-echo "TRAVIS ENV travis_repo=$travis_repo"
-
-# -------------------------------
-if [ -v "$travis_repo" ]; then
-    exit
-fi
-
 ###
 ## travis
 ###
@@ -106,6 +97,12 @@ fi
 # for mapic/engine, mapic/mile, mapic/mapic.js, do standalone travis-install.sh script, w/o localhost script
 # that way, both localhost-install is tested, while full control of checkouts of other code
 # 
+
+# exit if travis
+echo "TRAVIS ENV travis_repo=$travis_repo"
+if [ -v "$travis_repo" ]; then
+    exit
+fi
 
 
 
@@ -116,7 +113,6 @@ fi
 # install node modules
 # print_log "# Installing Node modules"
 # todo: move this to respective start-server scripts
-# todo: use yarn so dont have to build node_modules every time
 cd $DIR
 print_log "Installing Mapic Tile Server"
 docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel=silent 
