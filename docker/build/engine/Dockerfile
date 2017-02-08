@@ -5,6 +5,9 @@
 # base image
 FROM mapic/gis:latest
 
+# install postgres client only
+RUN apt-get install postgresql-client postgis -y
+
 # expose port
 EXPOSE 3001
 

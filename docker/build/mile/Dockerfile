@@ -6,7 +6,7 @@
 FROM mapic/gis:latest
 
 # install topojson
-RUN yarn global add topojson
+RUN npm install -g topojson
 
 # expose port
 EXPOSE 3003

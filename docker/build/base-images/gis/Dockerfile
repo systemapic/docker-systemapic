@@ -19,7 +19,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client
 # install gdal
 ADD gdal /usr/local/src/gdal-docker/
 RUN make -C /usr/local/src/gdal-docker install clean 
-RUN yarn global add gdal --build-from-source --shared_gdal --unsafe-perm
+# RUN apt-get update -y && sudo apt-get install libgdal-dev -y
+# RUN npm install -g gdal --build-from-source --shared_gdal --unsafe-perm
+RUN npm install -g gdal 
 RUN gdalinfo --version && gdalinfo --formats && ogrinfo --formats
 
 # install graphics magick
@@ -34,16 +36,16 @@ RUN sh /tmp/install-phantomjs.sh
 ADD ./install-mapnik-dependencies.sh /tmp/
 RUN sh /tmp/install-mapnik-dependencies.sh
 
-# download mapnik
-ADD ./download-mapnik.sh /tmp/
-RUN sh /tmp/download-mapnik.sh /tmp/mapnik
+# # download mapnik
+# ADD ./download-mapnik.sh /tmp/
+# RUN sh /tmp/download-mapnik.sh /tmp/mapnik
 
-# install mapnik
-ADD ./install-mapnik.sh /tmp/
-RUN sh /tmp/install-mapnik.sh /tmp/mapnik
+# # install mapnik
+# ADD ./install-mapnik.sh /tmp/
+# RUN sh /tmp/install-mapnik.sh /tmp/mapnik
 
-# remove mapnik tmp
-RUN rm -rf /tmp/mapnik
+# # remove mapnik tmp
+# RUN rm -rf /tmp/mapnik
 
 # workdir
 WORKDIR /data
