@@ -57,8 +57,8 @@ git submodule update --recursive --remote
 
 # install modules in mapic/mapic (for scripts, etc)
 cd $DIR
-# npm install
-yarn install
+npm install
+# yarn install
 
 # create self-signed SSL certs
 print_log "# Creating SSL certficate..."
@@ -119,11 +119,11 @@ fi
 # todo: use yarn so dont have to build node_modules every time
 cd $DIR
 print_log "Installing Mapic Tile Server"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest yarn install 
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mile -it mapic/mile:latest npm install --loglevel=silent 
 print_log "Installing Mapic Engine"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest yarn install 
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/engine -it mapic/engine:latest npm install --loglevel=silent
 print_log "Installing Mapic.js"
-docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mapic.js -it mapic/engine:latest yarn install 
+docker run -v $DIR/config/${MAPIC_DOMAIN}:/mapic/config -v $DIR/modules:/mapic/modules -w /mapic/modules/mapic.js -it mapic/engine:latest npm install --loglevel=silent
 
 # start server
 print_log "# Starting Mapic server..."
