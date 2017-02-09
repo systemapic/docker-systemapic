@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t systemapic/postgis:log .
+docker build -t mapic/postgis:log .
