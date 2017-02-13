@@ -1,14 +1,15 @@
 #!/bin/bash
 # install open-ssl
 
-OSSLVER=1.1.0b # TODO: figure out how to identify "latest"
+OSSLVER=1.1.0d # TODO: figure out how to identify "latest"
 
 die() {
     exit 1
 }
 
 cd /tmp/ || die
-wget ftp://ftp.openssl.org/source/openssl-${OSSLVER}.tar.gz || die
+# wget ftp://ftp.openssl.org/source/openssl-${OSSLVER}.tar.gz || die
+wget https://www.openssl.org/source/openssl-${OSSLVER}.tar.gz
 tar xvf  openssl-${OSSLVER}.tar.gz || die
 mv openssl-${OSSLVER} openssl
 cd openssl || die
