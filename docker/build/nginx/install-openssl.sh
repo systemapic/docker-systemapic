@@ -8,7 +8,6 @@ die() {
 }
 
 cd /tmp/ || die
-# wget ftp://ftp.openssl.org/source/openssl-${OSSLVER}.tar.gz || die
 wget https://www.openssl.org/source/openssl-${OSSLVER}.tar.gz
 tar xvf  openssl-${OSSLVER}.tar.gz || die
 mv openssl-${OSSLVER} openssl
