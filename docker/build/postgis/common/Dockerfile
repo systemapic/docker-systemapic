@@ -72,11 +72,11 @@ EXPOSE 5432
 ENV TERM xterm
 RUN apt-get install -y fish htop
 
-ADD start.sh /start.sh
-RUN chmod 0755 /start.sh
-
-ADD restore_databases.sh /restore_databases.sh
-RUN chmod 0755 /restore_databases.sh
+RUN apt-get update && apt-get -y install \
+  make \
+  postgresql-server-dev-${PGVER}
+ADD mapic-postgresql/ /mapic-postgresql
+RUN cd /mapic-postgresql && make install && cd -;
 
 # ADD default_env.txt /systemapic/configs/env  # added by build_config.sh in /docks/config/... @strk: YES, we need a deafult 
 # RUN chmod 0600 /systemapic/configs/env
@@ -84,12 +84,11 @@ RUN chmod 0755 /restore_databases.sh
 ADD update_extensions.sh /update_extensions.sh
 RUN chmod 0755 /update_extensions.sh
 
-RUN apt-get update && apt-get -y install \
-  make \
-  postgresql-server-dev-${PGVER}
-ADD mapic-postgresql/ /mapic-postgresql
-RUN cd /mapic-postgresql && make install && cd -;
+ADD start.sh /start.sh
+RUN chmod 0755 /start.sh
 
+ADD restore_databases.sh /restore_databases.sh
+RUN chmod 0755 /restore_databases.sh
 
 ENV PGVER ${PGVER}
 CMD /start.sh ${PGVER}

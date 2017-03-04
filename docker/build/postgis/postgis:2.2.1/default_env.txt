@@ -1,0 +1,6 @@
+# Username to use for connecting to the database
+SYSTEMAPIC_PGSQL_USERNAME=docker
+# Password to use for connecting to the database
+SYSTEMAPIC_PGSQL_PASSWORD=docker
+# Template database (for creating user databases)
+SYSTEMAPIC_PGSQL_DBNAME=systemapic
