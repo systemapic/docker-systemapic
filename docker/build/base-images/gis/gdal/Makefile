@@ -101,6 +101,8 @@ $(GDAL_CONFIG): /tmp/gdal $(MONGO_DEV) $(OPENJPEG_DEV) $(FILEGDBAPI_DEV) $(LIBEC
 	&& ldconfig
 
 /tmp/gdal: $(SVN) $(BUILD_ESSENTIAL)
+	export LC_CTYPE=en_US.UTF-8
+	$(SVN) update
 	$(SVN) checkout --quiet "http://svn.osgeo.org/gdal/$(GDAL_VERSION)/" /tmp/gdal/ \
 	&& touch -c /tmp/gdal
 
@@ -116,6 +118,7 @@ $(OPENJPEG_DEV): /tmp/$(OPENJPEG_DOWNLOAD)
 	&& cp -r /tmp/install-openjpeg/include/* /usr/local/include \
 	&& cp -r /tmp/install-openjpeg/lib/* /usr/local/lib
 /tmp/$(OPENJPEG_DOWNLOAD): $(WGET)
+	sleep 1
 	$(WGET) --no-verbose http://s3.amazonaws.com/etc-data.koordinates.com/gdal-travisci/$(OPENJPEG_DOWNLOAD) -O /tmp/$(OPENJPEG_DOWNLOAD) \
 	&& touch -c /tmp/$(OPENJPEG_DOWNLOAD)
 
@@ -177,6 +180,7 @@ $(JAVA): /tmp/apt-updated
 	apt-get install -y openjdk-7-jdk && touch -c $(JAVA)
 
 $(DEPS_DEV): /etc/apt/sources.list.d/ubuntugis-ubuntugis-unstable-trusty.list /etc/apt/sources.list.d/marlam-gta-trusty.list
+	sleep 1
 	apt-get install -y $(DEPS_PACKAGES) && touch -c $(DEPS_DEV)
 
 $(SVN): /tmp/apt-updated
@@ -205,6 +209,7 @@ $(BUILD_ESSENTIAL): /tmp/apt-updated
 	&& touch -c $(BUILD_ESSENTIAL)
 
 /etc/apt/sources.list.d/ubuntugis-ubuntugis-unstable-trusty.list: /usr/bin/add-apt-repository
+	sleep 1
 	add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable && apt-get update -y
 
 /etc/apt/sources.list.d/marlam-gta-trusty.list: /usr/bin/add-apt-repository

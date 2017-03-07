@@ -17,6 +17,10 @@ RUN apt-get install -y openjdk-8-jdk
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client
 
 # install gdal
+RUN apt-get install -y language-pack-en-base
+RUN export LC_CTYPE=en_US.UTF-8
+RUN locale-gen en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
 ADD gdal /usr/local/src/gdal-docker/
 RUN make -C /usr/local/src/gdal-docker install clean 
 # RUN apt-get update -y && sudo apt-get install libgdal-dev -y
