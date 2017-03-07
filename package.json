@@ -4,7 +4,7 @@
   "description": "Mapic Web Map Engine",
   "scripts": {
     "test": "cd scripts/test && ./run-all-tests.sh",
-    "start": "./restart-mapic.sh",
+    "start": "./restart-mapic.sh"
   },
   "repository": {
     "type": "git",
