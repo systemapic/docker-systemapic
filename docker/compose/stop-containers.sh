@@ -11,13 +11,9 @@ if [ -z "$MAPIC_DOMAIN" ]; then
 fi
 export MAPIC_DOMAIN
 
-# get file and name (eg. dev.systemapic.com.yml and dev)
+# get file and name (eg. dev.mapic.io.yml and dev)
 COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
-ARR=(${MAPIC_DOMAIN//./ })
-COMPOSENAME=${ARR[0]} 
-# COMPOSENAME=$MAPIC_DOMAIN
-# COMPOSENAME=${echo $MAPIC_DOMAIN | sed -e 's/\.//g'}
 COMPOSENAME=${MAPIC_DOMAIN//./}
 
-
+# stop containers
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME kill

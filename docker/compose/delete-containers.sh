@@ -6,11 +6,10 @@ function abort() {
 }
 
 # check domain ENV is set
-[ -z "$MAPIC_DOMAIN" ] && abort "Delete failed! Need to set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=dev.systemapic.com"
+[ -z "$MAPIC_DOMAIN" ] && abort "Delete failed! Need to set MAPIC_DOMAIN ENV variable, eg. export MAPIC_DOMAIN=dev.mapic.io"
 
 # get name
-ARR=(${MAPIC_DOMAIN//./ })
-COMPOSENAME=${ARR[0]} 
+COMPOSENAME=${MAPIC_DOMAIN//./}
 
 # remove stale containers
 docker rm "$COMPOSENAME"_nginx_1
