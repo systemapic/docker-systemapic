@@ -3,10 +3,10 @@
 #
 
 # base image
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 
 # maintainer
-MAINTAINER @kosjoli
+MAINTAINER knutole@mapic.io
 
 # upgrade ubuntu
 RUN apt-get update --fix-missing -y
@@ -38,7 +38,8 @@ RUN apt-get install -y \
   protobuf-compiler \
   libprotobuf-dev \
   apt-transport-https \
-  make
+  make \
+  sudo 
 
 # ensure everything up to date
 RUN apt-get update --fix-missing -y
@@ -49,12 +50,6 @@ RUN sh /tmp/install-nodejs.sh
 
 # set node path
 ENV NODE_PATH /usr/local/lib/node_modules
-
-# install yarn
-# RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-# RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-# RUN apt-get update -y
-# RUN apt-get install yarn -y
 
 # install node deps
 RUN npm install -g grunt-cli
