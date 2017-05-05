@@ -8,8 +8,9 @@ FROM mapic/gis:latest
 # install topojson
 RUN npm install -g topojson
 
-# install postgres client only
-RUN apt-get install postgresql-client postgis -y
+# install postgis
+RUN apt-get update -y
+RUN apt-get install -y postgresql-client postgis libpq-dev python-psycopg2 postgresql 
 
 # expose port
 EXPOSE 3003
