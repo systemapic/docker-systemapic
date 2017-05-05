@@ -6,3 +6,6 @@ scripts/*logs*txt
 scripts/logs/
 *.ignore.*
 node_modules/
+docker/compose/yml
+!docker/compose/yml/localhost.yml
+!docker/compose/yml/common.yml
