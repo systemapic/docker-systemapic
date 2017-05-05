@@ -12,6 +12,8 @@ if [ -z "$MAPIC_DOMAIN" ]; then
     MAPIC_DOMAIN=localhost
 fi
 
+MAPIC_DOMAIN="${MAPIC_DOMAIN//./}"
+
 # check variables are set
 test -z "$1" &&
   abort "Usage: $0 user@domain.com username firstName lastName [password]"
