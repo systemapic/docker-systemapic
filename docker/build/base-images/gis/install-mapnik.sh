@@ -1,22 +1,19 @@
 #!/bin/bash
 
-# test -n "$1"  || { echo "Usage: $0 <source_dir>" >&2; exit 1; }
-# SRCDIR=$1
+CPU_JOBS=12
 
-# cd "${SRCDIR}" || exit 1
-# #./configure BOOST_INCLUDES=/opt/boost/include BOOST_LIBS=/opt/boost/lib || exit 1
-# # make JOBS=1 || exit 1
-# # sudo make install || exit 1
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+sudo apt-get update -y
+sudo apt-get install -y gcc-6 g++-6 clang-3.8
+export CXX="clang++-3.8" && export CC="clang-3.8";
 
-# # workaround for Makefile bug, see https://github.com/mapnik/mapnik/issues/3385
-# python scons/scons.py configure BOOST_INCLUDES=/opt/boost/include BOOST_LIBS=/opt/boost/lib
-# python scons/scons.py -j7
-# python scons/scons.py -j7 install
-
-
-git clone https://github.com/mapnik/mapnik.git
-cd mapnik
-git checkout v3.0.12
+# install mapnik
+git clone https://github.com/mapnik/mapnik mapnik-3.x --depth 10
+cd mapnik-3.x
 git submodule update --init
-./configure && make && make test
-make install
+sudo apt-get install python zlib1g-dev clang make pkg-config curl
+source bootstrap.sh
+./configure CUSTOM_CXXFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0" CXX=${CXX} CC=${CC}
+JOBS=${CPU_JOBS} make
+make test
+sudo make install

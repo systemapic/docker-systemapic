@@ -6,7 +6,7 @@
 FROM mapic/ubuntu:latest
 
 # maintainer
-MAINTAINER Knut Ole Sjøli <@kosjoli>
+MAINTAINER knutole@mapic.io
 
 # install java
 RUN add-apt-repository ppa:openjdk-r/ppa
@@ -16,18 +16,6 @@ RUN apt-get install -y openjdk-8-jdk
 # install mysql
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server mysql-client
 
-# install gdal
-RUN apt-get install -y language-pack-en-base
-RUN export LC_CTYPE=en_US.UTF-8
-RUN locale-gen en_US.UTF-8
-ENV LC_CTYPE en_US.UTF-8
-ADD gdal /usr/local/src/gdal-docker/
-RUN make -C /usr/local/src/gdal-docker install clean 
-# RUN apt-get update -y && sudo apt-get install libgdal-dev -y
-# RUN npm install -g gdal --build-from-source --shared_gdal --unsafe-perm
-RUN npm install -g gdal 
-RUN gdalinfo --version && gdalinfo --formats && ogrinfo --formats
-
 # install graphics magick
 ADD ./install-graphicsmagick.sh /tmp/install-graphicsmagick.sh
 RUN sh /tmp/install-graphicsmagick.sh
@@ -36,20 +24,21 @@ RUN sh /tmp/install-graphicsmagick.sh
 ADD ./install-phantomjs.sh /tmp/install-phantomjs.sh
 RUN sh /tmp/install-phantomjs.sh
 
-# install mapnik deps
-ADD ./install-mapnik-dependencies.sh /tmp/
-RUN sh /tmp/install-mapnik-dependencies.sh
+# install gdal
+ADD ./install-gdal.sh /tmp/install-gdal.sh
+RUN bash /tmp/install-gdal.sh
 
-# # download mapnik
-# ADD ./download-mapnik.sh /tmp/
-# RUN sh /tmp/download-mapnik.sh /tmp/mapnik
+# install boost
+ADD ./install-boost.sh /tmp/
+RUN bash /tmp/install-boost.sh 
 
-# # install mapnik
-# ADD ./install-mapnik.sh /tmp/
-# RUN sh /tmp/install-mapnik.sh /tmp/mapnik
+# install harfbuzz
+ADD ./install-harfbuzz.sh /tmp/
+RUN bash /tmp/install-harfbuzz.sh 
 
-# # remove mapnik tmp
-# RUN rm -rf /tmp/mapnik
+# install mapnik
+ADD ./install-mapnik.sh /tmp/
+RUN bash /tmp/install-mapnik.sh 
 
 # workdir
 WORKDIR /data
