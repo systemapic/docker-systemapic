@@ -75,7 +75,7 @@ docker run --rm -it --name openssl \
 # update config
 print_log "# Updating configuration..."
 cd $DIR/scripts/install
-node update-configs.js
+node update-configs.js localhost
 
 # create storage containers
 print_log "# Creating storage containers..."

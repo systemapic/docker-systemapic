@@ -1,7 +1,15 @@
 var fs = require("fs");
 var crypto = require("crypto");
 
-var CONFIG_FOLDER           = "../../config/localhost/";
+// get/check domain arg
+var DOMAIN = process.argv[2];
+if (!DOMAIN) {
+    console.log('Usage: node update-config.js YOUR_DOMAIN');
+    process.exit(1);
+}
+
+// set config folder
+var CONFIG_FOLDER           = "../../config/" + DOMAIN + "/";
 var MONGO_JSON_PATH         = CONFIG_FOLDER + "mongo.json";
 var MILE_CONFIG_PATH        = CONFIG_FOLDER + "mile.config.js";
 var ENGINE_CONFIG_PATH      = CONFIG_FOLDER + "engine.config.js";
@@ -10,6 +18,11 @@ var REDIS_STATS_CONF_PATH   = CONFIG_FOLDER + "redis.stats.conf";
 var REDIS_TOKENS_CONF_PATH  = CONFIG_FOLDER + "redis.tokens.conf";
 var REDIS_TEMP_CONF_PATH    = CONFIG_FOLDER + "redis.temp.conf";
 
+// check if folder exists
+if (!fs.existsSync(CONFIG_FOLDER)) {
+    console.log(CONFIG_FOLDER, 'does not exist. Quitting!');
+    process.exit(1);
+}
 
 // helper fn
 var updateRedisConfig = function (filePath) {
