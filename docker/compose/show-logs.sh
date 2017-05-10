@@ -1,17 +1,20 @@
 #!/bin/bash
 
+# allow first arg for domain
 test -n "$1" && MAPIC_DOMAIN=`echo "$1" | sed 's/\.yml$//'`
 
-if [ -z "$MAPIC_DOMAIN" ]; then
+# set mapic domain
+test -z "$MAPIC_DOMAIN" &&
     MAPIC_DOMAIN=localhost
-fi
 
+# export env
 export MAPIC_DOMAIN
+export MAPIC_ROOT_FOLDER
 
 # get file and name (eg. dev.mapic.io.yml and dev)
-COMPOSEFILE="yml/$MAPIC_DOMAIN".yml
+COMPOSEFILE="$MAPIC_ROOT_FOLDER/docker/compose/yml/$MAPIC_DOMAIN".yml
 ARR=(${MAPIC_DOMAIN//./ })
-COMPOSENAME=${ARR[0]} 
 COMPOSENAME=${MAPIC_DOMAIN//./}
 
+# show logs
 docker-compose -f $COMPOSEFILE -p $COMPOSENAME logs -f
