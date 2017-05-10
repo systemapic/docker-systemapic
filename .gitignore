@@ -2,8 +2,7 @@ saved_images/*
 *.key
 *.pem
 npm-debug.log
-scripts/*logs*txt
-scripts/logs/
+scripts/log/*logs*txt
 *.ignore.*
 node_modules/
 docker/compose/yml
