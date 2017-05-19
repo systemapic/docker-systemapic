@@ -59,21 +59,27 @@ mapic_enter () {
 mapic_install () {
     # ensure either $MAPIC_DOMAIN is set, or arg for domain is passed
     # todo: better sanity checks for domain, maybe confirm
-    if [ "$MAPIC_DOMAIN" = "" ]
+    if [ "$2" = "" ]
     then
-        if [ "$2" = "" ] 
+        if [ "$MAPIC_DOMAIN" = "" ]
         then
             install_usage
-        else
-            export MAPIC_DOMAIN=$2
+        else 
             run_mapic_install
         fi
-    else
-       run_mapic_install
+    else 
+        export MAPIC_DOMAIN=$2
+        run_mapic_install
     fi
+
 }
 run_mapic_install () {
-    echo "running install $MAPIC_DOMAIN"
+    echo "Installing Mapic to $MAPIC_DOMAIN"
+    echo ""
+    echo "Press Ctrl-C in next 5 seconds to cancel."
+    sleep 5
+    cd $MAPIC_ROOT_FOLDER/scripts/install
+    bash install-to-localhost.sh 
 }
 mapic_help () {
     echo ""
