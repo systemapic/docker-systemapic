@@ -42,12 +42,12 @@ mapic_logs () {
     if [ "$2" == "dump" ]; then
         # dump logs to disk
         cd $MAPIC_ROOT_FOLDER/scripts/log
-        ./dump-logs.sh
+        bash dump-logs.sh
         exit 0
     else
         # print logs to console
         cd $MAPIC_ROOT_FOLDER/scripts/log
-        ./show-logs.sh
+        bash show-logs.sh
     fi
 }
 mapic_enter () {
@@ -88,29 +88,30 @@ mapic_help () {
     echo "  enter [filter]  Enter running container. Filter in grep format for finding Docker container."
     echo "  logs            Show logs of running Mapic server"
     echo "  ps              Show running containers"
+    echo "  install         Install Mapic."
+    echo "  help            This is it."
     echo ""
     exit 0
 }
 
-# check vars
-[ -z "$MAPIC_ROOT_FOLDER" ] && env_not_set 
-[ -z "$MAPIC_DOMAIN" ] && env_not_set 
-[ ! -f /usr/bin/mapic ] && symlink_not_set
-[ -z "$1" ] && mapic_help
 
+# checks
+test -z "$MAPIC_ROOT_FOLDER" && env_not_set # check MAPIC_ROOT_FOLDER is set
+test -z "$MAPIC_DOMAIN" && env_not_set # check MAPIC_DOMAIN is set
+test ! -f /usr/bin/mapic && symlink_not_set # create symlink for global mapic
+test -z "$1" && mapic_help # check for command line arguments
 
 
 # api
 case "$1" in
-
-start)      mapic_start;;
-restart)    mapic_start;;
-stop)       mapic_stop;;
-enter)      mapic_enter "$@";;
-logs)       mapic_logs "$@";;
-install)    mapic_install "$@";;
-help)       mapic_help;;
-ps)         mapic_ps;;
-*)          mapic_help;;
+    start)      mapic_start;;
+    restart)    mapic_start;;
+    stop)       mapic_stop;;
+    enter)      mapic_enter "$@";;
+    logs)       mapic_logs "$@";;
+    install)    mapic_install "$@";;
+    help)       mapic_help;;
+    ps)         mapic_ps;;
+    *)          mapic_help;;
 esac
 
