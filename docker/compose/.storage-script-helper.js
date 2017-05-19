@@ -17,8 +17,8 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
     var fs = require('fs');
 
     // load file
-    var MAPIC_DOMAIN = process.argv[2];
-    // var MAPIC_DOMAIN = process.env.MAPIC_DOMAIN || 'localhost';
+    var MAPIC_DOMAIN = process.argv[2] || process.env.MAPIC_DOMAIN || 'localhost';
+
     if (!MAPIC_DOMAIN) {
         console.log('Usage: node .storage-script-helper.js [MAPIC_DOMAIN]');
         process.exit(1);
