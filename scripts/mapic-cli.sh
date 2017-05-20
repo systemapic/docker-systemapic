@@ -1,6 +1,21 @@
 #!/bin/bash
+
+# TODO:
+# ----- 
+# 1. Create an ENV.sh file to source each time mapic-cli is run. 
+#    That way we don't have to worry about globals, just our own env file.
+
+D="$(readlink -f "$0")"
+MAPIC_CLI_DIR=${D%/*}
+set -o allexport
+source $MAPIC_CLI_DIR/env-cli.sh
+
 usage () {
     echo "Usage: mapic [COMMAND]"
+    exit 1
+}
+failed () {
+    echo "Something went wrong: $1"
     exit 1
 }
 enter_usage () {
@@ -16,6 +31,7 @@ install_usage () {
     exit 1
 }
 user_usage () {
+    echo ""
     echo "Usage: mapic user [OPTIONS]"
     echo ""
     echo "Options:"
@@ -26,6 +42,7 @@ user_usage () {
     exit 1
 }
 run_usage () {
+    echo ""
     echo "Usage: mapic run [filter] [commands]"
     echo ""
     echo "Example: mapic run engine bash"
@@ -39,6 +56,25 @@ symlink_usage () {
     ln -s $MAPIC_ROOT_FOLDER/scripts/mapic-cli.sh /usr/bin/mapic
     echo "Self-registered as global command."
     usage;
+}
+ssl_usage () {
+    echo ""
+    echo "Usage: mapic ssl [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  create      Create SSL certificates for your domain"
+    echo "  scan        Run security scan on your domain and SSL"
+    echo ""
+    exit 1   
+}
+dns_usage () {
+    echo ""
+    echo "Usage: mapic dns [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  create       Create DNS entries on Amazon Route 53 for your domain"
+    echo ""
+    exit 1   
 }
 
 # mapic-cli functions
@@ -124,6 +160,29 @@ mapic_run () {
     [ -z "$CONTAINER" ] && enter_usage_missing_container "$@"
     docker exec $CONTAINER ${@:3}
 }
+mapic_ssl () {
+    test -z "$2" && ssl_usage
+    case "$2" in
+        create)     mapic_ssl_create;;
+        scan)       mapic_ssl_scan;;
+        *)          ssl_usage;
+    esac 
+}
+mapic_ssl_create () {
+    cd $MAPIC_ROOT_FOLDER/scripts/cli
+    bash create-ssl-certs.sh
+}
+mapic_dns () {
+    test -z "$2" && dns_usage
+    case "$2" in
+        create)        mapic_dns_set;;
+        *)          dns_usage;
+    esac 
+}
+mapic_dns_set () {
+    cd $MAPIC_ROOT_FOLDER/scripts/cli
+    bash create-dns-entries-route-53.sh
+}
 
 
 # instructions
@@ -144,6 +203,8 @@ mapic_help () {
     echo "  logs dump           Dump logs of running Mapic server to disk"
     echo "  user                Show user information"
     echo "  ps                  Show running containers"
+    echo "  dns                 Create or check DNS entries for Mapic"
+    echo "  ssl                 Create or scan SSL certificates for Mapic"
     echo "  help                This is it."
     echo ""
     exit 0
@@ -168,6 +229,8 @@ case "$1" in
     logs)       mapic_logs "$@";;
     user)       mapic_user "$@";;
     help)       mapic_help;;
+    ssl)        mapic_ssl "$@";;
+    dns)        mapic_dns "$@";;
     ps)         mapic_ps;;
     *)          mapic_help;;
 esac
