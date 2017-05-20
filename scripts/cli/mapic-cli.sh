@@ -175,6 +175,10 @@ mapic_ssl_create () {
     cd $MAPIC_ROOT_FOLDER/scripts/cli
     bash create-ssl-certs.sh
 }
+mapic_ssl_scan () {
+    cd $MAPIC_ROOT_FOLDER/scripts/cli
+    bash ssllabs-scan.sh $MAPIC_DOMAIN
+}
 mapic_dns () {
     test -z "$2" && dns_usage
     case "$2" in
