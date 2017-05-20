@@ -28,8 +28,8 @@ env_usage () {
 }
 symlink_usage () {
     ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/bin/mapic
-    echo "Self-registered as global command."
-    usage;
+    echo "Self-registered as global command (/usr/bin/mapic)"
+    mapic_help;
 }
 
 
@@ -420,7 +420,7 @@ mapic_help () {
     echo "  install             Install Mapic"
     echo "  config              Configure Mapic"
     echo "  test                Run Mapic tests"
-    echo "  help                This is it!"
+    echo "  help                This screen"
     echo ""
     exit 0
 }
