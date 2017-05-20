@@ -5,8 +5,11 @@
 # 1. Create an ENV.sh file to source each time mapic-cli is run. 
 #    That way we don't have to worry about globals, just our own env file.
 
+# get absolute path of mapic-cli.sh
 D="$(readlink -f "$0")"
 MAPIC_CLI_DIR=${D%/*}
+
+# source env file
 set -o allexport
 source $MAPIC_CLI_DIR/env-cli.sh
 
