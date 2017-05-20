@@ -235,10 +235,10 @@ case "$1" in
     run)        mapic_run "$@";;
     logs)       mapic_logs "$@";;
     user)       mapic_user "$@";;
-    help)       mapic_help;;
-    ssl)        mapic_ssl "$@";;
-    dns)        mapic_dns "$@";;
     ps)         mapic_ps;;
+    dns)        mapic_dns "$@";;
+    ssl)        mapic_ssl "$@";;
+    help)       mapic_help;;
     *)          mapic_help;;
 esac
 

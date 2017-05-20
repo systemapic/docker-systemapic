@@ -5,6 +5,18 @@ usage () {
     exit 1
 }
 
+abort () {
+    echo ""
+    echo "Something went wrong. Failed to create SSL certificates."
+    echo ""
+    echo "Troubleshooting:"
+    echo "  PORT 443"
+    echo "      Please check that ports 443 are open for INBOUND connections your server,"
+    echo "      and that port 443 is not in use."
+    echo ""
+    exit 1
+}
+
 
 # todo: check if 443 is available, offer to shut down
 # put MAPIC_USER_EMAIL somwhere permanently
@@ -34,7 +46,7 @@ test -z "$MAPIC_DOMAIN" && usage "MAPIC_DOMAIN" # check MAPIC_ROOT_FOLDER is set
     --domain  grid-a-"$MAPIC_DOMAIN"   \
     --domain  grid-b-"$MAPIC_DOMAIN"   \
     --domain  grid-c-"$MAPIC_DOMAIN"   \
-    --domain  grid-d-"$MAPIC_DOMAIN"    
+    --domain  grid-d-"$MAPIC_DOMAIN"   || abort
    
 CERT_PATH=$MAPIC_ROOT_FOLDER/config/$MAPIC_DOMAIN
 
