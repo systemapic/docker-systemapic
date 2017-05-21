@@ -199,7 +199,7 @@ mapic_ssl_create () {
 }
 mapic_ssl_scan () {
     cd $MAPIC_CLI_FOLDER
-    bash ssllabs-scan.sh $MAPIC_DOMAIN
+    bash ssllabs-scan.sh "https://$MAPIC_DOMAIN"
 }
 
 #   ____/ /___  _____
@@ -347,18 +347,8 @@ mapic_config_refresh () {
     esac 
 }
 mapic_config_refresh_all () {
-    echo "Refreshing all Mapic configs!"
-
-    # todo: first make a backup of config files that will be changed
-
-    docker run -it \
-        --env MAPIC_ROOT_FOLDER=$MAPIC_ROOT_FOLDER \
-        --env MAPIC_DOMAIN=$MAPIC_DOMAIN \
-        --env MAPIC_CONFIG_FOLDER=$MAPIC_CONFIG_FOLDER \
-        --volume $MAPIC_ROOT_FOLDER:$MAPIC_ROOT_FOLDER \
-        -w $MAPIC_ROOT_FOLDER \
-        node:4 node scripts/cli/config/configure-mapic.js 
-
+    cd $MAPIC_CLI_FOLDER
+    bash configure-mapic.sh || failed "$@"
 }
 mapic_config_refresh_nginx () {
     echo "Not yet supported."
