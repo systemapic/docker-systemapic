@@ -51,6 +51,7 @@ mapic_help () {
     echo "  logs dump           Dump logs of running Mapic server to disk"
     echo "  enter [filter]      Enter running container (with [filter] in grep format for finding Docker container)"
     echo "  run [filter] [cmd]  Run command inside a container"
+    echo "  grep [pattern]      Find string in files in subdirectories of current path"
     echo "  user                Show user information"
     echo "  ps                  Show running containers"
     echo "  dns                 Create or check DNS entries for Mapic"
@@ -85,6 +86,7 @@ mapic_cli () {
         test)       mapic_test "$@";;
         home)       mapic_home "$@";;
         config)     mapic_config "$@";;
+        grep)       mapic_grep;;
         help)       mapic_help;;
         --help)     mapic_help;;
         -h)         mapic_help;;
@@ -111,6 +113,10 @@ source_env () {
     # source env file
     set -o allexport
     source $MAPIC_CLI_FOLDER/env-cli.sh
+
+    # set which folder mapic was executed from
+    MAPIC_EXECUTED_PATH=$PWD
+
 }
 usage () {
     echo "Usage: mapic [COMMAND]"
@@ -508,7 +514,23 @@ mapic_config_refresh_slack () {
     echo "Not yet supported."
     exit 0;
 }
-
+                        
+#   / __ `/ ___/ _ \/ __ \
+#  / /_/ / /  /  __/ /_/ /
+#  \__, /_/   \___/ .___/ 
+# /____/         /_/      
+mapic_grep () {
+    test -z "$2" && mapic_grep_usage
+    grep -rnw $PWD -e "\"$2\""
+}
+mapic_grep_usage () {
+    echo ""
+    echo "Usage: mapic grep [PATTERN]"
+    echo ""
+    echo "Will run: grep -rnw . -e \"PATTERN\""
+    echo ""
+    exit 1  
+}
 
 
 #   ___  ____  / /________  ______  ____  (_)___  / /_
