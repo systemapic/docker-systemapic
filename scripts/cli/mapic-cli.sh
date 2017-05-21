@@ -69,8 +69,9 @@ mapic_cli () {
     source_env "$@"
     check "$@"
 
-    # api
     case "$1" in
+
+        # documented API
         install)    mapic_install "$@";;
         start)      mapic_start;;
         restart)    mapic_start;;
@@ -90,6 +91,11 @@ mapic_cli () {
         help)       mapic_help;;
         --help)     mapic_help;;
         -h)         mapic_help;;
+    
+        # internal/undocumented
+        install_jq)  mapic_install_jq "$@";;
+
+        # catchall
         *)          mapic_wild "$@";;
     esac
 }
@@ -136,6 +142,11 @@ symlink_usage () {
     echo "Self-registered as global command (/usr/bin/mapic)"
     mapic_help;
 }
+mapic_install_jq () {
+    apt-get -qq update -y || exit 1
+    apt-get -qq install -y jq || exit 1
+    exit 0
+}
                
 #    / __ \/ ___/
 #   / /_/ (__  ) 
@@ -173,12 +184,11 @@ mapic_stop () {
 mapic_logs () {
     if [ "$2" == "dump" ]; then
         # dump logs to disk
-        cd $MAPIC_ROOT_FOLDER/scripts/log
+        cd $MAPIC_CLI_FOLDER/logs
         bash dump-logs.sh
-        exit 0
     else
         # print logs to console
-        cd $MAPIC_ROOT_FOLDER/scripts/log
+        cd $MAPIC_CLI_FOLDER/logs
         bash show-logs.sh
     fi
 }
