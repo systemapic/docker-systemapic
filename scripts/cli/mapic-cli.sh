@@ -58,6 +58,7 @@ mapic_help () {
     echo "  ssl                 Create or scan SSL certificates for Mapic"
     echo "  install             Install Mapic"
     echo "  config              Configure Mapic"
+    echo "  env                 Get and set Mapic environment variables"
     echo "  test                Run Mapic tests"
     echo "  help                This screen"
     echo ""
@@ -93,7 +94,6 @@ mapic_cli () {
         -h)         mapic_help;;
 
         env)        mapic_env "$@";;
-        get)        mapic_get "$@";;
     
         # internal/undocumented
         install_jq)  mapic_install_jq "$@";;
@@ -134,8 +134,12 @@ source_env () {
 # \___/_/ /_/|___/  
 mapic_env () {
     test -z $2 && mapic_env_usage
-    test "$2" == "set" && mapic_env_set "$@";
-    test "$2" == "get" && mapic_env_get "$@";
+    case "$2" in
+        get)        mapic_env_get "$@";;
+        set)        mapic_env_set "$@";;
+        edit)       mapic_env_edit "$@";;
+        *)          mapic_env_usage;
+    esac 
 }
 mapic_env_usage () {
     echo ""
@@ -143,19 +147,13 @@ mapic_env_usage () {
     echo ""
     echo "Commands:"
     echo "  set [key] [value]       Set an environment variable. See 'mapic env set --help' for more."
-    echo "  get [key]"              Get an environment variable. 
+    echo "  get [key]               Get an environment variable. Do 'mapic get' to list all variables."
+    echo "  edit                    Edit ENV directly in your favorite editor. (Set editor with MAPIC_DEFAULT_EDITOR env, "
+    echo "                          eg. 'mapic env set MAPIC_DEFAULT_EDITOR nano')"
     echo ""
     echo "Use with caution. Variables are sourced to Mapic environment."
     echo ""
-}
-mapic_env_set () {
-    test "$3" == "--help" && mapic_env_set_help
-    test -z "$3" && mapic_env_set_usage
-    test -z "$4" && mapic_env_set_usage
-
-    # update env file
-    cd $MAPIC_CLI_FOLDER
-    sed -i "/$2/c\ $2=$3" $MAPIC_ENV_FILE
+    exit 0
 }
 mapic_env_set_usage () {
     echo ""
@@ -164,6 +162,31 @@ mapic_env_set_usage () {
     echo "See 'mapic env set --help' for information about possible options."
     echo "Use with caution. Variables are sourced to Mapic environment."
     echo ""
+    exit 0
+}
+mapic_env_set () {
+    test "$3" == "--help" && mapic_env_set_help
+    test -z "$3" && mapic_env_set_usage
+    test -z "$4" && mapic_env_set_usage
+
+    # update env file
+    cd $MAPIC_CLI_FOLDER
+
+    # if KEY already exists
+    if grep -q "$3" "$MAPIC_ENV_FILE"; then
+        sed -i "/$3/c\ $3=$4" $MAPIC_ENV_FILE
+    
+    # if KEY does not exist
+    else
+        echo "$3"="$4" >> $MAPIC_ENV_FILE
+    fi
+
+    # ensure newline
+    sed -i -e '$a\' $MAPIC_ENV_FILE
+    
+    # source new env
+    source_env
+
     exit 0
 }
 mapic_env_set_help () {
@@ -191,6 +214,12 @@ mapic_env_get () {
     else 
         cat $MAPIC_ENV_FILE | grep "$3="
     fi
+    exit 0
+}
+mapic_env_edit () {
+    test -z $MAPIC_DEFAULT_EDITOR && mapic env set MAPIC_DEFAULT_EDITOR nano
+    $MAPIC_DEFAULT_EDITOR $MAPIC_ENV_FILE
+    exit 0
 }
 
 
