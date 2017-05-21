@@ -115,7 +115,7 @@ source_env () {
     source $MAPIC_CLI_FOLDER/env-cli.sh
 
     # set which folder mapic was executed from
-    MAPIC_EXECUTED_PATH=$PWD
+    MAPIC_CLI_PWD=$PWD
 
 }
 usage () {
@@ -264,20 +264,48 @@ mapic_user () {
 
     # api
     case "$2" in
-        list)       mapic_user_list;;
-        create)     mapic_user_create;;
-        super)      mapic_user_super;;
+        list)       mapic_user_list "$@";;
+        create)     mapic_user_create "$@";;
+        super)      mapic_user_super "$@";;
         *)          mapic_user_usage;
     esac 
 }
 mapic_user_list () {
-    echo "List users!"
+    cd $MAPIC_CLI_FOLDER/user
+    bash list-users.sh
 }
 mapic_user_create () {
-    echo "'mapic user create' not yet supported."
+    test -z "$3" && mapic_user_create_usage
+    test -z "$4" && mapic_user_create_usage
+    test -z "$5" && mapic_user_create_usage
+    test -z "$6" && mapic_user_create_usage
+    cd $MAPIC_CLI_FOLDER/user
+    bash create-user.sh "${@:3}"
+}
+mapic_user_create_usage () {
+    echo ""
+    echo "Usage: mapic user create [EMAIL] [USERNAME] [FIRSTNAME] [LASTNAME]"
+    echo ""
+    exit 1
 }
 mapic_user_super () {
-    echo "'mapic user super' not yet supported."
+    test -z "$3" && mapic_user_super_usage
+    read -p "Are you sure? (y/n)" -n 1 -r
+    echo 
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        cd $MAPIC_CLI_FOLDER/user
+        bash promote-super.sh "${@:3}"
+    fi
+}
+mapic_user_super_usage () {
+    echo ""
+    echo "Usage: mapic user super [EMAIL]"
+    echo ""
+    echo "(WARNING: This command will promote user to SUPERADMIN,"
+    echo "giving access to all projects and data.)"
+    echo ""
+    exit 1
 }
                    
 #   / ___/ / / / __ \
@@ -521,7 +549,7 @@ mapic_config_refresh_slack () {
 # /____/         /_/      
 mapic_grep () {
     test -z "$2" && mapic_grep_usage
-    grep -rnw $PWD -e "\"$2\""
+    grep -rnw $MAPIC_CLI_PWD -e "\"$2\""
 }
 mapic_grep_usage () {
     echo ""
