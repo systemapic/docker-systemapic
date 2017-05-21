@@ -13,4 +13,4 @@ logs
 logs/
 logs/*
 *.log
-env-cli.sh
+.mapic.env
