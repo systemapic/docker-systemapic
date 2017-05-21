@@ -86,7 +86,7 @@ mapic_cli () {
         test)       mapic_test "$@";;
         home)       mapic_home "$@";;
         config)     mapic_config "$@";;
-        grep)       mapic_grep;;
+        grep)       mapic_grep "$@";;
         help)       mapic_help;;
         --help)     mapic_help;;
         -h)         mapic_help;;
@@ -151,8 +151,8 @@ mapic_ps () {
 #  (__  ) /_/ /_/ / /  / /_  
 # /____/\__/\__,_/_/   \__/  
 mapic_start () {
-    cd $MAPIC_ROOT_FOLDER
-    ./restart-mapic.sh
+    cd $MAPIC_CLI_FOLDER
+    bash restart-mapic.sh
 }
 
 #    _____/ /_____  ____ 
@@ -161,8 +161,8 @@ mapic_start () {
 # /____/\__/\____/ .___/ 
 #               /_/      
 mapic_stop () {
-    cd $MAPIC_ROOT_FOLDER
-    ./stop-mapic.sh
+    cd $MAPIC_CLI_FOLDER
+    bash stop-mapic.sh
 }
 
 #    / /___  ____ ______
