@@ -1,14 +1,35 @@
 #!/bin/bash
+#   _________  ____  / /______(_) /_  __  __/ /_(_)___  ____ _
+#  / ___/ __ \/ __ \/ __/ ___/ / __ \/ / / / __/ / __ \/ __ `/
+# / /__/ /_/ / / / / /_/ /  / / /_/ / /_/ / /_/ / / / / /_/ / 
+# \___/\____/_/ /_/\__/_/  /_/_.___/\__,_/\__/_/_/ /_/\__, /  
+#                                                    /____/   
+#
+#   To whomever is using this script, feel free to add more scripts and wrappers. 
+#   Just glean the other wrappers below, and follow these steps:
+# 
+#   How to add more scripts/commands:
+#       1. add entry in mapic_help
+#       2. add entry in mapic_cli
+#       3. add your script in your own command (see other examples)
+#       4. put script-file.sh in /cli/ or relevant subfolder (install, config, etc)
+#       5. commit and push as branch/PR
+#       
+#       (For "cool" ascii art text, see: http://patorjk.com/software/taag/#p=display&f=Slant&t=mapic)
+#       (Tracking issue: https://github.com/mapic/mapic/issues/27)
 
-# TODO:
-# ----- 
+
+#   / /_____  ____/ /___ 
+#  / __/ __ \/ __  / __ \
+# / /_/ /_/ / /_/ / /_/ /
+# \__/\____/\__,_/\____/ 
+#
 # 1. Create an ENV.sh file to source each time mapic-cli is run. 
 #    That way we don't have to worry about globals, just our own env file.
 #    Need to clean up this ENV across Mapic
-# 
 # 2. Prompt and contiune on missing $MAPIC_DOMAIN 
-# 
-# 
+# 3. Install flow, work seamlessly with `mapic install [OPTIONS]`. Also for travis (`mapic install --travis [OPTIONS]`)
+# 4. Create own repo for mapic-cli (?)
 
 
 #   _____/ (_)
@@ -69,7 +90,6 @@ mapic_cli () {
         -h)         mapic_help;;
         *)          mapic_wild "$@";;
     esac
-
 }
 
 #    _______________(_)___  / /_   __  __/ /_(_) /____
