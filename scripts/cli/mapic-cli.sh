@@ -17,8 +17,8 @@
 #       
 #       (For "cool" ascii art text, see: http://patorjk.com/software/taag/#p=display&f=Slant&t=mapic)
 #       (Tracking issue: https://github.com/mapic/mapic/issues/27)
-
-
+#
+#
 #   / /_____  ____/ /___ 
 #  / __/ __ \/ __  / __ \
 # / /_/ /_/ / /_/ / /_/ /
@@ -92,7 +92,8 @@ mapic_cli () {
         --help)     mapic_help;;
         -h)         mapic_help;;
 
-        set)        mapic_set "$@";;
+        env)        mapic_env "$@";;
+        get)        mapic_get "$@";;
     
         # internal/undocumented
         install_jq)  mapic_install_jq "$@";;
@@ -125,30 +126,51 @@ source_env () {
 
     # set which folder mapic was executed from
     MAPIC_CLI_PWD=$PWD
-
 }
-mapic_set () {
-    test "$2" == "help" && mapic_set_help
-    test -z "$2" && mapic_set_usage
-    test -z "$3" && mapic_set_usage
+
+                  
+#  / _ \/ __ \ | / /
+# /  __/ / / / |/ / 
+# \___/_/ /_/|___/  
+mapic_env () {
+    test -z $2 && mapic_env_usage
+    test "$2" == "set" && mapic_env_set "$@";
+    test "$2" == "get" && mapic_env_get "$@";
+}
+mapic_env_usage () {
+    echo ""
+    echo "Usage: mapic env [COMMAND]"
+    echo ""
+    echo "Commands:"
+    echo "  set [key] [value]       Set an environment variable. See 'mapic env set --help' for more."
+    echo "  get [key]"              Get an environment variable. 
+    echo ""
+    echo "Use with caution. Variables are sourced to Mapic environment."
+    echo ""
+}
+mapic_env_set () {
+    test "$3" == "--help" && mapic_env_set_help
+    test -z "$3" && mapic_env_set_usage
+    test -z "$4" && mapic_env_set_usage
 
     # update env file
     cd $MAPIC_CLI_FOLDER
     sed -i "/$2/c\ $2=$3" $MAPIC_ENV_FILE
 }
-mapic_set_usage () {
+mapic_env_set_usage () {
     echo ""
-    echo "Usage: mapic set [KEY] [VALUE]"
+    echo "Usage: mapic env set [KEY] [VALUE]"
     echo ""
-    echo "See 'mapic set help' for information about possible options."
+    echo "See 'mapic env set --help' for information about possible options."
     echo "Use with caution. Variables are sourced to Mapic environment."
     echo ""
+    exit 0
 }
-mapic_set_help () {
+mapic_env_set_help () {
     echo ""
-    echo "Usage: mapic set [KEY] [VALUE]"
+    echo "Usage: mapic env set [KEY] [VALUE]"
     echo ""
-    echo "Example: mapic set MAPIC_DOMAIN localhost"
+    echo "Example: mapic env set MAPIC_DOMAIN localhost"
     echo ""
     echo "Possible environment variables options:"
     echo "  MAPIC_DOMAIN                    The domain which Mapic is running on, eg. 'maps.mapic.io' "
@@ -160,7 +182,18 @@ mapic_set_help () {
     echo "  MAPIC_DEBUG                     Debug switch, used arbitrarily."
     echo "  MAPIC_ROOT_FOLDER               Folder where 'mapic' root lives. Set automatically."
     echo ""
+    exit 0
 }
+mapic_env_get () {
+    if [ -z $3 ]
+    then
+        cat $MAPIC_ENV_FILE 
+    else 
+        cat $MAPIC_ENV_FILE | grep "$3="
+    fi
+}
+
+
 usage () {
     echo "Usage: mapic [COMMAND]"
     exit 1
