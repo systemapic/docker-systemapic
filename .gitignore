@@ -13,4 +13,6 @@ logs
 logs/
 logs/*
 *.log
-.mapic.env
+*.mapic.env
+*.env
+scritps/cli/.mapic.env
