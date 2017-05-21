@@ -91,6 +91,8 @@ mapic_cli () {
         help)       mapic_help;;
         --help)     mapic_help;;
         -h)         mapic_help;;
+
+        set)        mapic_set "$@";;
     
         # internal/undocumented
         install_jq)  mapic_install_jq "$@";;
@@ -117,12 +119,47 @@ source_env () {
     MAPIC_CLI_FOLDER=${D%/*}
 
     # source env file
+    MAPIC_ENV_FILE=$MAPIC_CLI_FOLDER/.mapic.env
     set -o allexport
-    source $MAPIC_CLI_FOLDER/env-cli.sh
+    source $MAPIC_ENV_FILE
 
     # set which folder mapic was executed from
     MAPIC_CLI_PWD=$PWD
 
+}
+mapic_set () {
+    test "$2" == "help" && mapic_set_help
+    test -z "$2" && mapic_set_usage
+    test -z "$3" && mapic_set_usage
+
+    # update env file
+    cd $MAPIC_CLI_FOLDER
+    sed -i "/$2/c\ $2=$3" $MAPIC_ENV_FILE
+}
+mapic_set_usage () {
+    echo ""
+    echo "Usage: mapic set [KEY] [VALUE]"
+    echo ""
+    echo "See 'mapic set help' for information about possible options."
+    echo "Use with caution. Variables are sourced to Mapic environment."
+    echo ""
+}
+mapic_set_help () {
+    echo ""
+    echo "Usage: mapic set [KEY] [VALUE]"
+    echo ""
+    echo "Example: mapic set MAPIC_DOMAIN localhost"
+    echo ""
+    echo "Possible environment variables options:"
+    echo "  MAPIC_DOMAIN                    The domain which Mapic is running on, eg. 'maps.mapic.io' "
+    echo "  MAPIC_USER_EMAIL                Your email. Only used for creating SSL certificates for now."
+    echo "  MAPIC_IP                        Public IP of your server. Set automatically by default."
+    echo "  MAPIC_AWS_ACCESSKEYID           Amazon AWS credentials: Access Key Id"
+    echo "  MAPIC_AWS_SECRETACCESSKEY       Amazon AWS credentials: Secret Access Key"
+    echo "  MAPIC_AWS_HOSTED_ZONE_DOMAIN    Amazon Route53 Zone Domain. Used for creating DNS entries with Route53."
+    echo "  MAPIC_DEBUG                     Debug switch, used arbitrarily."
+    echo "  MAPIC_ROOT_FOLDER               Folder where 'mapic' root lives. Set automatically."
+    echo ""
 }
 usage () {
     echo "Usage: mapic [COMMAND]"
@@ -300,6 +337,9 @@ mapic_user_create_usage () {
 }
 mapic_user_super () {
     test -z "$3" && mapic_user_super_usage
+    echo "WARNING: This command will promote user to SUPERADMIN,"
+    echo "giving access to all projects and data."
+    echo ""
     read -p "Are you sure? (y/n)" -n 1 -r
     echo 
     if [[ $REPLY =~ ^[Yy]$ ]]
