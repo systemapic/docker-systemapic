@@ -114,6 +114,7 @@ mapic_cli () {
         --help)     mapic_cli_usage;;
         -h)         mapic_cli_usage;;
         env)        mapic_env "$@";;
+        edit)       mapic_edit "$@";;
     
         *)          mapic_wild "$@";;
     esac
@@ -151,6 +152,10 @@ mapic_debug () {
         echo "Debug mode is on"
         mapic env set --silent MAPIC_DEBUG true
     fi
+}
+mapic_edit () {
+    cd $MAPIC_CLI_FOLDER
+    $MAPIC_DEFAULT_EDITOR 
 }
 
                   
@@ -249,6 +254,8 @@ mapic_env_set_internal () {
     
     # source new env
     source_env
+    echo "declaring!"
+    declare -g $ENV_KEY="$ENV_VALUE"
 
     # confirm new variable
     [[ "$FLAG" = "" ]] && mapic env get $ENV_KEY
@@ -277,6 +284,15 @@ mapic_env_set_help () {
     exit 0
 }
 mapic_env_get () {
+    if [ "$3" = "--value" ]
+    then
+        echo "--value!"
+        VAR=$(cat $MAPIC_ENV_FILE | grep "$4=")
+        echo "VAR: $VAR"
+        exit 0
+    fi
+
+    # no options
     if [ -z $3 ]
     then
         cat $MAPIC_ENV_FILE 
@@ -286,7 +302,10 @@ mapic_env_get () {
     exit 0
 }
 mapic_env_edit () {
-    test -z $MAPIC_DEFAULT_EDITOR && mapic env set MAPIC_DEFAULT_EDITOR nano
+    if [ -z $MAPIC_DEFAULT_EDITOR ]; then
+        mapic env set MAPIC_DEFAULT_EDITOR nano
+        # MAPIC_DEFAULT_EDITOR=nano
+    fi
     $MAPIC_DEFAULT_EDITOR $MAPIC_ENV_FILE
     exit 0
 }
