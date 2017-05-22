@@ -1,0 +1,31 @@
+{
+  "name": "mapic-cli-upload",
+  "version": "0.0.1",
+  "description": "Packages for Mapic CLI",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapic/mapic-cli.git"
+  },
+  "author": "knutole@mapic.io",
+  "license": "AGPL",
+  "bugs": {
+    "url": "https://github.com/mapic/mapic-cli/issues"
+  },
+  "homepage": "https://github.com/mapic/mapic-cli",
+  "dependencies": {
+    "async": "^2.0.0-rc.2",
+    "fs-extra": "^0.26.7",
+    "ftps": "^0.4.8",
+    "jsftp": "^1.5.5",
+    "lodash": "^4.8.2",
+    "moment": "^2.12.0",
+    "node-dir": "^0.1.11",
+    "node-uuid": "^1.4.7",
+    "strip-json-comments": "^2.0.1",
+    "supertest": "^1.2.0"
+  }
+}
