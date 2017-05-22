@@ -71,11 +71,17 @@ mapic_cli_usage () {
     echo "  run                 Run command inside a container"
     echo "  grep                Find string in files in subdirectories of current path"
     echo "  ps                  Show running containers"
+    echo "  debug               Toggle debug mode"
     echo ""
     echo "API commands:"
     echo "  api user            Handle Mapic users"
     echo "  api upload          Upload data"  
     echo ""
+    if [[ "$MAPIC_DEBUG" = "true" ]]; then
+    echo "Undocumented:"
+    echo "  edit                Edit mapic-cli.sh source file"
+    echo ""
+    fi
     exit 0
 }
 mapic_cli () {
@@ -103,10 +109,12 @@ mapic_cli () {
         home)       mapic_home "$@";;
         config)     mapic_config "$@";;
         grep)       mapic_grep "$@";;
+        debug)      mapic_debug "$@";;
         help)       mapic_cli_usage;;
         --help)     mapic_cli_usage;;
         -h)         mapic_cli_usage;;
         env)        mapic_env "$@";;
+        edit)       mapic_edit "$@";;
     
         *)          mapic_wild "$@";;
     esac
@@ -136,6 +144,19 @@ source_env () {
     # set which folder mapic was executed from
     MAPIC_CLI_PWD=$PWD
 }
+mapic_debug () {
+    if $MAPIC_DEBUG == "true"; then
+        echo "Debug mode is off"
+        mapic env set --silent MAPIC_DEBUG false
+    else 
+        echo "Debug mode is on"
+        mapic env set --silent MAPIC_DEBUG true
+    fi
+}
+mapic_edit () {
+    cd $MAPIC_CLI_FOLDER
+    $MAPIC_DEFAULT_EDITOR 
+}
 
                   
 #  / _ \/ __ \ | / /
@@ -157,6 +178,15 @@ mapic_env_usage () {
     exit 0
 }
 mapic_env () {
+
+    # debug mode
+    if $MAPIC_DEBUG = "true" && test -z $2; then
+        echo "(Mapic DEBUG mode: Showing ENV instead of help screen.)"
+        echo ""
+        mapic_env_get
+        exit 0
+    fi
+
     test -z $2 && mapic_env_usage
     case "$2" in
         get)        mapic_env_get "$@";;
@@ -224,6 +254,8 @@ mapic_env_set_internal () {
     
     # source new env
     source_env
+    echo "declaring!"
+    declare -g $ENV_KEY="$ENV_VALUE"
 
     # confirm new variable
     [[ "$FLAG" = "" ]] && mapic env get $ENV_KEY
@@ -252,6 +284,15 @@ mapic_env_set_help () {
     exit 0
 }
 mapic_env_get () {
+    if [ "$3" = "--value" ]
+    then
+        echo "--value!"
+        VAR=$(cat $MAPIC_ENV_FILE | grep "$4=")
+        echo "VAR: $VAR"
+        exit 0
+    fi
+
+    # no options
     if [ -z $3 ]
     then
         cat $MAPIC_ENV_FILE 
@@ -261,7 +302,10 @@ mapic_env_get () {
     exit 0
 }
 mapic_env_edit () {
-    test -z $MAPIC_DEFAULT_EDITOR && mapic env set MAPIC_DEFAULT_EDITOR nano
+    if [ -z $MAPIC_DEFAULT_EDITOR ]; then
+        mapic env set MAPIC_DEFAULT_EDITOR nano
+        # MAPIC_DEFAULT_EDITOR=nano
+    fi
     $MAPIC_DEFAULT_EDITOR $MAPIC_ENV_FILE
     exit 0
 }
@@ -469,6 +513,10 @@ mapic_install_docker_unsupported () {
 }
 mapic_install_docker_ubuntu () {
     echo "Installing Docker!"
+    cd $MAPIC_CLI_FOLDER/install
+    ls -l
+    echo $PWD
+    bash install-docker.sh
 }
 
 #   ____ _____  (_)
