@@ -8,7 +8,7 @@ fail () {
 check_env () {
 
     # allow arg for dataset
-    test -n $3 && mapic env set MAPIC_API_UPLOAD_DATASET $3; MAPIC_API_UPLOAD_DATASET=$3
+    test -n $3 && mapic env set --quiet MAPIC_API_UPLOAD_DATASET $3; MAPIC_API_UPLOAD_DATASET=$3
 
     # check for all variables
     test -z $MAPIC_API_DOMAIN                && mapic env prompt MAPIC_API_DOMAIN "Enter the domain for Mapic API" dev.mapic.io
@@ -20,7 +20,7 @@ check_env () {
     test -z $MAPIC_API_AUTH                  && mapic env prompt MAPIC_API_AUTH "Enter your Mapic API password"
 
     # debug
-    if [[ "$MAPIC_API_DEBUG" == "true"]]; then
+    if [[ "$MAPIC_API_DEBUG" == "true" ]]; then
         echo "MAPIC_API_DOMAIN            $MAPIC_API_DOMAIN            "
         echo "MAPIC_API_UPLOAD_DATASET    $MAPIC_API_UPLOAD_DATASET    "
         echo "MAPIC_API_UPLOAD_PROJECT    $MAPIC_API_UPLOAD_PROJECT    "
@@ -28,13 +28,12 @@ check_env () {
         echo "MAPIC_API_DATASET_TITLE     $MAPIC_API_DATASET_TITLE     "
         echo "MAPIC_API_USERNAME          $MAPIC_API_USERNAME          "
         echo "MAPIC_API_AUTH              $MAPIC_API_AUTH              "
-        echo "DAEMON: $DAEMON"
-        echo "IMAGE: $IMAGE"
-        echo "CMD: $CMD"
-        echo "WORKDIR: $WORKDIR"
-        echo "PWD: $PWD"
-        echo "still here!"
-        echo "ENV_FILE: $ENV_FILE"
+        echo "DAEMON:                     $DAEMON"
+        echo "IMAGE:                      $IMAGE"
+        echo "CMD:                        $CMD"
+        echo "WORKDIR:                    $WORKDIR"
+        echo "PWD:                        $PWD"
+        echo "ENV_FILE:                   $ENV_FILE"
     fi
 
 }
@@ -50,8 +49,6 @@ docker_run () {
     docker run -it --volume $PWD:$WORKDIR --workdir $WORKDIR node:6 npm install --silent || fail "Couldn't install Node modules"
 
     # upload data
-    # docker run -it --volume $PWD:$WORKDIR --volume $MAPIC_API_UPLOAD_DATASET:/mapic_upload$MAPIC_API_UPLOAD_DATASET --workdir $WORKDIR --env-file $ENV_FILE node:6 ls -l /mapic_upload$MAPIC_API_UPLOAD_DATASET || fail "Couldn't upload dataset: $@"
-    # docker run -it --volume $PWD:$WORKDIR --volume $MAPIC_API_UPLOAD_DATASET:/mapic_upload$MAPIC_API_UPLOAD_DATASET --workdir $WORKDIR --env-file $ENV_FILE node:6 env || fail "Couldn't upload dataset: $@"
     docker run -it --volume $PWD:$WORKDIR --volume $MAPIC_API_UPLOAD_DATASET:/mapic_upload$MAPIC_API_UPLOAD_DATASET --workdir $WORKDIR --env-file $ENV_FILE node:6 node upload-data.js || fail "Couldn't upload dataset: $@"
 }
 

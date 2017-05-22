@@ -160,18 +160,41 @@ mapic_env () {
 }
 mapic_env_set_usage () {
     echo ""
-    echo "Usage: mapic env set [KEY] [VALUE]"
+    echo "Usage: mapic env set [OPTIONS] [KEY] [VALUE]"
     echo ""
-    echo "See 'mapic env set --help' for information about possible options."
+    echo "Options:"
+    echo "  --silent        Silent"
+    echo "  --return-value  Return only set environment value (instead of default VALUE=KEY)"
+    echo "  --help          More information about possible ENV variables"
+    echo ""
     echo "Use with caution. Variables are sourced to Mapic environment."
     echo ""
     exit 0
 }
 mapic_env_set () {
+    test -z $3 && mapic_env_set_usage
+    case "$3" in
+        --help)           mapic_env_set_usage "$@";;
+        --silent)         mapic_env_set_silent "$@";;
+        --return-value)   mapic_env_set_return_value "$@";;
+        *)                mapic_env_set_default "$@";
+    esac 
+}
+mapic_env_set_silent () {
+    mapic_env_set_internal $4 $5 "silent"
+}
+mapic_env_set_default () {
+    mapic_env_set_internal $3 $4
+}
+mapic_env_set_return_value () {
+    mapic_env_set_internal $4 $5 "value"
+}
+mapic_env_set_internal () {
 
     # check
-    ENV_KEY=$3
-    ENV_VALUE=$4
+    ENV_KEY=$1
+    ENV_VALUE=$2
+    FLAG=$3
     test "$ENV_KEY" == "--help" && mapic_env_set_help
     test -z "$ENV_KEY" && mapic_env_set_usage
 
@@ -194,7 +217,8 @@ mapic_env_set () {
     source_env
 
     # confirm new variable
-    mapic env get $ENV_KEY
+    [[ "$FLAG" = "" ]] && mapic env get $ENV_KEY
+    [[ "$FLAG" = "value" ]] && echo $ENV_VALUE
 
     exit 0
 }
@@ -244,7 +268,6 @@ mapic_env_prompt () {
     read -e -p "$ENV_KEY $MSG: " -i "$DEFAULT_VALUE" ENV_VALUE
 
     # set env
-    echo "$ENV_KEY=$ENV_VALUE"
     test -n $ENV_VALUE && mapic env set $ENV_KEY $ENV_VALUE 
 
     exit 0

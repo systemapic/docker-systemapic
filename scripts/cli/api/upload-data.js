@@ -224,7 +224,6 @@ ops.add_to_layermenu = function (callback) {
         .end(function (err, response) {
             var body = response.body;
             debug && console.log('add to layermenu:', body);
-            console.log('Added layer to layermenu.');
             callback();
         });
     });
