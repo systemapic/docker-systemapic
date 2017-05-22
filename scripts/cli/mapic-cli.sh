@@ -1,4 +1,6 @@
 #!/bin/bash
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+#
 #   _________  ____  / /______(_) /_  __  __/ /_(_)___  ____ _
 #  / ___/ __ \/ __ \/ __/ ___/ / __ \/ / / / __/ / __ \/ __ `/
 # / /__/ /_/ / / / / /_/ /  / / /_/ / /_/ / /_/ / / / / /_/ / 
@@ -6,14 +8,15 @@
 #                                                    /____/   
 #
 #   To whomever is using this script, feel free to add more scripts and wrappers. 
-#   Just glean the other wrappers below, and follow these steps:
+#   Look at the syntax and organisation of other functions, or follow these steps:
 # 
 #   How to add more scripts/commands:
-#       1. add entry in mapic_help
-#       2. add entry in mapic_cli
-#       3. add your script in your own command (see other examples)
-#       4. put script-file.sh in /cli/ or relevant subfolder (install, config, etc)
-#       5. commit and push as branch/PR
+#       1. fork this repo
+#       2. add entry in mapic_cli_usage
+#       3. add entry in mapic_cli
+#       4. add your script in your own command (see other examples)
+#       5. put script-file.sh in /cli/ or relevant subfolder (install, config, etc)
+#       6. create PR @ https://github.com/mapic/mapic-cli
 #       
 #       (For "cool" ascii art text, see: http://patorjk.com/software/taag/#p=display&f=Slant&t=mapic)
 #       (Tracking issue: https://github.com/mapic/mapic/issues/27)
@@ -24,19 +27,26 @@
 # / /_/ /_/ / /_/ / /_/ /
 # \__/\____/\__,_/\____/ 
 #
-# 1. Create an ENV.sh file to source each time mapic-cli is run. 
+# 1. (DONE!) Create an ENV.sh file to source each time mapic-cli is run. 
 #    That way we don't have to worry about globals, just our own env file.
 #    Need to clean up this ENV across Mapic
-# 2. Prompt and contiune on missing $MAPIC_DOMAIN 
+# 2. (DONE!) Prompt and contiune on missing $MAPIC_DOMAIN 
 # 3. Install flow, work seamlessly with `mapic install [OPTIONS]`. Also for travis (`mapic install --travis [OPTIONS]`)
-# 4. Create own repo for mapic-cli (?)
+# 4. Create own repo for mapic-cli eventually
+#
+#
+#
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
+
+
 
 
 #   _____/ (_)
 #  / ___/ / / 
 # / /__/ / /  
 # \___/_/_/      
-mapic_help () {
+mapic_cli_usage () {
     echo ""
     echo "Usage: mapic COMMAND"
     echo ""
@@ -49,18 +59,22 @@ mapic_help () {
     echo "  status              Display status on running Mapic stack"
     echo "  logs                Show logs of running Mapic server"
     echo "  logs dump           Dump logs of running Mapic server to disk"
-    echo "  enter [filter]      Enter running container (with [filter] in grep format for finding Docker container)"
-    echo "  run [filter] [cmd]  Run command inside a container"
-    echo "  grep [pattern]      Find string in files in subdirectories of current path"
-    echo "  ps                  Show running containers"
-    echo "  dns                 Create or check DNS entries for Mapic"
-    echo "  ssl                 Create or scan SSL certificates for Mapic"
+    echo "  test                Run Mapic tests"
+    echo ""
+    echo "Commands:"
     echo "  install             Install Mapic"
     echo "  config              Configure Mapic"
     echo "  env                 Get and set Mapic environment variables"
-    echo "  test                Run Mapic tests"
-    echo "  api                 Run API commands"
-    echo "  help                This screen"
+    echo "  dns                 Create or check DNS entries for Mapic"
+    echo "  ssl                 Create or scan SSL certificates for Mapic"
+    echo "  enter               Enter running container"
+    echo "  run                 Run command inside a container"
+    echo "  grep                Find string in files in subdirectories of current path"
+    echo "  ps                  Show running containers"
+    echo ""
+    echo "API commands:"
+    echo "  api user            Handle Mapic users"
+    echo "  api upload          Upload data"  
     echo ""
     exit 0
 }
@@ -89,16 +103,11 @@ mapic_cli () {
         home)       mapic_home "$@";;
         config)     mapic_config "$@";;
         grep)       mapic_grep "$@";;
-        help)       mapic_help;;
-        --help)     mapic_help;;
-        -h)         mapic_help;;
-
+        help)       mapic_cli_usage;;
+        --help)     mapic_cli_usage;;
+        -h)         mapic_cli_usage;;
         env)        mapic_env "$@";;
     
-        # internal/undocumented
-        install_jq)  mapic_install_jq "$@";;
-
-        # catchall
         *)          mapic_wild "$@";;
     esac
 }
@@ -112,7 +121,7 @@ check () {
     test -z "$MAPIC_ROOT_FOLDER" && env_usage # check MAPIC_ROOT_FOLDER is set
     test -z "$MAPIC_DOMAIN" && env_usage # check MAPIC_DOMAIN is set
     test ! -f /usr/bin/mapic && symlink_usage # create symlink for global mapic
-    test -z "$1" && mapic_help # check for command line arguments
+    test -z "$1" && mapic_cli_usage # check for command line arguments
 }
 source_env () {
     # get absolute path of mapic-cli.sh
@@ -134,7 +143,7 @@ source_env () {
 # \___/_/ /_/|___/  
 mapic_env_usage () {
     echo ""
-    echo "Usage: mapic env [COMMAND]"
+    echo "Usage: mapic env COMMAND"
     echo ""
     echo "Commands:"
     echo "  set [key] [value]       Set an environment variable. See 'mapic env set --help' for more."
@@ -160,7 +169,7 @@ mapic_env () {
 }
 mapic_env_set_usage () {
     echo ""
-    echo "Usage: mapic env set [OPTIONS] [KEY] [VALUE]"
+    echo "Usage: mapic env set [OPTIONS] KEY VALUE"
     echo ""
     echo "Options:"
     echo "  --silent        Silent"
@@ -224,7 +233,7 @@ mapic_env_set_internal () {
 }
 mapic_env_set_help () {
     echo ""
-    echo "Usage: mapic env set [KEY] [VALUE]"
+    echo "Usage: mapic env set KEY VALUE"
     echo ""
     echo "Example: mapic env set MAPIC_DOMAIN localhost"
     echo ""
@@ -237,6 +246,8 @@ mapic_env_set_help () {
     echo "  MAPIC_AWS_HOSTED_ZONE_DOMAIN    Amazon Route53 Zone Domain. Used for creating DNS entries with Route53."
     echo "  MAPIC_DEBUG                     Debug switch, used arbitrarily."
     echo "  MAPIC_ROOT_FOLDER               Folder where 'mapic' root lives. Set automatically."
+    echo ""
+    echo "  See 'mapic env get' for all variables"
     echo ""
     exit 0
 }
@@ -274,19 +285,17 @@ mapic_env_prompt () {
 }
 mapic_env_prompt_usage () {
     echo ""
-    echo "Usage: mapic env prompt [ENV KEY] [MESSAGE] [DEFAULT VALUE]"
+    echo "Usage: mapic env prompt ENV_KEY [MESSAGE] [DEFAULT_VALUE]"
     echo ""
     echo "Prompt user for Mapic environment variable and set it permanently"
     echo ""
     echo "Options:"
-    echo "  ENV KEY         The environment key to set"
+    echo "  ENV_KEY         The environment key to set"
     echo "  MESSAGE         A message to diplay at prompt"
-    echo "  DEFAULT VALUE   The default provided value"
+    echo "  DEFAULT_VALUE   The default provided value"
     echo ""
     exit 1
 }
-
-
 usage () {
     echo "Usage: mapic [COMMAND]"
     exit 1
@@ -303,13 +312,9 @@ env_usage () {
 symlink_usage () {
     ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/bin/mapic
     echo "Self-registered as global command (/usr/bin/mapic)"
-    mapic_help;
+    mapic_cli_usage;
 }
-mapic_install_jq () {
-    apt-get -qq update -y || exit 1
-    apt-get -qq install -y jq || exit 1
-    exit 0
-}
+
                
 #    / __ \/ ___/
 #   / /_/ (__  ) 
@@ -369,13 +374,6 @@ mapic_wild () {
 #  / _ \/ __ \/ __/ _ \/ ___/
 # /  __/ / / / /_/  __/ /    
 # \___/_/ /_/\__/\___/_/     
-mapic_enter () {
-    [ -z "$1" ] && mapic_enter_usage
-    [ -z "$2" ] && mapic_enter_usage
-    C=$(docker ps -q --filter name=$2)
-    [ -z "$C" ] && mapic_enter_usage_missing_container "$@"
-    docker exec -it $C bash
-}
 mapic_enter_usage () {
     echo ""
     echo "Usage: mapic enter [filter]"
@@ -384,6 +382,13 @@ mapic_enter_usage () {
     echo ""
     echo "Example: 'mapic enter engine'"
     exit 1
+}
+mapic_enter () {
+    [ -z "$1" ] && mapic_enter_usage
+    [ -z "$2" ] && mapic_enter_usage
+    C=$(docker ps -q --filter name=$2)
+    [ -z "$C" ] && mapic_enter_usage_missing_container "$@"
+    docker exec -it $C bash
 }
 mapic_enter_usage_missing_container () {
     echo "No container matched filter: $2" 
@@ -395,47 +400,82 @@ mapic_enter_usage_missing_container () {
 #  / / / / (__  ) /_/ /_/ / / /  
 # /_/_/ /_/____/\__/\__,_/_/_/   
 mapic_install_usage () {
-    echo "Usage: mapic install [domain] (or set \$MAPIC_DOMAIN env variable)"
+    echo ""
+    echo "Usage: mapic install [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  mapic       Install Mapic"
+    echo "  docker      Install Docker"
+    echo "  jq          Install JQ (dependency)"
+    echo "  node        Install NodeJS (not a dependency)"
+    echo ""
     exit 1
 }
 mapic_install () {
-    # ensure either $MAPIC_DOMAIN is set, or arg for domain is passed
-    # todo: better sanity checks for domain, maybe confirm
-    if [ "$2" = "" ]
-    then
-        if [ "$MAPIC_DOMAIN" = "" ]
-        then
-            mapic_install_usage
-        else 
-            mapic_run_install
-        fi
-    else 
-        export MAPIC_DOMAIN=$2
-        mapic_run_install
-    fi
+    test -z $2 && mapic_install_usage
 
+    case "$2" in
+        mapic)      mapic_install_mapic "$@";;
+        docker)     mapic_install_docker "$@";;
+        jq)         mapic_install_jq "$@";;
+        node)       mapic_install_node "$@";;
+        *)          mapic_install_usage;
+    esac 
 }
-mapic_run_install () {
+mapic_install_mapic () {
+    test -z $MAPIC_DOMAIN && mapic env prompt MAPIC_DOMAIN "Domain for Mapic. (Example: maps.mapic.io)" localhost
     echo "Installing Mapic to $MAPIC_DOMAIN"
     echo ""
-    echo "Press Ctrl-C in next 5 seconds to cancel."
-    sleep 5
-    cd $MAPIC_ROOT_FOLDER/scripts/install
-    bash install-to-localhost.sh
+    echo "Press Ctrl-C in next 10 seconds to cancel."
+    sleep 10
+    # cd $MAPIC_ROOT_FOLDER/scripts/install
+    # bash install-to-localhost.sh
 }
-        
+mapic_install_jq () {
+    DISTRO=$(lsb_release -si)
+    case "$DISTRO" in
+        Ubuntu)     mapic_install_jq_ubuntu "$@";;
+        *)          mapic_install_jq_unsupported;;
+    esac 
+}
+mapic_install_jq_ubuntu () {
+    apt-get -qq update -y || exit 1
+    apt-get -qq install -y jq || exit 1
+    echo "JQ installed."
+    exit 0
+}
+mapic_install_jq_unsupported () {
+    echo ""
+    echo "Unable to install JQ automatically."
+    echo ""
+    echo "See https://stedolan.github.io/jq/download/"
+    echo ""
+    exit 1
+}
+mapic_install_docker () {
+    DISTRO=$(lsb_release -si)
+    case "$DISTRO" in
+        Ubuntu)     mapic_install_docker_ubuntu "$@";;
+        *)          mapic_install_docker_unsupported;;
+    esac 
+}
+mapic_install_docker_unsupported () {
+    echo ""
+    echo "Unable to install Docker automatically."
+    echo ""
+    echo "See https://docs.docker.com/engine/installation/"
+    echo ""
+    exit 1
+}
+mapic_install_docker_ubuntu () {
+    echo "Installing Docker!"
+}
 
-mapic_api_user_usage () {
-    echo ""
-    echo "Usage: mapic api user [OPTIONS]"
-    echo ""
-    echo "Options:"
-    echo "  list        List registered users"
-    echo "  create      Create user"
-    echo "  super       Promote user to superadmin"
-    echo ""
-    exit 1 
-}
+#   ____ _____  (_)
+#  / __ `/ __ \/ / 
+# / /_/ / /_/ / /  
+# \__,_/ .___/_/   
+#     /_/          
 mapic_api_usage () {
     echo ""
     echo "Usage: mapic api [OPTIONS]"
@@ -448,42 +488,45 @@ mapic_api_usage () {
 }
 mapic_api () {
     test -z "$2" && mapic_api_usage
-
-    # api
     case "$2" in
         user)       mapic_api_user "$@";;
         upload)     mapic_api_upload "$@";;
         *)          mapic_api_usage;
     esac 
-
 }
 
+#   ____ _____  (_)  __  ______  / /___  ____ _____/ /
+#  / __ `/ __ \/ /  / / / / __ \/ / __ \/ __ `/ __  / 
+# / /_/ / /_/ / /  / /_/ / /_/ / / /_/ / /_/ / /_/ /  
+# \__,_/ .___/_/   \__,_/ .___/_/\____/\__,_/\__,_/   
+#     /_/              /_/                            
+mapic_api_upload_usage () {
+    echo ""
+    echo "Usage: mapic api upload DATASET [OPTIONS]"
+    echo ""
+    echo "Dataset:"
+    echo "  Absolute path of dataset to upload"
+    echo ""
+    # echo "Options:"
+    # echo "  (Not yet implemented:)"
+    # echo "  --project-id        Project id"
+    # echo "  --dataset-name      Name of dataset'"
+    # echo "  --project-name      Name of new project if created"
+    # echo ""
+    exit 1 
+}
 mapic_api_upload () {
     test -z "$3" && mapic_api_upload_usage
-
     cd $MAPIC_CLI_FOLDER/api
     bash upload-data.sh "$@"
     exit 0
 }
-mapic_api_upload_usage () {
-    echo ""
-    echo "Usage: mapic api upload [DATASET] [OPTIONS]"
-    echo ""
-    echo "Dataset:"
-    echo "  Required. Absolute path of dataset to upload"
-    echo ""
-    echo "Options:"
-    echo "  (Not yet implemented:)"
-    echo "  --project-id        Project UUID"
-    echo "  --dataset-name      Name of dataset. Defaults to 'New Dataset'"
-    echo "  --project-name      Name of new project if created"
-    echo ""
-    exit 1 
-}
 
-#  / / / / ___/ _ \/ ___/
-# / /_/ (__  )  __/ /    
-# \__,_/____/\___/_/     
+#   ____ _____  (_)  __  __________  _____
+#  / __ `/ __ \/ /  / / / / ___/ _ \/ ___/
+# / /_/ / /_/ / /  / /_/ (__  )  __/ /    
+# \__,_/ .___/_/   \__,_/____/\___/_/     
+#     /_/                                     
 mapic_api_user_usage () {
     echo ""
     echo "Usage: mapic api user [OPTIONS]"
@@ -497,8 +540,6 @@ mapic_api_user_usage () {
 }
 mapic_api_user () {
     [ -z "$3" ] && mapic_api_user_usage
-
-    # api
     case "$3" in
         list)       mapic_api_user_list "$@";;
         create)     mapic_api_user_create "$@";;
@@ -510,6 +551,12 @@ mapic_api_user_list () {
     cd $MAPIC_CLI_FOLDER/user
     bash list-users.sh
 }
+mapic_api_user_create_usage () {
+    echo ""
+    echo "Usage: mapic api user create [EMAIL] [USERNAME] [FIRSTNAME] [LASTNAME]"
+    echo ""
+    exit 1
+}
 mapic_api_user_create () {
     test -z "$4" && mapic_api_user_create_usage
     test -z "$5" && mapic_api_user_create_usage
@@ -518,9 +565,12 @@ mapic_api_user_create () {
     cd $MAPIC_CLI_FOLDER/user
     bash create-user.sh "${@:4}"
 }
-mapic_api_user_create_usage () {
+mapic_api_user_super_usage () {
     echo ""
-    echo "Usage: mapic api user create [EMAIL] [USERNAME] [FIRSTNAME] [LASTNAME]"
+    echo "Usage: mapic api user super [EMAIL]"
+    echo ""
+    echo "(WARNING: This command will promote user to SUPERADMIN,"
+    echo "giving access to all projects and data.)"
     echo ""
     exit 1
 }
@@ -536,15 +586,6 @@ mapic_api_user_super () {
         cd $MAPIC_CLI_FOLDER/user
         bash promote-super.sh "${@:4}"
     fi
-}
-mapic_api_user_super_usage () {
-    echo ""
-    echo "Usage: mapic api user super [EMAIL]"
-    echo ""
-    echo "(WARNING: This command will promote user to SUPERADMIN,"
-    echo "giving access to all projects and data.)"
-    echo ""
-    exit 1
 }
                    
 #   / ___/ / / / __ \
@@ -786,10 +827,6 @@ mapic_config_refresh_slack () {
 #  / /_/ / /  /  __/ /_/ /
 #  \__, /_/   \___/ .___/ 
 # /____/         /_/      
-mapic_grep () {
-    test -z "$2" && mapic_grep_usage
-    grep -rnw $MAPIC_CLI_PWD -e "\"$2\""
-}
 mapic_grep_usage () {
     echo ""
     echo "Usage: mapic grep [PATTERN]"
@@ -798,7 +835,10 @@ mapic_grep_usage () {
     echo ""
     exit 1  
 }
-
+mapic_grep () {
+    test -z "$2" && mapic_grep_usage
+    grep -rnw $MAPIC_CLI_PWD -e "\"$2\""
+}
 
 #   ___  ____  / /________  ______  ____  (_)___  / /_
 #  / _ \/ __ \/ __/ ___/ / / / __ \/ __ \/ / __ \/ __/
