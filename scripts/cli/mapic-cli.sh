@@ -126,23 +126,56 @@ mapic_cli () {
 # /____/\___/_/  /_/ .___/\__/   \__,_/\__/_/_/____/  
 #                 /_/                                  
 check () {
-    test -z "$MAPIC_ROOT_FOLDER" && env_usage # check MAPIC_ROOT_FOLDER is set
-    test -z "$MAPIC_DOMAIN" && env_usage # check MAPIC_DOMAIN is set
-    test ! -f /usr/bin/mapic && symlink_usage # create symlink for global mapic
+    # test -z "$MAPIC_ROOT_FOLDER" && mapic_set_rootfolder # check MAPIC_ROOT_FOLDER is set
+    # test -z "$MAPIC_DOMAIN" && env_usage # check MAPIC_DOMAIN is set
+    # test ! -f /usr/bin/mapic && symlink_usage # create symlink for global mapic
     test -z "$1" && mapic_cli_usage # check for command line arguments
 }
 source_env () {
+    
     # get absolute path of mapic-cli.sh
-    D="$(readlink -f "$0")"
-    MAPIC_CLI_FOLDER=${D%/*}
+    source ./realpath.sh
+    MAPIC_CLI_FOLDER=$(realpath)
 
-    # source env file
+    # env file path
     MAPIC_ENV_FILE=$MAPIC_CLI_FOLDER/.mapic.env
+
+    # check if env exists, if not copy defaults
+    if [ ! -f $MAPIC_ENV_FILE ]; then
+        # copy default env file
+        cp $MAPIC_CLI_FOLDER/.mapic.default.env $MAPIC_ENV_FILE
+    fi
+
+    # source env
     set -o allexport
     source $MAPIC_ENV_FILE
 
+    # ensure root folder is set
+    if [ -z $MAPIC_ROOT_FOLDER ]; then
+        # set root folder
+        MAPIC_ROOT_FOLDER=$(realpath ../../)
+        echo "MAPIC_ROOT_FOLDER=$MAPIC_ROOT_FOLDER" >> $MAPIC_ENV_FILE
+
+    fi
+
+    # ensure config folder is set
+    if [ -z $MAPIC_CONFIG_FOLDER ]; then
+        # set root folder
+        echo "MAPIC_CONFIG_FOLDER=$(realpath ../../config/)" >> $MAPIC_ENV_FILE
+    fi
+
+    # ensure symlink
+    if [ ! -f /usr/local/bin/mapic ]; then
+        ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/local/bin/mapic
+        echo "Self-registered as global command (/usr/local/bin/mapic)"
+    fi
+
     # set which folder mapic was executed from
-    MAPIC_CLI_PWD=$PWD
+    MAPIC_CLI_EXECUTED_FROM=$PWD
+
+    # show help if no args
+    test -z "$1" && mapic_cli_usage 
+
 }
 mapic_debug () {
     if $MAPIC_DEBUG == "true"; then
@@ -241,8 +274,11 @@ mapic_env_set_internal () {
     cd $MAPIC_CLI_FOLDER
 
     # if KEY already exists
+    echo "ENV_KEY $ENV_KEY"
+    echo "ENV_VALUE $ENV_VALUE"
+
     if grep -q "$ENV_KEY" "$MAPIC_ENV_FILE"; then
-        sed -i "/$ENV_KEY/c\\$ENV_KEY=$ENV_VALUE" $MAPIC_ENV_FILE
+        sed -i "/$ENV_KEY/c\\$ENV_KEY=$ENV_VALUE" $MAPIC_ENV_FILE # TODO: ERROR HERE! OSX vs LINUX!
     
     # if KEY does not exist
     else
@@ -354,7 +390,9 @@ env_usage () {
     exit 1
 }
 symlink_usage () {
-    ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/bin/mapic
+    echo "sumlin"
+    echo "$MAPIC_ROOT_FOLDER"
+    sudo ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/bin/mapic
     echo "Self-registered as global command (/usr/bin/mapic)"
     mapic_cli_usage;
 }
@@ -885,7 +923,7 @@ mapic_grep_usage () {
 }
 mapic_grep () {
     test -z "$2" && mapic_grep_usage
-    grep -rnw $MAPIC_CLI_PWD -e "\"$2\""
+    grep -rnw $MAPIC_CLI_EXECUTED_FROM -e "\"$2\""
 }
 
 #   ___  ____  / /________  ______  ____  (_)___  / /_
