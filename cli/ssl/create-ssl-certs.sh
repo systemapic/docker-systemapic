@@ -21,14 +21,13 @@ abort () {
 # todo: check if 443 is available, offer to shut down
 # put MAPIC_USER_EMAIL somwhere permanently
 
-test -z $MAPIC_USER_EMAIL && read -p "Please enter your email: "  MAPIC_USER_EMAIL
-test -z $MAPIC_USER_EMAIL && usage MAPIC_USER_EMAIL # check email
+test -z "$MAPIC_USER_EMAIL" && usage MAPIC_USER_EMAIL # check email
 test -z "$MAPIC_ROOT_FOLDER" && usage "MAPIC_ROOT_FOLDER" # check MAPIC_ROOT_FOLDER is set
 test -z "$MAPIC_DOMAIN" && usage "MAPIC_DOMAIN" # check MAPIC_ROOT_FOLDER is set
 
     
 # certbot-auto
-./ssl certonly \
+./certbot certonly \
     --standalone \
     --agree-tos \
     --email "$MAPIC_USER_EMAIL" \

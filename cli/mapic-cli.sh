@@ -34,7 +34,8 @@
 # 3. Install flow, work seamlessly with `mapic install [OPTIONS]`. Also for travis (`mapic install --travis [OPTIONS]`)
 # 4. Create own repo for mapic-cli eventually
 #
-#
+#   Currnetly working on: 1. sed -i not cross-comp 
+#                         2. .mapic.env-e file is cause of sed bug
 #
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
@@ -77,6 +78,8 @@ mapic_cli_usage () {
     echo "  api user            Handle Mapic users"
     echo "  api upload          Upload data"  
     echo ""
+    
+    # undocumented api
     if [[ "$MAPIC_DEBUG" = "true" ]]; then
     echo "Undocumented:"
     echo "  edit                Edit mapic-cli.sh source file"
@@ -86,16 +89,18 @@ mapic_cli_usage () {
 }
 mapic_cli () {
 
-    # source n check
-    source_env "$@"
-    check "$@"
+    # initialize mapic cli
+    initialize "$@"
+
+    # check 
+    test -z "$1" && mapic_cli_usage
 
     case "$1" in
 
         # documented API
         install)    mapic_install "$@";;
         start)      mapic_start;;
-        restart)    mapic_start;;
+        restart)    mapic_restart;;
         stop)       mapic_stop;;
         status)     mapic_status "$@";;
         logs)       mapic_logs "$@";;
@@ -120,77 +125,109 @@ mapic_cli () {
     esac
 }
 
-#    _______________(_)___  / /_   __  __/ /_(_) /____
-#   / ___/ ___/ ___/ / __ \/ __/  / / / / __/ / / ___/
-#  (__  ) /__/ /  / / /_/ / /_   / /_/ / /_/ / (__  ) 
-# /____/\___/_/  /_/ .___/\__/   \__,_/\__/_/_/____/  
-#                 /_/                                  
-check () {
-    # test -z "$MAPIC_ROOT_FOLDER" && mapic_set_rootfolder # check MAPIC_ROOT_FOLDER is set
-    # test -z "$MAPIC_DOMAIN" && env_usage # check MAPIC_DOMAIN is set
-    # test ! -f /usr/bin/mapic && symlink_usage # create symlink for global mapic
-    test -z "$1" && mapic_cli_usage # check for command line arguments
-}
-source_env () {
-    
-    # get absolute path of mapic-cli.sh
-    source ./realpath.sh
-    MAPIC_CLI_FOLDER=$(realpath)
+#    (_)___  (_) /_(_)___ _/ (_)___  ___ 
+#   / / __ \/ / __/ / __  / / /_  / / _ \
+#  / / / / / / /_/ / /_/ / / / / /_/  __/
+# /_/_/ /_/_/\__/_/\__,_/_/_/ /___/\___/ 
+initialize () {
 
-    # env file path
-    MAPIC_ENV_FILE=$MAPIC_CLI_FOLDER/.mapic.env
+    # get osx/linux
+    get_mapic_host_os
 
-    # check if env exists, if not copy defaults
+    # hardcoded env file
+    MAPIC_ENV_FILE=/usr/local/bin/.mapic.env
+
+    # check if we're properly installed
     if [ ! -f $MAPIC_ENV_FILE ]; then
-        # copy default env file
-        cp $MAPIC_CLI_FOLDER/.mapic.default.env $MAPIC_ENV_FILE
-    fi
 
-    # source env
-    set -o allexport
-    source $MAPIC_ENV_FILE
+        # we're not installed, so let's do that
 
-    # ensure root folder is set
-    if [ -z $MAPIC_ROOT_FOLDER ]; then
-        # set root folder
-        MAPIC_ROOT_FOLDER=$(realpath ../../)
-        echo "MAPIC_ROOT_FOLDER=$MAPIC_ROOT_FOLDER" >> $MAPIC_ENV_FILE
+        # check for .mapic.env
+        test ! -f mapic-cli.sh && corrupted_install
 
-    fi
+        # check for default env
+        test ! -f .mapic.default.env && corrupted_install 
 
-    # ensure config folder is set
-    if [ -z $MAPIC_CONFIG_FOLDER ]; then
-        # set root folder
-        echo "MAPIC_CONFIG_FOLDER=$(realpath ../../config/)" >> $MAPIC_ENV_FILE
-    fi
+        # set cli folder
+        MAPIC_CLI_FOLDER="$( cd "$(dirname "$0")" ; pwd -P )"
 
-    # ensure symlink
-    if [ ! -f /usr/local/bin/mapic ]; then
-        ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/local/bin/mapic
-        echo "Self-registered as global command (/usr/local/bin/mapic)"
+        # set root folder (../)
+        MAPIC_ROOT_FOLDER="$(dirname "$MAPIC_CLI_FOLDER")"
+
+        # cp default env file
+        cp $MAPIC_CLI_FOLDER/.mapic.default.env /usr/local/bin/.mapic.env 
+
+        # create symlink for global mapic
+        create_mapic_symlink
+
+        # install dependencies on osx
+        test $MAPIC_HOST_OS == "osx" && install_osx_tools
+
+        # ensure editor
+        ensure_editor
+
+        # now everything should work, time to write ENV
+        write_env MAPIC_ROOT_FOLDER $MAPIC_ROOT_FOLDER
+        write_env MAPIC_CLI_FOLDER $MAPIC_CLI_FOLDER
+        write_env MAPIC_HOST_OS $MAPIC_HOST_OS
+        write_env MAPIC_ENV_FILE $MAPIC_ENV_FILE
+
     fi
 
     # set which folder mapic was executed from
     MAPIC_CLI_EXECUTED_FROM=$PWD
 
-    # show help if no args
-    test -z "$1" && mapic_cli_usage 
+    # source env file
+    set -o allexport
+    source $MAPIC_ENV_FILE
+}
+corrupted_install () {
+    echo "Install is corrupted. Try downloading fresh from https://github.com/mapic/cli"
+    exit 1 
+}
+install_osx_tools () {
+    SED=$(which sed)
+    BREW=$(which brew)
+    JQ=$(which jq)
 
+    # gnu-sed
+    if [ -z $SED ]; then
+        echo "Installing GNU sed..."
+        cd $MAPIC_CLI_FOLDER/lib >/dev/null 2>&1
+        rm -rf sed-4.4 >/dev/null 2>&1
+        tar xf sed-4.4.tar.xz >/dev/null 2>&1
+        cd sed-4.4 >/dev/null 2>&1
+        ./configure >/dev/null 2>&1
+        make >/dev/null 2>&1
+        make install >/dev/null 2>&1
+        cd .. && rm -rf sed-4.4 >/dev/null 2>&1
+    fi
+    # brew
+    # jq
+}
+get_mapic_host_os () {
+    case "$OSTYPE" in
+      darwin*)  MAPIC_HOST_OS="osx";; 
+      linux*)   MAPIC_HOST_OS="linux" ;;
+      solaris*) echo "Your OS is not supported yet. Feel free to contribute with a PR! :)"; exit 1;;
+      bsd*)     echo "Your OS is not supported yet. Feel free to contribute with a PR! :)"; exit 1;;
+      msys*)    echo "Your OS is not supported yet. Feel free to contribute with a PR! :)"; exit 1;;
+      *)        echo "Your OS is not supported yet. Feel free to contribute with a PR! :)"; exit 1;;
+    esac
 }
 mapic_debug () {
     if $MAPIC_DEBUG == "true"; then
         echo "Debug mode is off"
-        mapic env set --silent MAPIC_DEBUG false
+        write_env MAPIC_DEBUG false
     else 
         echo "Debug mode is on"
-        mapic env set --silent MAPIC_DEBUG true
+        write_env MAPIC_DEBUG true
     fi
 }
 mapic_edit () {
-    cd $MAPIC_CLI_FOLDER
-    $MAPIC_DEFAULT_EDITOR 
+    # edit mapic-cli.sh
+    $MAPIC_DEFAULT_EDITOR $MAPIC_CLI_FOLDER/mapic-cli.sh
 }
-
                   
 #  / _ \/ __ \ | / /
 # /  __/ / / / |/ / 
@@ -212,7 +249,7 @@ mapic_env_usage () {
 }
 mapic_env () {
 
-    # debug mode
+    # debug mode: show env with 'mapic env'
     if $MAPIC_DEBUG = "true" && test -z $2; then
         echo "(Mapic DEBUG mode: Showing ENV instead of help screen.)"
         echo ""
@@ -232,71 +269,10 @@ mapic_env () {
 }
 mapic_env_set_usage () {
     echo ""
-    echo "Usage: mapic env set [OPTIONS] KEY VALUE"
-    echo ""
-    echo "Options:"
-    echo "  --silent        Silent"
-    echo "  --return-value  Return only set environment value (instead of default VALUE=KEY)"
-    echo "  --help          More information about possible ENV variables"
+    echo "Usage: mapic env set KEY VALUE"
     echo ""
     echo "Use with caution. Variables are sourced to Mapic environment."
     echo ""
-    exit 0
-}
-mapic_env_set () {
-    test -z $3 && mapic_env_set_usage
-    case "$3" in
-        --help)           mapic_env_set_usage "$@";;
-        --silent)         mapic_env_set_silent "$@";;
-        --return-value)   mapic_env_set_return_value "$@";;
-        *)                mapic_env_set_default "$@";
-    esac 
-}
-mapic_env_set_silent () {
-    mapic_env_set_internal $4 $5 "silent"
-}
-mapic_env_set_default () {
-    mapic_env_set_internal $3 $4
-}
-mapic_env_set_return_value () {
-    mapic_env_set_internal $4 $5 "value"
-}
-mapic_env_set_internal () {
-
-    # check
-    ENV_KEY=$1
-    ENV_VALUE=$2
-    FLAG=$3
-    test "$ENV_KEY" == "--help" && mapic_env_set_help
-    test -z "$ENV_KEY" && mapic_env_set_usage
-
-    # update env file
-    cd $MAPIC_CLI_FOLDER
-
-    # if KEY already exists
-    echo "ENV_KEY $ENV_KEY"
-    echo "ENV_VALUE $ENV_VALUE"
-
-    if grep -q "$ENV_KEY" "$MAPIC_ENV_FILE"; then
-        sed -i "/$ENV_KEY/c\\$ENV_KEY=$ENV_VALUE" $MAPIC_ENV_FILE # TODO: ERROR HERE! OSX vs LINUX!
-    
-    # if KEY does not exist
-    else
-        echo "$ENV_KEY"="$ENV_VALUE" >> $MAPIC_ENV_FILE
-    fi
-
-    # ensure newline
-    sed -i -e '$a\' $MAPIC_ENV_FILE
-    
-    # source new env
-    source_env
-    echo "declaring!"
-    declare -g $ENV_KEY="$ENV_VALUE"
-
-    # confirm new variable
-    [[ "$FLAG" = "" ]] && mapic env get $ENV_KEY
-    [[ "$FLAG" = "value" ]] && echo $ENV_VALUE
-
     exit 0
 }
 mapic_env_set_help () {
@@ -319,49 +295,52 @@ mapic_env_set_help () {
     echo ""
     exit 0
 }
-mapic_env_get () {
-    if [ "$3" = "--value" ]
-    then
-        echo "--value!"
-        VAR=$(cat $MAPIC_ENV_FILE | grep "$4=")
-        echo "VAR: $VAR"
-        exit 0
-    fi
+mapic_env_set () {
+    test -z $3 && mapic_env_set_usage
+    test -z $4 && mapic_env_set_usage
 
-    # no options
+    # undocumented flags
+    FLAG=$5
+
+    # update env file
+    write_env $3 $4
+ 
+    # confirm new variable
+    [[ "$FLAG" = "" ]] && mapic env get $3
+    [[ "$FLAG" = "value" ]] && echo $4
+}
+# fn used internally to write to env file
+write_env () {
+    test -z $1 && failed "missing arg"
+    test -z $2 && failed "missing arg"
+
+    # add or replace line in .mapic.env
+    if grep -q "$1" "$MAPIC_ENV_FILE"; then
+
+        # replace line
+        sed -i "/$1/c\\$1=$2" $MAPIC_ENV_FILE 
+    else
+        # add to bottom
+        echo "$1"="$2" >> $MAPIC_ENV_FILE
+
+        # ensure newline
+        sed -i -e '$a\' $MAPIC_ENV_FILE 
+    fi
+}
+mapic_env_get () {
     if [ -z $3 ]
     then
         cat $MAPIC_ENV_FILE 
     else 
         cat $MAPIC_ENV_FILE | grep "$3="
     fi
-    exit 0
 }
 mapic_env_edit () {
-    if [ -z $MAPIC_DEFAULT_EDITOR ]; then
-        mapic env set MAPIC_DEFAULT_EDITOR nano
-        # MAPIC_DEFAULT_EDITOR=nano
-    fi
+    # edit .mapic.env
     $MAPIC_DEFAULT_EDITOR $MAPIC_ENV_FILE
-    exit 0
 }
 mapic_env_file () {
     echo "$MAPIC_ENV_FILE"
-}
-mapic_env_prompt () {
-    ENV_KEY=$3
-    MSG=$4
-    DEFAULT_VALUE=$5
-    test -z $ENV_KEY && mapic_env_prompt_usage
-
-    # prompt
-    echo ""
-    read -e -p "$ENV_KEY $MSG: " -i "$DEFAULT_VALUE" ENV_VALUE
-
-    # set env
-    test -n $ENV_VALUE && mapic env set $ENV_KEY $ENV_VALUE 
-
-    exit 0
 }
 mapic_env_prompt_usage () {
     echo ""
@@ -376,6 +355,28 @@ mapic_env_prompt_usage () {
     echo ""
     exit 1
 }
+mapic_env_prompt () {
+    ENV_KEY=$3
+    MSG=$4
+    DEFAULT_VALUE=$5
+    test -z $ENV_KEY && mapic_env_prompt_usage
+
+    # prompt
+    echo ""
+    if [ $MAPIC_HOST_OS == "osx" ]; then
+        # hack: (-i) not valid on osx
+        read -e -p "$ENV_KEY $MSG: " ENV_VALUE 
+    else
+        read -e -p "$ENV_KEY $MSG: " -i "$DEFAULT_VALUE" ENV_VALUE 
+    fi
+
+    # set env
+    test -n $ENV_VALUE && mapic env set $ENV_KEY $ENV_VALUE 
+}
+
+
+
+
 usage () {
     echo "Usage: mapic [COMMAND]"
     exit 1
@@ -384,19 +385,18 @@ failed () {
     echo "Something went wrong: $1"
     exit 1
 }
-env_usage () {
-    echo "You need to set MAPIC_DOMAIN environment variable before you can use this script."
-    # todo: prompt and continue
-    exit 1
+create_mapic_symlink () {
+    unlink /usr/local/bin/mapic >/dev/null 2>&1
+    ln -s $MAPIC_CLI_FOLDER/mapic-cli.sh /usr/local/bin/mapic >/dev/null 2>&1
+    chmod +x /usr/local/bin/mapic >/dev/null 2>&1
+    echo "Self-registered as global command (/usr/local/bin/mapic)"
 }
-symlink_usage () {
-    echo "sumlin"
-    echo "$MAPIC_ROOT_FOLDER"
-    sudo ln -s $MAPIC_ROOT_FOLDER/scripts/cli/mapic-cli.sh /usr/bin/mapic
-    echo "Self-registered as global command (/usr/bin/mapic)"
-    mapic_cli_usage;
+ensure_editor () {
+    if [ -z $MAPIC_DEFAULT_EDITOR ]; then
+        MAPIC_DEFAULT_EDITOR=nano
+        write_env MAPIC_DEFAULT_EDITOR $MAPIC_DEFAULT_EDITOR
+    fi
 }
-
                
 #    / __ \/ ___/
 #   / /_/ (__  ) 
@@ -412,18 +412,25 @@ mapic_ps () {
 #  (__  ) /_/ /_/ / /  / /_  
 # /____/\__/\__,_/_/   \__/  
 mapic_start () {
-    cd $MAPIC_CLI_FOLDER
-    bash restart-mapic.sh
+    cd $MAPIC_CLI_FOLDER/management
+    bash start-mapic.sh
 }
-
-#    _____/ /_____  ____ 
-#   / ___/ __/ __ \/ __ \
-#  (__  ) /_/ /_/ / /_/ /
-# /____/\__/\____/ .___/ 
-#               /_/      
+mapic_restart () {
+    mapic_stop
+    mapic_flush
+    mapic_start
+}
 mapic_stop () {
-    cd $MAPIC_CLI_FOLDER
+    cd $MAPIC_CLI_FOLDER/management
     bash stop-mapic.sh
+}
+mapic_flush () {
+    cd $MAPIC_CLI_FOLDER/management
+    bash flush-mapic.sh
+}
+mapic_create_storage () {
+    cd $MAPIC_CLI_FOLDER/management
+    bash create-storage-containers.sh
 }
 
 #    / /___  ____ ______
@@ -434,11 +441,11 @@ mapic_stop () {
 mapic_logs () {
     if [ "$2" == "dump" ]; then
         # dump logs to disk
-        cd $MAPIC_CLI_FOLDER/logs
+        cd $MAPIC_CLI_FOLDER/management
         bash dump-logs.sh
     else
         # print logs to console
-        cd $MAPIC_CLI_FOLDER/logs
+        cd $MAPIC_CLI_FOLDER/management
         bash show-logs.sh
     fi
 }
@@ -634,7 +641,7 @@ mapic_api_user () {
     esac 
 }
 mapic_api_user_list () {
-    cd $MAPIC_CLI_FOLDER/user
+    cd $MAPIC_CLI_FOLDER/api
     bash list-users.sh
 }
 mapic_api_user_create_usage () {
@@ -648,7 +655,7 @@ mapic_api_user_create () {
     test -z "$5" && mapic_api_user_create_usage
     test -z "$6" && mapic_api_user_create_usage
     test -z "$7" && mapic_api_user_create_usage
-    cd $MAPIC_CLI_FOLDER/user
+    cd $MAPIC_CLI_FOLDER/api
     bash create-user.sh "${@:4}"
 }
 mapic_api_user_super_usage () {
@@ -669,7 +676,7 @@ mapic_api_user_super () {
     echo 
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        cd $MAPIC_CLI_FOLDER/user
+        cd $MAPIC_CLI_FOLDER/api
         bash promote-super.sh "${@:4}"
     fi
 }
@@ -688,7 +695,7 @@ mapic_run () {
     test -z "$2" && mapic_run_usage
     test -z "$3" && mapic_run_usage
     C=$(docker ps -q --filter name=$2)
-    test -z "$C" && enter_usage_missing_container "$@"
+    test -z "$C" && mapic_enter_usage_missing_container "$@"
     docker exec $C ${@:3}
 }
 
@@ -715,11 +722,11 @@ mapic_ssl () {
     esac 
 }
 mapic_ssl_create () {
-    cd $MAPIC_CLI_FOLDER
+    cd $MAPIC_CLI_FOLDER/ssl
     bash create-ssl-certs.sh
 }
 mapic_ssl_scan () {
-    cd $MAPIC_CLI_FOLDER
+    cd $MAPIC_CLI_FOLDER/ssl
     bash ssllabs-scan.sh "https://$MAPIC_DOMAIN"
 }
 
@@ -744,7 +751,7 @@ mapic_dns () {
     esac 
 }
 mapic_dns_set () {
-    cd $MAPIC_CLI_FOLDER
+    cd $MAPIC_CLI_FOLDER/dns
     bash create-dns-entries-route-53.sh
 }
 
@@ -753,7 +760,7 @@ mapic_dns_set () {
 #  (__  ) /_/ /_/ / /_/ /_/ (__  ) 
 # /____/\__/\__,_/\__/\__,_/____/  
 mapic_status () {
-    cd $MAPIC_CLI_FOLDER
+    cd $MAPIC_CLI_FOLDER/management
     bash mapic-status.sh
     exit 1
 }
