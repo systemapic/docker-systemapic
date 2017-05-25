@@ -226,6 +226,7 @@ mapic_debug () {
 }
 mapic_edit () {
     # edit mapic-cli.sh
+    echo "$MAPIC_DEFAULT_EDITOR $MAPIC_CLI_FOLDER/mapic-cli.sh"
     $MAPIC_DEFAULT_EDITOR $MAPIC_CLI_FOLDER/mapic-cli.sh
 }
                   
