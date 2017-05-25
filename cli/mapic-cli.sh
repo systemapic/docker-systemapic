@@ -930,7 +930,8 @@ mapic_grep_usage () {
 }
 mapic_grep () {
     test -z "$2" && mapic_grep_usage
-    grep -rnw $MAPIC_CLI_EXECUTED_FROM -e "\"$2\""
+    echo "[grep -rnw $MAPIC_CLI_EXECUTED_FROM -e $2]:"
+    grep -rnw $MAPIC_CLI_EXECUTED_FROM -e "$2"
 }
 
 #   ___  ____  / /________  ______  ____  (_)___  / /_
