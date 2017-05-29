@@ -7,10 +7,11 @@ Learn more @ https://mapic.io. For a technical overview, please see [Mapic Techn
 
 
 ## Usage
-1. Install with `mapic install` (or see below).
-2. Start server with `mapic start`.
-3. Open your browser @ https://localhost.
-4. Stop server with `mapic stop`.
+1. Install `mapic-cli` with `wget -qO- https://get.mapic.io/ | sh'.
+2. Install Mapic with `mapic install mapic` and follow instructions. (Do `mapic debug` first for verbose logs.)
+3. Start server with `mapic start`.
+4. Open your browser @ https://localhost (or other configured domain).
+5. Stop server with `mapic stop`.
 
 
 ## Install
@@ -22,47 +23,37 @@ Learn more @ https://mapic.io. For a technical overview, please see [Mapic Techn
 
 ### Install to localhost
 Download install script and run install:
+
 ```bash
 
-# download mapic
-git clone git://github.com/mapic/mapic.git
-cd mapic
+# get mapic cli (this will download mapic from github to your folder and install mapic cli)
+wget -qO- https://get.mapic.io/ | sh
 
-# Set enviroment variables
-export MAPIC_DOMAIN your.domain.com
-export MAPIC_ROOT_FOLDER $PWD
+# see available mapic commands:
+mapic 
 
-# Then install Mapic
-mapic install 
+# install mapic with cli command:
+mapic install mapic
 
 ```
 
 ### Create User
-The first user is created automatically. You can log in to [https://localhost](https://localhost) with these default credentials:  
-
-```
-username: localhost@mapic.io
-password: localhost-password
-```
-
-To create another superuser, do:
+To create a superuser, use the `mapic` cli:
 
 ```bash
 # create super user
-cd scripts/api
-./create-super-user.sh 
+mapic api user create
 
 ```
 
 ### Install to custom domain
-Install to localhost first, following instructions above; then see [mapic/config-domain.example.com](https://github.com/mapic/config-domain.example.com) for instructions on changing configs for custom domain.
-
-If installing on a publicly available domain, it's important to flush the default `localhost@mapic.io` superuser account first, for obvious reasons. Simply run this script, and the user is removed:
-
 ```bash
-# flush localhost user
-cd scripts/api
-./flush-localhost-user.sh
+
+# set mapic domain
+mapic config set MAPIC_DOMAIN domain.example.com
+
+# install mapic
+mapic install mapic
 
 ```
 
@@ -71,7 +62,6 @@ Mapic consists of:
 1. [Mapic Engine](https://github.com/mapic/engine)  
 2. [Mapic Mile Tileserver](https://github.com/mapic/mile)    
 3. [Mapic Javascript Client library](https://github.com/mapic/mapic.js)    
-4. [Mapic SDK](https://github.com/mapic/sdk) (for interacting with API programmatically)
 
 Mapic is built on Docker. Docker Images for Mapic are available on the [Docker Hub](https://hub.docker.com/u/mapic/).
 
