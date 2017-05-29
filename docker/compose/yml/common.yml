@@ -5,8 +5,8 @@ engine:
     MAPIC_DOMAIN: ${MAPIC_DOMAIN}
   working_dir: /mapic/modules/engine 
   volumes:
-    - ../../../config/${MAPIC_DOMAIN}:/mapic/config
-    - ../../../modules:/mapic/modules
+    - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
+    - ${MAPIC_ROOT_FOLDER}/modules:/mapic/modules
 
 mile: 
   image: mapic/mile:latest
@@ -14,25 +14,25 @@ mile:
     MAPIC_DOMAIN: ${MAPIC_DOMAIN}
   working_dir: /mapic/modules/mile 
   volumes:
-    - ../../../config/${MAPIC_DOMAIN}:/mapic/config
-    - ../../../modules:/mapic/modules
+    - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
+    - ${MAPIC_ROOT_FOLDER}/modules:/mapic/modules
 
 nginx:
   image: mapic/nginx:latest
   volumes:
-    - ../../../config/${MAPIC_DOMAIN}:/mapic/config
+    - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
 
 redis:
   image: redis:latest
   volumes:
-    - ../../../config/${MAPIC_DOMAIN}:/mapic/config
+    - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
 
 mongo: 
   image: mapic/mongo:latest
   volumes:
-    - ../../../config/${MAPIC_DOMAIN}:/mapic/config
+    - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
 
 postgis:
   image: mapic/postgis:latest
   volumes:
-    - ../../../config/${MAPIC_DOMAIN}:/mapic/config
+    - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
