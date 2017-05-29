@@ -182,6 +182,9 @@ initialize () {
     # source env file
     set -o allexport
     source $MAPIC_ENV_FILE
+
+    # mark that we're in a cli
+    MAPIC_CLI=true
 }
 corrupted_install () {
     echo "Install is corrupted. Try downloading fresh from https://github.com/mapic/cli"
@@ -530,7 +533,6 @@ mapic_install_usage () {
 }
 mapic_install () {
     test -z $2 && mapic_install_usage
-
     case "$2" in
         mapic)      mapic_install_mapic "$@";;
         docker)     mapic_install_docker "$@";;
@@ -540,13 +542,44 @@ mapic_install () {
     esac 
 }
 mapic_install_mapic () {
+
+    # ensure MAPIC_DOMAIN
     test -z $MAPIC_DOMAIN && mapic env prompt MAPIC_DOMAIN "Domain for Mapic. (Example: maps.mapic.io)" localhost
-    echo "Installing Mapic to $MAPIC_DOMAIN"
-    echo ""
-    echo "Press Ctrl-C in next 10 seconds to cancel."
-    sleep 10
-    # cd $MAPIC_ROOT_FOLDER/scripts/install
-    # bash install-to-localhost.sh
+    
+    # save env
+    write_env MAPIC_DOMAIN $MAPIC_DOMAIN
+
+    if [ $MAPIC_DOMAIN = "localhost" ]; then
+        echo ""
+        echo "Installing Mapic to $MAPIC_DOMAIN"
+        echo ""
+        echo "Press Ctrl-C in next 10 seconds to cancel."
+        sleep 1
+        mapic_install_mapic_localhost
+    else
+        echo "Only localhost supported at the moment."
+        exit 1
+    fi
+}
+
+mapic_install_mapic_localhost () {
+    cd $MAPIC_CLI_FOLDER/install
+    # bash init-submodules.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    # bash create-ssl-localhost.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    # bash update-config.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    # bash create-storage-containers.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    # bash initialize-auth-mongo.sh
+
+    # cd $MAPIC_CLI_FOLDER/install
+    bash npm-install-on-modules.sh
 }
 mapic_install_jq () {
     DISTRO=$(lsb_release -si)
@@ -750,11 +783,20 @@ mapic_ssl () {
     esac 
 }
 mapic_ssl_create () {
-    cd $MAPIC_CLI_FOLDER/ssl
-    bash create-ssl-certs.sh
+    if [ $MAPIC_DOMAIN = "localhost" ]; then
+        cd $MAPIC_CLI_FOLDER/install/ssl
+        bash create-ssl-localhost.sh
+    else 
+        cd $MAPIC_CLI_FOLDER/install/ssl
+        bash create-ssl-public-domain.sh
+    fi
 }
 mapic_ssl_scan () {
-    cd $MAPIC_CLI_FOLDER/ssl
+    if [ $MAPIC_DOMAIN = "localhost" ]; then
+        echo "SSLLabs scan not supported on localhost."
+        exit 1
+    fi
+    cd $MAPIC_CLI_FOLDER/install/ssl
     bash ssllabs-scan.sh "https://$MAPIC_DOMAIN"
 }
 
