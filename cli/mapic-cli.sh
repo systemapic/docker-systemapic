@@ -375,9 +375,6 @@ mapic_env_prompt () {
     test -n $ENV_VALUE && mapic env set $ENV_KEY $ENV_VALUE 
 }
 
-
-
-
 usage () {
     echo "Usage: mapic [COMMAND]"
     exit 1
@@ -834,7 +831,12 @@ mapic_config_usage () {
     echo "Usage: mapic config [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  refresh [config]   Refresh Mapic configuration files"
+    echo "  refresh                 Refresh Mapic configuration files"
+    echo "  set                     Set an environment variable. See 'mapic config set --help' for more."
+    echo "  get                     Get an environment variable. Do 'mapic config get' to list all variables."
+    echo "  get                     Get an environment variable. Do 'mapic config get' to list all variables."
+    echo "  edit                    Edit config directly in your favorite editor."
+    echo "  file                    Returns absolute path of Mapic config file, useful for scripts and 'docker run --env-file'"
     echo ""
     exit 1   
 }
@@ -842,6 +844,12 @@ mapic_config () {
     test -z "$2" && mapic_config_usage
      case "$2" in
         refresh)    mapic_config_refresh "$@";;
+        set)        mapic_env_set "$@";;
+        get)        mapic_env_get "$@";;
+        list)       mapic_env_get;;
+        edit)       mapic_env_edit "$@";;
+        file)       mapic_env_file "$@";;
+        prompt)     mapic_env_prompt "$@";; 
         *)          mapic_config_usage;;
     esac 
 }
