@@ -7,11 +7,10 @@ Learn more @ https://mapic.io. For a technical overview, please see [Mapic Techn
 
 
 ## Usage
-1. Set enviroment variables: `MAPIC_DOMAIN=domain.example.com` and `$MAPIC_ROOT_FOLDER=/home/mapic`. Exchange values for your domain and installation folder.
-2. Install with `mapic install` (or see below).
-3. Start server with `mapic start`.
-4. Open your browser @ https://localhost.
-5. Stop server with `mapic stop`.
+1. Install with `mapic install` (or see below).
+2. Start server with `mapic start`.
+3. Open your browser @ https://localhost.
+4. Stop server with `mapic stop`.
 
 
 ## Install
