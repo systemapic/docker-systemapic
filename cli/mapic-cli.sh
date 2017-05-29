@@ -463,25 +463,27 @@ mapic_wild () {
 mapic_pull () {
     cd $MAPIC_ROOT_FOLDER
 
+    REPO_FOLDER=$MAPIC_ROOT_FOLDER/modules
+
     echo "Pulling mapic/mapic"
     git pull --rebase
-    cd modules
 
     echo "Pulling mapic/engine"
-    cd engine && git pull --rebase && cd ..
+    cd $REPO_FOLDER/engine
+    git pull --rebase
 
     echo "Pulling mapic/mile"
-    cd mile && git pull --rebase && cd ..
+    cd $REPO_FOLDER/mile
+    git pull --rebase
 
     echo "Pulling mapic/mapic.js"
-    cd mapic.js && git pull --rebase && cd ..
+    cd $REPO_FOLDER/mapic.js
+    git pull --rebase
 
     echo "Pulling mapic/sdk"
-    cd sdk && git pull --rebase && cd ..
-    cd ..
-    echo "Pulling mapic/config"
-    cd config && git pull --rebase && cd ..
-
+    cd $REPO_FOLDER/sdk
+    git pull --rebase
+    
     echo "All pulled!"
 }
 
