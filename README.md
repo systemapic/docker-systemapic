@@ -6,43 +6,34 @@ Mapic is an Open Source Web Map Engine.
 Learn more @ https://mapic.io. For a technical overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
 
-## Usage
-1. Install `mapic-cli` with `wget -qO- https://get.mapic.io/ | sh'.
-2. Install Mapic with `mapic install mapic` and follow instructions. (Do `mapic debug` first for verbose logs.)
-3. Start server with `mapic start`.
-4. Open your browser @ https://localhost (or other configured domain).
-5. Stop server with `mapic stop`.
-
-
 ## Install
+This will install mapic and configure it for `localhost`. For custom domain configuration, see below.
+
+```bash
+# install mapic
+wget -qO- https://get.mapic.io/ | sh
+```
+
+## Usage
+1. Start server with `mapic start`.
+2. Open your browser @ https://localhost (or other configured domain).
+3. Stop server with `mapic stop`.
+
 
 ### Install dependencies: 
 - [Docker](https://docs.docker.com/engine/installation/) `>= 1.9.0`  
 - [Docker Compose](https://docs.docker.com/compose/install/) `>= 1.5.2`  
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-### Install to localhost
-Download install script and run install:
+### Create user
+Create a user with the `mapic` cli:
 
 ```bash
-
-# get mapic cli (this will download mapic from github to your folder and install mapic cli)
-wget -qO- https://get.mapic.io/ | sh
-
-# see available mapic commands:
-mapic 
-
-# install mapic with cli command:
-mapic install mapic
-
-```
-
-### Create User
-To create a superuser, use the `mapic` cli:
-
-```bash
-# create super user
+# create user
 mapic api user create
+
+# promote to superuser
+mapic api user super 
 
 ```
 
