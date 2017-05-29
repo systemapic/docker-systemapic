@@ -19,11 +19,14 @@ wget -qO- https://get.mapic.io/ | sh
 2. Open your browser @ https://localhost (or other configured domain).
 3. Stop server with `mapic stop`.
 
+See `mapic` command for more options.
 
-### Install dependencies: 
+### Dependencies: 
 - [Docker](https://docs.docker.com/engine/installation/) `>= 1.9.0`  
 - [Docker Compose](https://docs.docker.com/compose/install/) `>= 1.5.2`  
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+(`mapic` cli will try to install these automatically on Ubunut and OSX.)
 
 ### Create user
 Create a user with the `mapic` cli:
