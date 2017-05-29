@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd $MAPIC_ROOT_FOLDER || exit 1;
+
 echo "Pulling mapic/mapic"
 git pull --rebase
 cd modules
