@@ -73,6 +73,7 @@ mapic_cli_usage () {
     echo "  grep                Find string in files in subdirectories of current path"
     echo "  ps                  Show running containers"
     echo "  debug               Toggle debug mode"
+    echo "  pull                git pull --rebase all repos"
     echo ""
     echo "API commands:"
     echo "  api user            Handle Mapic users"
@@ -115,6 +116,7 @@ mapic_cli () {
         config)     mapic_config "$@";;
         grep)       mapic_grep "$@";;
         debug)      mapic_debug "$@";;
+        pull)       mapic_pull "$@";;
         help)       mapic_cli_usage;;
         --help)     mapic_cli_usage;;
         -h)         mapic_cli_usage;;
@@ -455,6 +457,32 @@ mapic_logs () {
 mapic_wild () {
     echo "\"$@\" is not a Mapic command. See 'mapic help' for available commands."
     exit 1
+}
+
+
+mapic_pull () {
+    cd $MAPIC_ROOT_FOLDER
+
+    echo "Pulling mapic/mapic"
+    git pull --rebase
+    cd modules
+
+    echo "Pulling mapic/engine"
+    cd engine && git pull --rebase && cd ..
+
+    echo "Pulling mapic/mile"
+    cd mile && git pull --rebase && cd ..
+
+    echo "Pulling mapic/mapic.js"
+    cd mapic.js && git pull --rebase && cd ..
+
+    echo "Pulling mapic/sdk"
+    cd sdk && git pull --rebase && cd ..
+    cd ..
+    echo "Pulling mapic/config"
+    cd config && git pull --rebase && cd ..
+
+    echo "All pulled!"
 }
 
 #   ___  ____  / /____  _____
