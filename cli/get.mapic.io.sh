@@ -12,6 +12,3 @@ git clone https://github.com/mapic/mapic.git
 
 # install mapic-cli
 cd mapic/cli && bash mapic-cli.sh
-
-# run mapic cli
-mapic
