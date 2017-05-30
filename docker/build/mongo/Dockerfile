@@ -1,11 +1,11 @@
 FROM mongo:latest
 MAINTAINER <knutole@mapic.io>
 
-# start scripts
-ADD start.sh /start.sh
-RUN chmod +x /start.sh
+# add start scripts
 ADD init_mongo.js /init_mongo.js
+ADD start.sh /start.sh
 ADD init.sh /init.sh
+RUN chmod +x /start.sh
 RUN chmod +x /init.sh
 
 # start

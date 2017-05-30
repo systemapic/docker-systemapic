@@ -2,10 +2,7 @@
 # mapic/nginx:latest
 #
 
-# base image
-FROM mapic/ubuntu:latest
-
-# maintainer
+FROM mapic/xenial:latest
 MAINTAINER Knut Ole Sjøli <knutole@mapic.io>
 
 # install openssl

@@ -20,27 +20,16 @@ RUN apt-get dist-upgrade -y
 # install basics
 RUN apt-get update -y
 RUN apt-get install -y \ 
-	wget \
-	fish \
-	htop \
-	curl \
-	unzip \
-	bmon \
-	nmon \
-	nmap \
-	pigz \
-	build-essential \
+	wget fish htop  curl zip git sudo \
+	unzip bmon nmon nmap pigz make \
   python-software-properties \
-  subversion \
-  zip \
-  mlocate \
-  redis-tools \ 
-  git \
+  apt-transport-https \
   protobuf-compiler \
   libprotobuf-dev \
-  apt-transport-https \
-  make \
-  sudo 
+  build-essential \
+  redis-tools \ 
+  subversion \
+  mlocate 
 
 # ensure everything up to date
 RUN apt-get update --fix-missing -y
