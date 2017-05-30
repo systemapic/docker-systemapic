@@ -3,18 +3,49 @@
 
 Mapic is an Open Source Web Map Engine. 
 
-Learn more @ https://mapic.io. For a technical overview, please see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
+Learn more @ https://mapic.io. For a technical overview, see [Mapic Technical Overview](https://github.com/mapic/mapic/wiki/Mapic-Techincal-Overview).
 
 
 ## Install
 This will install mapic and configure it for `localhost`. For custom domain configuration, see below.
 
 ```bash
-# install mapic cli with wget
+# install mapic cli
 wget -qO- https://get.mapic.io/ | sh
 
-# install to localhost
-mapic install mapic
+# show available commands
+mapic 
+
+Usage: mapic COMMAND
+
+A CLI for Mapic
+
+Management commands:
+  start               Start Mapic stack
+  restart             Stop, flush and start Mapic stack
+  stop                Stop Mapic stack
+  status              Display status on running Mapic stack
+  logs                Show logs of running Mapic server
+  logs dump           Dump logs of running Mapic server to disk
+  test                Run Mapic tests
+
+Commands:
+  install             Install Mapic
+  config              Configure Mapic
+  env                 Get and set Mapic environment variables
+  dns                 Create or check DNS entries for Mapic
+  ssl                 Create or scan SSL certificates for Mapic
+  enter               Enter running container
+  run                 Run command inside a container
+  grep                Find string in files in subdirectories of current path
+  ps                  Show running containers
+  debug               Toggle debug mode
+  pull                git pull --rebase all repos
+
+API commands:
+  api user            Handle Mapic users
+  api upload          Upload data
+
 
 ```
 
