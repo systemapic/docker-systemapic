@@ -7,6 +7,9 @@
 #
 # #
 
+# todo: ubuntu/osx/windows compatibility.
+# use wget/unzip instead of git?
+
 # clone mapic
 git clone https://github.com/mapic/mapic.git
 
