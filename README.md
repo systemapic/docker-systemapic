@@ -41,7 +41,7 @@ See `mapic help` for more options.
 - [Docker Compose](https://docs.docker.com/compose/install/) `>= 1.5.2`  
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-(`mapic` cli will try to install these automatically on Ubunut and OSX.)
+The `mapic cli` will try to install these automatically on Ubuntu and OSX.
 
 ### Create user
 Create a user with the `mapic` cli:
