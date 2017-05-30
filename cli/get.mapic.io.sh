@@ -11,7 +11,7 @@
 # use wget/unzip instead of git?
 
 # clone mapic
-git clone https://github.com/mapic/mapic.git
+git clone git@github.com:mapic/mapic.git
 
 # install mapic-cli
 cd mapic/cli && bash mapic-cli.sh

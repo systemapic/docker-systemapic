@@ -270,7 +270,7 @@ mapic_env_usage () {
 mapic_env () {
 
     # debug mode: show env with 'mapic env'
-    if $MAPIC_DEBUG = "true" && test -z $2; then
+    if [ -z $MAPIC_DEBUG ] && test -z $2; then
         echo "(Mapic DEBUG mode: Showing ENV instead of help screen.)"
         echo ""
         mapic_env_get
@@ -391,7 +391,7 @@ mapic_env_prompt () {
     fi
 
     # set env
-    test -n $ENV_VALUE && mapic env set $ENV_KEY $ENV_VALUE 
+    test -n "$ENV_VALUE" && mapic env set "$ENV_KEY" "$ENV_VALUE" 
 }
 
 usage () {
@@ -571,9 +571,24 @@ mapic_install_mapic () {
         sleep 1
         mapic_install_mapic_localhost
     else
-        echo "Only localhost supported at the moment."
-        exit 1
+        echo "Only localhost supported at the moment, but trying anyway."
+        mapic_install_mapic_domain
     fi
+}
+
+mapic_install_mapic_domain () {
+    cd $MAPIC_CLI_FOLDER/install
+    bash init-submodules.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    bash create-ssl-public-domain.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    bash update-config.sh
+
+    cd $MAPIC_CLI_FOLDER/install
+    bash create-storage-containers.sh
+
 }
 
 mapic_install_mapic_localhost () {
@@ -589,11 +604,6 @@ mapic_install_mapic_localhost () {
     cd $MAPIC_CLI_FOLDER/install
     bash create-storage-containers.sh
 
-    cd $MAPIC_CLI_FOLDER/install
-    # bash initialize-auth-mongo.sh
-
-    cd $MAPIC_CLI_FOLDER/install
-    # bash npm-install-on-modules.sh
 }
 mapic_install_jq () {
     DISTRO=$(lsb_release -si)

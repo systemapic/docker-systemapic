@@ -17,7 +17,9 @@ var args = process.argv;
 var stripComments = require('strip-json-comments');
 moment.utc(); // set utc
 
-var debug = (process.env.MAPIC_API_DEBUG === true);
+var debug = process.env.MAPIC_API_DEBUG;
+console.log('process.env.MAPIC_API_DEBUG', process.env.MAPIC_API_DEBUG);
+// var debug = true;
 var MAPIC_API_DOMAIN = process.env.MAPIC_API_DOMAIN;
 var MAPIC_API_UPLOAD_DATASET = '/mapic_upload' + process.env.MAPIC_API_UPLOAD_DATASET;        // absolute path of dataset
 var MAPIC_API_UPLOAD_PROJECT = process.env.MAPIC_API_UPLOAD_PROJECT;        // null if new project
