@@ -131,11 +131,15 @@ mapic_cli () {
 #   / / __ \/ / __/ / __  / / /_  / / _ \
 #  / / / / / / /_/ / /_/ / / / / /_/  __/
 # /_/_/ /_/_/\__/_/\__,_/_/_/ /___/\___/ 
+print_debug () {
+    printf "${c_dot}[debug mode]${c_reset}\n"
+}
 initialize () {
 
     # get osx/linux
     get_mapic_host_os
 
+   
     # hardcoded env file
     MAPIC_ENV_FILE=/usr/local/bin/.mapic.env
 
@@ -156,6 +160,9 @@ initialize () {
         # set root folder (../)
         MAPIC_ROOT_FOLDER="$(dirname "$MAPIC_CLI_FOLDER")"
 
+        # set color file
+        MAPIC_COLOR_FILE=$MAPIC_CLI_FOLDER/.mapic.colors
+
         # cp default env file
         cp $MAPIC_CLI_FOLDER/.mapic.default.env /usr/local/bin/.mapic.env 
 
@@ -173,6 +180,7 @@ initialize () {
         write_env MAPIC_CLI_FOLDER $MAPIC_CLI_FOLDER
         write_env MAPIC_HOST_OS $MAPIC_HOST_OS
         write_env MAPIC_ENV_FILE $MAPIC_ENV_FILE
+        write_env MAPIC_COLOR_FILE $MAPIC_COLOR_FILE
 
     fi
 
@@ -182,6 +190,10 @@ initialize () {
     # source env file
     set -o allexport
     source $MAPIC_ENV_FILE
+    source $MAPIC_COLOR_FILE
+
+    # mark [debug mode]
+    test ! -z $MAPIC_DEBUG && print_debug
 
     # mark that we're in a cli
     MAPIC_CLI=true
@@ -221,12 +233,13 @@ get_mapic_host_os () {
     esac
 }
 mapic_debug () {
-    if $MAPIC_DEBUG == "true"; then
-        echo "Debug mode is off"
-        write_env MAPIC_DEBUG false
-    else 
+    if [ -z $MAPIC_DEBUG ]; then
         echo "Debug mode is on"
         write_env MAPIC_DEBUG true
+    else 
+       
+         echo "Debug mode is off"
+        write_env MAPIC_DEBUG
     fi
 }
 mapic_edit () {
@@ -318,7 +331,7 @@ mapic_env_set () {
 # fn used internally to write to env file
 write_env () {
     test -z $1 && failed "missing arg"
-    test -z $2 && failed "missing arg"
+    # test -z $2 && failed "missing arg"
 
     # add or replace line in .mapic.env
     if grep -q "$1" "$MAPIC_ENV_FILE"; then
@@ -579,7 +592,7 @@ mapic_install_mapic_localhost () {
     # bash initialize-auth-mongo.sh
 
     cd $MAPIC_CLI_FOLDER/install
-    bash npm-install-on-modules.sh
+    # bash npm-install-on-modules.sh
 }
 mapic_install_jq () {
     DISTRO=$(lsb_release -si)
