@@ -1,21 +1,27 @@
 # see domain-specific .yml for documentation
 engine:
-  image: mapic/engine:latest 
+  image: mapic/geo:latest 
   environment:
     MAPIC_DOMAIN: ${MAPIC_DOMAIN}
   working_dir: /mapic/modules/engine 
+  expose:
+    - "3001"
   volumes:
     - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
     - ${MAPIC_ROOT_FOLDER}/modules:/mapic/modules
+  command: ./start-server.sh
 
 mile: 
-  image: mapic/mile:latest
+  image: mapic/geo:latest
   environment:
     MAPIC_DOMAIN: ${MAPIC_DOMAIN}
   working_dir: /mapic/modules/mile 
+  expose:
+    - "3003"
   volumes:
     - ${MAPIC_ROOT_FOLDER}/config/${MAPIC_DOMAIN}:/mapic/config
     - ${MAPIC_ROOT_FOLDER}/modules:/mapic/modules
+  command: ./start-server.sh
 
 nginx:
   image: mapic/nginx:latest

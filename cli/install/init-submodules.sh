@@ -7,32 +7,38 @@ else
     PIPE=/dev/null
 fi
 
+print_head () { printf "$c_yellow $1 $c_red $cb_black $2 $c_reset \n"; }
+print_sub () { printf "$cb_white $1 $c_red $2 $c_reset \r"; }
+
+# feedback
+print_head "#" "Pulling latest code..." "\n"
+
 # init mapic/mapic submodule
+# print_sub "#" "Initing submodules..."
 cd $MAPIC_ROOT_FOLDER
 git submodule init 2>"${PIPE}" 1>"${PIPE}"
 git submodule update --recursive --remote 2>"${PIPE}" 1>"${PIPE}"
 git submodule foreach --recursive git checkout master 2>"${PIPE}" 1>"${PIPE}"
 
 # init mapic/mile submodule
+# print_sub "#" "Initing submodule: Mile"
 cd $MAPIC_ROOT_FOLDER/modules/mile
 git submodule init 2>"${PIPE}" 1>"${PIPE}"
 git submodule update --recursive --remote 2>"${PIPE}" 1>"${PIPE}"
 
 # init mapic/engine submodule
+# print_sub "#" "Initing submodule: Engine"
 cd $MAPIC_ROOT_FOLDER/modules/engine
 git submodule init 2>"${PIPE}" 1>"${PIPE}"
 git submodule update --recursive --remote 2>"${PIPE}" 1>"${PIPE}"
 
 # init mapic/mapic.js submodule
+# print_sub "#" "Initing submodule: Mapic.js"
 cd $MAPIC_ROOT_FOLDER/modules/mapic.js
 git submodule init 2>"${PIPE}"
 git submodule update --recursive --remote 2>"${PIPE}" 1>"${PIPE}"
 
-# init mapic/sdk submodule
-cd $MAPIC_ROOT_FOLDER/modules/sdk
-git submodule init 2>"${PIPE}"
-git submodule update --recursive --remote 2>"${PIPE}" 1>"${PIPE}"
-
 # install modules in mapic/mapic (for scripts, etc)
+# todo: do this in a container env also
 cd $MAPIC_ROOT_FOLDER
-npm install 2>"${PIPE}" 1>"${PIPE}"
+yarn install 2>"${PIPE}" 1>"${PIPE}"

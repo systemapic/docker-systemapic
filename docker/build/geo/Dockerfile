@@ -1,9 +1,8 @@
 ##
-# mapic/gis:latest
+# mapic/geo:latest
 #
 
-# base image
-FROM mapic/ubuntu:latest
+FROM mapic/xenial:latest
 
 # maintainer
 MAINTAINER knutole@mapic.io
@@ -40,12 +39,22 @@ RUN bash /tmp/install-harfbuzz.sh
 ADD ./install-mapnik.sh /tmp/
 RUN bash /tmp/install-mapnik.sh 
 
-# install yarn
-ADD ./install-yarn.sh /tmp/
-RUN bash /tmp/install-yarn.sh 
+# # install yarn
+# ADD ./install-yarn.sh /tmp/
+# RUN bash /tmp/install-yarn.sh 
 
-# workdir
-WORKDIR /data
 
-# volume
-VOLUME ["/data"]
+RUN rm /etc/apt/sources.list.d/*
+RUN apt-get clean
+
+# install postgis
+RUN sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
+RUN apt-get update -y
+RUN apt-get install -y postgresql-client postgis libpq-dev python-psycopg2 postgresql 
+
+
+# # workdir
+# WORKDIR /data
+
+# # volume
+# VOLUME ["/data"]

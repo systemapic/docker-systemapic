@@ -20,7 +20,9 @@ var child = exec('npm install lodash yamljs async', function (err, stdout, stder
     var fs = require('fs');
 
     // compose file
-    var yml_file = YAML.load('/compose/yml/' + process.env.MAPIC_DOMAIN + '.yml');
+    var compose_file = '/compose/yml/' + process.env.MAPIC_DOMAIN + '.yml';
+    console.log('compose_file: ', compose_file);
+    var yml_file = YAML.load(compose_file);
 
     // settings
     var paths = {

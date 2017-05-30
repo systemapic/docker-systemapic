@@ -122,6 +122,7 @@ mapic_cli () {
         -h)         mapic_cli_usage;;
         env)        mapic_env "$@";;
         edit)       mapic_edit "$@";;
+        create_storage) mapic_create_storage "$@";;
     
         *)          mapic_wild "$@";;
     esac
@@ -445,7 +446,7 @@ mapic_flush () {
     bash flush-mapic.sh
 }
 mapic_create_storage () {
-    cd $MAPIC_CLI_FOLDER/management
+    cd $MAPIC_CLI_FOLDER/install
     bash create-storage-containers.sh
 }
 
