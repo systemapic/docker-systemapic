@@ -13,39 +13,8 @@ This will install mapic and configure it for `localhost`. For custom domain conf
 # install mapic cli
 wget -qO- https://get.mapic.io/ | sh
 
-# show available commands
-mapic 
-
-Usage: mapic COMMAND
-
-A CLI for Mapic
-
-Management commands:
-  start               Start Mapic stack
-  restart             Stop, flush and start Mapic stack
-  stop                Stop Mapic stack
-  status              Display status on running Mapic stack
-  logs                Show logs of running Mapic server
-  logs dump           Dump logs of running Mapic server to disk
-  test                Run Mapic tests
-
-Commands:
-  install             Install Mapic
-  config              Configure Mapic
-  env                 Get and set Mapic environment variables
-  dns                 Create or check DNS entries for Mapic
-  ssl                 Create or scan SSL certificates for Mapic
-  enter               Enter running container
-  run                 Run command inside a container
-  grep                Find string in files in subdirectories of current path
-  ps                  Show running containers
-  debug               Toggle debug mode
-  pull                git pull --rebase all repos
-
-API commands:
-  api user            Handle Mapic users
-  api upload          Upload data
-
+# install to localhost
+mapic install mapic
 
 ```
 
@@ -61,17 +30,29 @@ mapic install mapic
 ```
 
 ## Usage
-1. Start server with `mapic start`, and open your browser @ https://localhost (or other configured domain).
-3. Stop server with `mapic stop`.
+```bash
+# start server 
+mapic start
 
-See `mapic` command for more options.
+# and open your browser @ https://localhost (or other configured domain).
+
+# see logs
+mapic logs
+
+# stop server 
+mapic stop
+
+# see available commands
+mapic
+
+```
 
 ### Dependencies: 
 - [Docker](https://docs.docker.com/engine/installation/) `>= 1.9.0`  
 - [Docker Compose](https://docs.docker.com/compose/install/) `>= 1.5.2`  
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-(`mapic` cli will try to install these automatically on Ubunut and OSX.)
+`mapic cli` will try to install these automatically on Ubunut and OSX.
 
 ### Create user
 Create a user with the `mapic` cli:
