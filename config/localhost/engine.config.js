@@ -1,6 +1,6 @@
 module.exports = {
   "serverConfig": {
-    "instance": "tx - dev",
+    "instance": "[localhost]",
     "token": {
       "accessTokenLength": "256",
       "refreshTokenLength": "256",
