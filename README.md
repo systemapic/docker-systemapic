@@ -10,13 +10,27 @@ Learn more @ https://mapic.io. For a technical overview, please see [Mapic Techn
 This will install mapic and configure it for `localhost`. For custom domain configuration, see below.
 
 ```bash
-# install mapic
+# install mapic cli with wget
 wget -qO- https://get.mapic.io/ | sh
+
+# or curl
+# curl -sSL https://get.mapic.io/ | sh
+
+# install to localhost
+mapic install mapic
+
+# ... 
+
+# or, configure with your domain
+mapic config set MAPIC_DOMAIN domain.example.com
+
+# then install
+mapic install mapic
+
 ```
 
 ## Usage
-1. Start server with `mapic start`.
-2. Open your browser @ https://localhost (or other configured domain).
+1. Start server with `mapic start`, and open your browser @ https://localhost (or other configured domain).
 3. Stop server with `mapic stop`.
 
 See `mapic` command for more options.
