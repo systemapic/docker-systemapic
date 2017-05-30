@@ -1,12 +1,8 @@
 ##
-# mapic/ubuntu:latest
 # mapic/xenial:latest
 #
 
-# base image
 FROM ubuntu:xenial
-
-# maintainer
 MAINTAINER knutole@mapic.io
 
 # upgrade ubuntu
@@ -22,12 +18,12 @@ RUN apt-get update -y
 RUN apt-get install -y \ 
 	wget fish htop  curl zip git sudo \
 	unzip bmon nmon nmap pigz make \
-  python-software-properties \
-  apt-transport-https \
+  python-software-properties
+RUN apt-get install -y apt-transport-https \
   protobuf-compiler \
   libprotobuf-dev \
-  build-essential \
-  redis-tools \ 
+  build-essential 
+RUN apt-get install -y redis-tools \ 
   subversion \
   mlocate 
 
