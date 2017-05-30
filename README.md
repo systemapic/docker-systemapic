@@ -30,29 +30,18 @@ mapic install mapic
 ```
 
 ## Usage
-```bash
-# start server 
-mapic start
+1. Start server with `mapic start`.
+2. Open your browser @ https://localhost
+3. Stop server with `mapic stop`.
 
-# and open your browser @ https://localhost (or other configured domain).
-
-# see logs
-mapic logs
-
-# stop server 
-mapic stop
-
-# see available commands
-mapic
-
-```
+See `mapic help` for more options.
 
 ### Dependencies: 
 - [Docker](https://docs.docker.com/engine/installation/) `>= 1.9.0`  
 - [Docker Compose](https://docs.docker.com/compose/install/) `>= 1.5.2`  
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-`mapic cli` will try to install these automatically on Ubunut and OSX.
+(`mapic` cli will try to install these automatically on Ubunut and OSX.)
 
 ### Create user
 Create a user with the `mapic` cli:
