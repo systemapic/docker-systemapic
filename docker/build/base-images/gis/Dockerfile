@@ -40,6 +40,10 @@ RUN bash /tmp/install-harfbuzz.sh
 ADD ./install-mapnik.sh /tmp/
 RUN bash /tmp/install-mapnik.sh 
 
+# install yarn
+ADD ./install-yarn.sh /tmp/
+RUN bash /tmp/install-yarn.sh 
+
 # workdir
 WORKDIR /data
 
