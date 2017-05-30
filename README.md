@@ -13,18 +13,18 @@ This will install mapic and configure it for `localhost`. For custom domain conf
 # install mapic cli with wget
 wget -qO- https://get.mapic.io/ | sh
 
-# or curl
-# curl -sSL https://get.mapic.io/ | sh
-
 # install to localhost
 mapic install mapic
 
-# ... 
+```
 
-# or, configure with your domain
+### Install to custom domain
+```bash
+
+# set mapic domain
 mapic config set MAPIC_DOMAIN domain.example.com
 
-# then install
+# install mapic
 mapic install mapic
 
 ```
@@ -54,16 +54,6 @@ mapic api user super
 
 ```
 
-### Install to custom domain
-```bash
-
-# set mapic domain
-mapic config set MAPIC_DOMAIN domain.example.com
-
-# install mapic
-mapic install mapic
-
-```
 
 ## Libraries
 Mapic consists of:   
