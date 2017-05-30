@@ -564,21 +564,21 @@ mapic_install_mapic () {
 
 mapic_install_mapic_localhost () {
     cd $MAPIC_CLI_FOLDER/install
-    # bash init-submodules.sh
+    bash init-submodules.sh
 
     cd $MAPIC_CLI_FOLDER/install
-    # bash create-ssl-localhost.sh
+    bash create-ssl-localhost.sh
 
     cd $MAPIC_CLI_FOLDER/install
-    # bash update-config.sh
+    bash update-config.sh
 
     cd $MAPIC_CLI_FOLDER/install
-    # bash create-storage-containers.sh
+    bash create-storage-containers.sh
 
     cd $MAPIC_CLI_FOLDER/install
     # bash initialize-auth-mongo.sh
 
-    # cd $MAPIC_CLI_FOLDER/install
+    cd $MAPIC_CLI_FOLDER/install
     bash npm-install-on-modules.sh
 }
 mapic_install_jq () {
@@ -1011,8 +1011,8 @@ mapic_grep_usage () {
 }
 mapic_grep () {
     test -z "$2" && mapic_grep_usage
-    echo "[grep -rnw $MAPIC_CLI_EXECUTED_FROM -e $2]:"
-    grep -rnw $MAPIC_CLI_EXECUTED_FROM -e "$2"
+    echo "[grep -rn \"$2\" $MAPIC_CLI_EXECUTED_FROM]:"
+    grep -rn "$2" $MAPIC_CLI_EXECUTED_FROM
 }
 
 #   ___  ____  / /________  ______  ____  (_)___  / /_
