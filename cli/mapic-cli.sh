@@ -670,6 +670,7 @@ mapic_api_usage () {
     echo "Usage: mapic api [OPTIONS]"
     echo ""
     echo "Options:"
+    echo "  configure   Configure API settings"
     echo "  user        Show and edit users"
     echo "  upload      Upload data"
     echo ""
@@ -678,6 +679,7 @@ mapic_api_usage () {
 mapic_api () {
     test -z "$2" && mapic_api_usage
     case "$2" in
+        configure)  mapic_api_configure "$@";;
         user)       mapic_api_user "$@";;
         upload)     mapic_api_upload "$@";;
         *)          mapic_api_usage;
@@ -775,6 +777,17 @@ mapic_api_user_super () {
         cd $MAPIC_CLI_FOLDER/api
         bash promote-super.sh "${@:4}"
     fi
+}
+mapic_api_configure () {
+    m config prompt MAPIC_API_DOMAIN "Please enter the domain of the Mapic API you want to connect with (eg. maps.mapic.io)"
+    m config prompt MAPIC_API_USERNAME "Please enter your Mapic API username"
+    m config prompt MAPIC_API_AUTH "Please enter your Mapic API password"
+
+    echo ""
+    echo "Mapic API is configured:"
+    echo "  Domain:   $MAPIC_API_DOMAIN"
+    echo "  Username: $MAPIC_API_USERNAME"
+    echo "  Auth:     $MAPIC_API_AUTH"
 }
                    
 #   / ___/ / / / __ \
