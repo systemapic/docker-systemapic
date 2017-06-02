@@ -666,6 +666,7 @@ mapic_install_docker_ubuntu () {
 # \__,_/ .___/_/   
 #     /_/          
 mapic_api_usage () {
+    mapic_api_display_config
     echo ""
     echo "Usage: mapic api [OPTIONS]"
     echo ""
@@ -783,12 +784,17 @@ mapic_api_configure () {
     m config prompt MAPIC_API_USERNAME "Please enter your Mapic API username"
     m config prompt MAPIC_API_AUTH "Please enter your Mapic API password"
 
+    mapic_api_display_config
+}
+
+mapic_api_display_config () {
     echo ""
-    echo "Mapic API is configured:"
+    echo "Mapic API config:"
     echo "  Domain:   $MAPIC_API_DOMAIN"
     echo "  Username: $MAPIC_API_USERNAME"
     echo "  Auth:     $MAPIC_API_AUTH"
 }
+
                    
 #   / ___/ / / / __ \
 #  / /  / /_/ / / / /
