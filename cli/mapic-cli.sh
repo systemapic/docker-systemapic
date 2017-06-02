@@ -396,7 +396,8 @@ mapic_env_prompt () {
     fi
 
     # set env
-    test -n "$ENV_VALUE" && mapic env set "$ENV_KEY" "$ENV_VALUE" 
+    # test -n "$ENV_VALUE" && mapic env set "$ENV_KEY" "$ENV_VALUE" 
+    mapic env set "$ENV_KEY" "$ENV_VALUE" 
 }
 
 usage () {
