@@ -11,6 +11,6 @@ fi
 
 
 echo "# Creating storage containers..."
-docker run -it --rm --name create-containers -v "$MAPIC_CLI_FOLDER/install":/cli -v "$MAPIC_ROOT_FOLDER/docker/compose":/compose -w /cli --env-file "$MAPIC_ENV_FILE" node:4 node create-storage-containers.js 2>"${PIPE}" 1>"${PIPE}"
+docker run -it --rm --name create-containers -v "$MAPIC_CLI_FOLDER/install":/cli -v "$MAPIC_ROOT_FOLDER/config/$MAPIC_DOMAIN":/config -w /cli --env-file "$MAPIC_ENV_FILE" node:6 node create-storage-containers.js 2>"${PIPE}" 1>"${PIPE}"
 bash createcontainers.tmp.sh 2>"${PIPE}" 1>"${PIPE}"
 rm -f createcontainers.tmp.sh 2>"${PIPE}" 1>"${PIPE}"

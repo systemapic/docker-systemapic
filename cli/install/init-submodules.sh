@@ -7,12 +7,13 @@ else
     PIPE=/dev/null
 fi
 
-print_head () { printf "$c_yellow $1 $c_red $cb_black $2 $c_reset \n"; }
+print_head () { printf "$cb_white $1 $c_red $2 $c_reset \n"; }
 print_sub () { printf "$cb_white $1 $c_red $2 $c_reset \r"; }
 
 # feedback
 print_head "#" "Pulling latest code..." "\n"
 
+# todo: do this in a container also, to remove dep on git..
 # init mapic/mapic submodule
 # print_sub "#" "Initing submodules..."
 cd $MAPIC_ROOT_FOLDER

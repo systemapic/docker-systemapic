@@ -27,7 +27,9 @@ test -z "$MAPIC_DOMAIN" && usage "MAPIC_DOMAIN" # check MAPIC_ROOT_FOLDER is set
 
     
 # certbot-auto
-bash certbot certonly \
+cd $MAPIC_CLI_FOLDER/install
+ls -l
+./certbot certonly \
     --standalone \
     --agree-tos \
     --email "$MAPIC_USER_EMAIL" \

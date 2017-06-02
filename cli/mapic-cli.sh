@@ -96,6 +96,12 @@ mapic_cli () {
     # check 
     test -z "$1" && mapic_cli_usage
 
+    # run internal mapic
+    m "$@"
+}
+
+m () {
+    
     case "$1" in
 
         # documented API
@@ -140,7 +146,6 @@ initialize () {
     # get osx/linux
     get_mapic_host_os
 
-   
     # hardcoded env file
     MAPIC_ENV_FILE=/usr/local/bin/.mapic.env
 
@@ -580,11 +585,17 @@ mapic_install_mapic_domain () {
     cd $MAPIC_CLI_FOLDER/install
     bash init-submodules.sh
 
+    echo "$c_red submodule done! $c_reset"
+
     cd $MAPIC_CLI_FOLDER/install
     bash create-ssl-public-domain.sh
 
+    echo "$c_red ssl done! $c_reset"
+
     cd $MAPIC_CLI_FOLDER/install
     bash update-config.sh
+
+    echo "$c_red config done! $c_reset"
 
     cd $MAPIC_CLI_FOLDER/install
     bash create-storage-containers.sh
@@ -808,10 +819,10 @@ mapic_ssl () {
 }
 mapic_ssl_create () {
     if [ $MAPIC_DOMAIN = "localhost" ]; then
-        cd $MAPIC_CLI_FOLDER/install/ssl
+        cd $MAPIC_CLI_FOLDER/install
         bash create-ssl-localhost.sh
     else 
-        cd $MAPIC_CLI_FOLDER/install/ssl
+        cd $MAPIC_CLI_FOLDER/install
         bash create-ssl-public-domain.sh
     fi
 }
