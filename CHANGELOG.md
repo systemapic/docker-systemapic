@@ -10,5 +10,8 @@ A simple log of core changes in all Mapic repositories. For a complete change hi
 
 ## 2.0.0
 
-- [x] Mapic CLI https://github.com/mapic/mapic/issues/27
-- [ ] Reorganized repositories https://github.com/mapic/mapic/issues/37
+#### Summary
+Beginning of scalability and Docker Swarm; not backwards-compatible.
+
+- [x] Mapic CLI [#27](https://github.com/mapic/mapic/issues/27)
+- [ ] Reorganized repositories [#37](https://github.com/mapic/mapic/issues/37)
