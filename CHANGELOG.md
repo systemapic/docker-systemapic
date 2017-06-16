@@ -1,5 +1,5 @@
 # Mapic Changelog
-A simple log of core changes affecting Mapic usage. For a complete change history, see the git log.
+A simple log of core changes in all Mapic repositories. For a complete change history, see the git log.
 
 > #### Semantic Versioning 2.0.0
 > Given a version number `MAJOR.MINOR.PATCH`, increment the:  
@@ -11,3 +11,4 @@ A simple log of core changes affecting Mapic usage. For a complete change histor
 ## 2.0.0
 
 - [x] Mapic CLI https://github.com/mapic/mapic/issues/27
+- [ ] Reorganized repositories https://github.com/mapic/mapic/issues/37
