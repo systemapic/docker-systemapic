@@ -1,11 +1,7 @@
 # Mapic Changelog
-A simple log of core changes affecting Mapnik usage.
+A simple log of core changes affecting Mapic usage. For a complete change history, see the git log.
 
-Developers: Please commit along with changes.
-
-For a complete change history, see the git log.
-
-> ### Semantic Versioning 2.0.0
+> #### Semantic Versioning 2.0.0
 > Given a version number MAJOR.MINOR.PATCH, increment the:
 > MAJOR version when you make incompatible API changes,
 > MINOR version when you add functionality in a backwards-compatible manner, and
