@@ -7,7 +7,6 @@ notifications:
   email: false
   slack: mapic-io:NKaii0z3tRkeDyXaDbRauRFp
 
-
 install:
   - wget -qO- https://get.mapic.io/ | sh
 
