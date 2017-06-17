@@ -1,17 +1,12 @@
-# Mapic Changelog
-A simple log of core changes in all Mapic repositories. For a complete change history, see the git log.
+# Change Log
+# Change Log
+All notable changes to all repositories in this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
 
-> #### Semantic Versioning 2.0.0
-> Given a version number `MAJOR.MINOR.PATCH`, increment the:  
-> `MAJOR` version when you make incompatible API changes,  
-> `MINOR` version when you add functionality in a backwards-compatible manner, and  
-> `PATCH` version when you make backwards-compatible bug fixes.  
-> Additional labels for pre-release and build metadata are available as extensions to the `MAJOR.MINOR.PATCH `format.  
-
-## 2.0.0
-
-#### Summary
-Beginning of scalability and Docker Swarm; not backwards-compatible.
-
+## [Unreleased]
+### Added
 - [x] Mapic CLI [#27](https://github.com/mapic/mapic/issues/27)
+
+### Changed
 - [ ] Reorganized repositories [#37](https://github.com/mapic/mapic/issues/37)
+
