@@ -9,6 +9,8 @@ git:
 
 sudo: required
 
+dist: trusty
+
 install:
   - cd cli
   - bash mapic-cli.sh
