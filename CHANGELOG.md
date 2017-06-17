@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- [x] Mapic CLI [#27](https://github.com/mapic/mapic/issues/27)
+- [x] `mapic/mapic`: Mapic CLI [#27](https://github.com/mapic/mapic/issues/27)
 
 ### Changed
-- [ ] Reorganized repositories [#37](https://github.com/mapic/mapic/issues/37)
+- [ ] `mapic/mapic`: Reorganized repositories [#37](https://github.com/mapic/mapic/issues/37)
 
