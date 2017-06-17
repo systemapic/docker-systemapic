@@ -7,3 +7,18 @@
 [submodule "modules/mapic.js"]
 	path = modules/mapic.js
 	url = git://github.com/mapic/mapic.js.git
+[submodule "docker/docker-mapic-mongo"]
+	path = docker/docker-mapic-mongo
+	url = git@github.com:mapic/docker-mapic-mongo.git
+[submodule "docker/docker-mapic-xenial"]
+	path = docker/docker-mapic-xenial
+	url = git@github.com:mapic/docker-mapic-xenial.git
+[submodule "docker/docker-mapic-geo"]
+	path = docker/docker-mapic-geo
+	url = git@github.com:mapic/docker-mapic-geo.git
+[submodule "docker/docker-mapic-nginx"]
+	path = docker/docker-mapic-nginx
+	url = git@github.com:mapic/docker-mapic-nginx.git
+[submodule "docker/docker-mapic-redis"]
+	path = docker/docker-mapic-redis
+	url = git@github.com:mapic/docker-mapic-redis.git
