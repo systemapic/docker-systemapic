@@ -1,5 +1,4 @@
-
-# Mapic [![Build Status](https://travis-ci.org/mapic/mapic.png)](https://travis-ci.org/mapic/mapic)
+# Mapic [![GitHub release](https://img.shields.io/github/release/mapic/mapic.svg)]() [![Travis](https://img.shields.io/travis/mapic/mapic.svg)]() [![Twitter Follow](https://img.shields.io/twitter/follow/mapic_io.svg?style=social&label=Follow)](https://twitter.com/mapic_io) 
 
 Mapic is an Open Source Web Map Engine. 
 
@@ -19,10 +18,10 @@ Create a user with the `mapic` cli:
 
 ```bash
 # create user
-mapic api user create
+mapic user create
 
 # promote to superuser
-mapic api user super 
+mapic user super 
 
 ```
 
