@@ -1,8 +1,5 @@
 language: generic
 
-services:
-  - docker
-
 notifications:
   email: false
   slack: mapic-io:NKaii0z3tRkeDyXaDbRauRFp
@@ -11,9 +8,7 @@ git:
   submodules: false
 
 install:
-  - cd cli 
-  - ls -l
-  - bash mapic-cli.sh
+  - sudo bash mapic-cli.sh
 
 script:
   - mapic 
