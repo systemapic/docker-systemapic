@@ -9,10 +9,11 @@ notifications:
 
 git:
   submodules: false
-  depth: 1
 
 install:
-  - cd cli && bash mapic-cli.sh
+  - cd cli 
+  - ls -l
+  - bash mapic-cli.sh
 
 script:
   - mapic 
