@@ -7,8 +7,11 @@ notifications:
 git:
   submodules: false
 
+sudo: required
+
 install:
-  - sudo bash mapic-cli.sh
+  - cd cli
+  - bash mapic-cli.sh
 
 script:
   - mapic 
