@@ -13,7 +13,7 @@ dist: trusty
 
 install:
   - cd cli
-  - bash mapic-cli.sh
+  - sudo bash mapic-cli.sh
 
 script:
   - mapic 
