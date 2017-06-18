@@ -39,4 +39,22 @@ install:
   - sudo bash mapic-cli.sh
 
 script:
-  - mapic 
+  - mapic install mapic
+  - mapic start
+  - mapic status
+  - sleep 20
+  - mapic test all
+
+
+
+
+
+
+
+
+
+
+
+
+
+
