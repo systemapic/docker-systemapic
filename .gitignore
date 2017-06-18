@@ -2,5 +2,13 @@ saved_images/*
 *.key
 *.pem
 npm-debug.log
-scripts/*logs*txt
-scripts/logs/
+*.ignore.*
+node_modules/
+logs
+logs/
+logs/*
+*.log
+*.mapic.env
+cli/.mapic.env
+tmp/
+tmp/*

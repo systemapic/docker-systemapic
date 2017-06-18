@@ -1,25 +1,32 @@
 {
-  "name": "systemapic",
-  "version": "1.3.8",
-  "description": "Systemapic Cloud Server",
+  "name": "mapic",
+  "version": "2.1.0",
+  "description": "Mapic Web Map Engine",
   "scripts": {
-    "test": "cd scripts && ./test.sh",
-    "start": "cd compose && ./restart.sh",
-    "pull": "cd scripts && ./update_all_repos.sh"
+    "test": "cd scripts/test && ./run-all-tests.sh",
+    "start": "./restart-mapic.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/systemapic/docker-systemapic.git"
+    "url": "https://github.com/mapic/mapic.git"
   },
   "contributors": [
-    "knutole@systemapic.com",
+    "knutole@mapic.io",
     "jorgen@systemapic.com",
     "strk@keybit.net",
-    "icygler@hwdtech.ru"
+    "icygler@hwdtech.ru",
+    "mgdfot@gmail.com",
+    "shahjada.talukdar@gmail.com"
   ],
-  "license": "GPLv2",
+  "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/systemapic/docker-systemapic/issues"
+    "url": "https://github.com/mapic/mapic/issues"
   },
-  "homepage": "https://github.com/systemapic/docker-systemapic",
+  "homepage": "https://mapic.io",
+  "devDependencies": {
+    "async": "^2.1.2",
+    "aws-sdk": "^2.6.12",
+    "lodash": "^4.16.6",
+    "yamljs": "^0.2.8"
+  }
 }

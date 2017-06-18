@@ -1,3 +1,0 @@
-#!/bin/bash
-apt-get update -y && apt-get install -y --only-upgrade docker-engine
-docker version
